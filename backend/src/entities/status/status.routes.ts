@@ -7,7 +7,9 @@ import { crud, StatusController } from "@/src/entities/status/status.controller"
 const router = Router();
 
 // EndPoints
+router.get("/", verifyToken, crud.getAll);
+router.get("/:id", verifyToken, crud.getById);
 
-router.use("/", verifyToken, crudRoutes(crud)); // CRUD
+router.use("/", verifyToken, checkRole([1]), crudRoutes(crud)); // CRUD
 
 export default router;

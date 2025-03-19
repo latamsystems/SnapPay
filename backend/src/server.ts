@@ -30,9 +30,7 @@ class Server {
         cert: fs.readFileSync(SSL_CERT),
       };
       this.server = https.createServer(sslOptions, this.app);
-    } else {
-      this.server = http.createServer(this.app);
-    }
+    } else { this.server = http.createServer(this.app); }
 
     // Conectar a base de datos
     connectDB();

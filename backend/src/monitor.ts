@@ -6,6 +6,7 @@ import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
 import { dbConnection } from '@/src/database';
 import { setupWebSocket, getIo } from '@/src/websocket';
+import models from '@/models/init-models';
 
 // Instancias de consola personalizadas
 const consoleHelper = new Console('SERVER');
@@ -33,6 +34,7 @@ export function connectDB() {
   const connection = async () => {
     try {
       await dbConnection.sync({ alter: true });
+      await dbConnection.sync({ force: false });
       consoleHelper.debug(`Base de datos: ${chalk.cyanBright.bold(DB_NAME)}`, false);
     } catch (error) {
       consoleHelper.error('Error al iniciar la base de datos.', false);
