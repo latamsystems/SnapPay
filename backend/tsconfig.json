@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "*"
+      ]
+    },
+    "target": "es2020",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist"
+  },
+  "include": [
+    "**/*.ts",
+    "middlewares/validateRequest.ts",
+    "src/auth/auth.service.ts",
+    "src/auth/auth.routes.ts",
+    "src/auth/auth.controller.ts",
+    "middlewares/entityVerify.ts"
+, "config/config.js", "helpers/httpResponse.ts"  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

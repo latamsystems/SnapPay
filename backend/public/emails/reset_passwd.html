@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="author" content="Josue Velasquez" />
+	<meta name="description" content="Seña Tech" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900"
+		rel="stylesheet" type="text/css" />
+	<title>Restablecer contraseña</title>
+	<style>
+		* {
+			box-sizing: border-box;
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		}
+
+		body {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			background-color: #f8f8f9;
+		}
+
+		.body {
+			display: block;
+			width: 100%;
+			background-color: #f8f8f9;
+			margin: 0;
+			padding: 0;
+			-webkit-text-size-adjust: none;
+			text-size-adjust: none;
+		}
+
+		/* Media Queries para Responsividad */
+		@media (max-width: 630px) {
+
+			.header,
+			.content,
+			.footer {
+				width: 100% !important;
+				padding: 10px !important;
+			}
+
+			.content .title,
+			.content .text,
+			.content .code {
+				padding: 10px !important;
+				/* Ajustar padding interno para que no se salga del contenedor */
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="body">
+		<!-- Cabezera -->
+		<div class="header" style="
+          text-align: center;
+          padding: 10px;
+          width: 100%;
+          background-color: #09090b;
+          max-width: 640px;
+          margin: 0 auto;
+        ">
+			<img src="https://armandovelasquez.com/assets/img/logo/logo_black.png" alt="SeñaTech"
+				style="width: 100px; filter: drop-shadow(1px 1px 1px #000) !important" />
+		</div>
+
+		<!-- Contenido -->
+		<div class="content" style="
+          padding: 30px;
+          width: 100%;
+          max-width: 640px;
+          margin: 0 auto;
+          background-color: #fff;
+        ">
+			<div class="title" style="
+            padding: 10px 40px;
+            color: #2b303a;
+            word-break: break-word;
+            text-align: center;
+            font-size: 30px !important;
+          ">
+				<b>Restablecimiento de contraseña</b>
+			</div>
+			<div class="text" style="
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 150%;
+            text-align: center;
+            padding: 10px 40px;
+            color: #808389;
+            word-break: break-word;
+          ">
+				Hola,
+				<span class="name" style="color: #09090b">{{firstname_user}} {{lastname_user}}</span>, usa este código
+				de verificación para restablecer tu contraseña.
+			</div>
+			<div class="code" style="
+            text-align: center;
+            font-size: 25px !important;
+            padding: 10px 40px;
+          ">
+				<b>{{token}}</b>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<div class="footer" style="
+		  display: grid;
+		  gap: 15px;
+          background-color: #09090b;
+          width: 100%;
+          padding: 10px 40px;
+          max-width: 640px;
+          margin: 0 auto;
+          color: #fff;
+        ">
+
+			<div style="display: flex;">
+				<div style="margin: 0; color: #fff;">
+					Saludos,<br />El equipo de <b>Latam Systems</b>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+
+</html>
