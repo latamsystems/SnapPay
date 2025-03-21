@@ -31,7 +31,7 @@ const configQuery = async (config: any, queryParams: any, model: any, id: number
     };
 
     includeAttributes(queryOptions, config);
-    applyFilters(queryOptions, filter);
+    applyFilters(queryOptions, filter, config);
     applySearch(queryOptions, search, searchFields);
     applySorting(queryOptions, sortBy, sortOrder);
 
@@ -76,16 +76,38 @@ const includeAttributes = (queryOptions: any, config: any) => {
 // ============================================================================
 
 /**
- * Aplicar filtros exactos a la consulta
+ * Aplicar filtros a la consulta
  * @param queryOptions - Objeto de configuración de Sequelize
- * @param filter - Filtros proporcionados en la petición
+ * @param filter - Filtros a aplicar
+ * @param config - Configuración adicional
  */
-const applyFilters = (queryOptions: any, filter: any) => {
-    if (filter && typeof filter === "object") {
+const applyFilters = (queryOptions: any, filter: any, config: any) => {
+    if (!queryOptions.where) queryOptions.where = {};
+
+    // Clonar include solo si existe
+    const includes = (config.include || []).map((rel: any) => ({ ...rel }));
+
+    if (filter && typeof filter === 'object') {
         Object.keys(filter).forEach((key) => {
-            queryOptions.where[key] = filter[key];
+            const value = filter[key];
+
+            if (key.includes('.')) {
+                const [relationAlias, field] = key.split('.');
+
+                const includeItem = includes.find((rel: any) => rel.as === relationAlias);
+
+                if (includeItem) {
+                    if (!includeItem.where) includeItem.where = {};
+                    includeItem.where[field] = value;
+                }
+            } else {
+                queryOptions.where[key] = value;
+            }
         });
     }
+
+    queryOptions.include = includes;
+    queryOptions.attributes = config.attributes;
 };
 
 // ============================================================================
