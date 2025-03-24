@@ -75,7 +75,7 @@ import { rule, validateRequest } from "@/lib/crud/config/validation/request.vali
 import { handleService } from "@/lib/crud/service/config.service";
 import { Service } from "@/lib/crud/service/decorator.service";
 
-import { ${capitalizedEntity}Model } from "@/interface/models/${entity}.interface";
+import { ${capitalizedEntity} } from "@/models/interface/${entity}.interface";
 
 
 // Nombre del servicio

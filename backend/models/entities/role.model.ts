@@ -1,15 +1,15 @@
 import { DataTypes, Model } from 'sequelize';
 import { dbConnection } from '@/src/database';
-import { RoleCreationAttributes, RoleModel } from '@/models/interface/role.interface';
+import { RoleCreationAttributes, Role } from '@/models/interface/role.interface';
 
 // Definir el modelo en TypeScript extendiendo Sequelize Model
-class Role extends Model<RoleModel, RoleCreationAttributes> implements RoleModel {
+class RoleModel extends Model<Role, RoleCreationAttributes> implements Role {
   public id_role!: number;
   public name_role!: string;
 }
 
 // Inicializar el modelo
-Role.init({
+RoleModel.init({
   id_role: {
     type: DataTypes.INTEGER.UNSIGNED,
     primaryKey: true,
@@ -26,4 +26,4 @@ Role.init({
   timestamps: false
 });
 
-export default Role;
+export default RoleModel;

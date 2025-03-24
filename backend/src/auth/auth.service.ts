@@ -6,7 +6,7 @@ import HttpResponse from '@/helpers/httpResponse';
 import models from '@/models/init-models';
 import { rule, validateRequest } from '@/lib/crud/config/validation/request.validation';
 import { Service } from '@/lib/crud/service/decorator.service';
-import { UserModel } from '@/models/interface/user.interface';
+import { User } from '@/models/interface/user.interface';
 
 // Tiempo de sesion
 const DEFAULT_EXPIRATION_SECONDS = `${TIME_SESION}h`;
@@ -44,7 +44,7 @@ export class AuthService {
    * @returns 
    */
   @Service
-  static async authenticateUser(formData: UserModel, reqMsg: Record<string, string>) {
+  static async authenticateUser(formData: User, reqMsg: Record<string, string>) {
 
     // Reglas de validación
     await validateRequest({

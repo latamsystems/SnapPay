@@ -1,15 +1,15 @@
 import { DataTypes, Model } from 'sequelize';
 import { dbConnection } from '@/src/database';
-import { StatusCreationAttributes, StatusModel } from '@/models/interface/status.interface';
+import { StatusCreationAttributes, Status } from '@/models/interface/status.interface';
 
 // Definir el modelo en TypeScript extendiendo Sequelize Model
-class Status extends Model<StatusModel, StatusCreationAttributes> implements StatusModel {
+class StatusModel extends Model<Status, StatusCreationAttributes> implements Status {
   public id_status!: number;
   public name_status!: string;
 }
 
 // Inicializar el modelo
-Status.init({
+StatusModel.init({
   id_status: {
     type: DataTypes.INTEGER.UNSIGNED,
     primaryKey: true,
@@ -26,4 +26,4 @@ Status.init({
   timestamps: false
 });
 
-export default Status;
+export default StatusModel;

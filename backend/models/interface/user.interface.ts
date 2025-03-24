@@ -1,21 +1,26 @@
-import { Optional } from "sequelize";
+// user.interface.ts
+import { Role } from "@/models/interface/role.interface";
+import { Status } from "@/models/interface/status.interface";
 
-// User interface
-export interface UserModel {
-    id_user: number;
-    firstname_user: string;
-    lastname_user: string;
-    identification_user: string;
-    email_user: string;
-    password_user: string;
-    id_role: number;
-    id_status: number;
-    resetPasswordToken_user?: string | null;
-    resetPasswordExpires_user?: Date | null;
-    created_at_user: Date;
-    inactive_in_user?: Date | null;
+// Solo los atributos que existen en la tabla
+export interface User {
+  id_user: number;
+  firstname_user: string;
+  lastname_user: string;
+  identification_user: string;
+  email_user: string;
+  password_user: string;
+  id_role: number;
+  id_status: number;
+  resetPasswordToken_user?: string | null;
+  resetPasswordExpires_user?: Date | null;
+  created_at_user: Date;
+  inactive_in_user?: Date | null;
+
+  role?: Role;
+  status?: Status;
 }
 
-// Definir los atributos opcionales para la creación
-export interface UserCreationAttributes extends Optional
-    <UserModel, 'id_user' | 'resetPasswordToken_user' | 'resetPasswordExpires_user' | 'inactive_in_user'> { }
+// Atributos opcionales para crear
+import { Optional } from "sequelize";
+export interface UserCreationAttributes extends Optional<User, 'id_user' | 'resetPasswordToken_user' | 'resetPasswordExpires_user' | 'inactive_in_user'> {}

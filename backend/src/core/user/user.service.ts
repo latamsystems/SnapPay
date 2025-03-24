@@ -12,7 +12,7 @@ import { rule, validateRequest } from "@/lib/crud/config/validation/request.vali
 import { handleService } from "@/lib/crud/service/config.service";
 import { Service } from "@/lib/crud/service/decorator.service";
 
-import { UserModel } from "@/models/interface/user.interface";
+import { User } from "@/models/interface/user.interface";
 
 // Nombre de servicio
 const consoleHelper = new Console("User Service");
@@ -33,12 +33,12 @@ const config = {
  * Métodos personalizados para el servicio
  */
 const serviceMethods = {
-    create: (formData: UserModel, reqMsg: Record<string, string>) => handleService({
+    create: (formData: User, reqMsg: Record<string, string>) => handleService({
         consoleHelper, async serviceFunction(...args) {
             const [formData] = args as [any];
 
             // Reglas de validación
-            await validateRequest<UserModel>({
+            await validateRequest<User>({
                 model: models.User,
                 formData,
                 rules: [
@@ -52,7 +52,7 @@ const serviceMethods = {
 
             // Generar hash de la nueva contraseña
             const password = await bcrypt.hash(formData.identification_user, 10);
-
+            
             // Crear
             const result = await models.User.create({ ...formData, password_user: password, id_status: 1 });
 
@@ -64,12 +64,12 @@ const serviceMethods = {
         },
         params: [formData]
     }),
-    update: (id_user: number, formData: UserModel, reqMsg: Record<string, string>) => handleService({
+    update: (id_user: number, formData: User, reqMsg: Record<string, string>) => handleService({
         consoleHelper, async serviceFunction(...args) {
-            const [id_user, formData] = args as [number, UserModel];
+            const [id_user, formData] = args as [number, User];
 
             // Reglas de validación
-            await validateRequest<UserModel>({
+            await validateRequest<User>({
                 model: models.User,
                 formData,
                 rules: [
@@ -110,7 +110,7 @@ export class UserService {
      * @returns 
      */
     @Service
-    static async updateUserProfile(id_user: number, formData: UserModel, reqMsg: Record<string, string>) {
+    static async updateUserProfile(id_user: number, formData: User, reqMsg: Record<string, string>) {
 
         // Reglas de validación
         await validateRequest({
@@ -246,7 +246,7 @@ export class UserService {
     static async resetPasswordUser(id_user: number, identification_user: string, reqMsg: Record<string, string>) {
 
         // Reglas de validación
-        await validateRequest<UserModel>({
+        await validateRequest<User>({
             model: models.User,
             rules: [
                 rule.recordExists(id_user, reqMsg.notFound),

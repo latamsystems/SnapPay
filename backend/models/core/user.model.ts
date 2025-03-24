@@ -1,13 +1,13 @@
 import { DataTypes, Model, Association } from 'sequelize';
 import { dbConnection } from '@/src/database';
-import { UserCreationAttributes, UserModel } from '@/models/interface/user.interface';
+import { UserCreationAttributes, User } from '@/models/interface/user.interface';
 
 // Modelos relacionados
 import Role from '@/models/entities/role.model';
 import Status from '@/models/entities/status.model';
 
 // Definir el modelo en TypeScript extendiendo Sequelize Model
-class User extends Model<UserModel, UserCreationAttributes> implements UserModel {
+class UserModel extends Model<User, UserCreationAttributes> implements User {
   public id_user!: number;
   public firstname_user!: string;
   public lastname_user!: string;
@@ -26,13 +26,13 @@ class User extends Model<UserModel, UserCreationAttributes> implements UserModel
   public readonly status?: Status;
 
   public static readonly associations: {
-    role: Association<User, Role>;
-    status: Association<User, Status>;
+    role: Association<UserModel, Role>;
+    status: Association<UserModel, Status>;
   };
 }
 
 // Inicializar el modelo
-User.init({
+UserModel.init({
   id_user: {
     type: DataTypes.INTEGER.UNSIGNED,
     primaryKey: true,
@@ -102,7 +102,7 @@ User.init({
 });
 
 // Definir las asociaciones (relaciones)
-User.belongsTo(Role, { foreignKey: 'id_role', as: 'role' });
-User.belongsTo(Status, { foreignKey: 'id_status', as: 'status' });
+UserModel.belongsTo(Role, { foreignKey: 'id_role', as: 'role' });
+UserModel.belongsTo(Status, { foreignKey: 'id_status', as: 'status' });
 
-export default User;
+export default UserModel;

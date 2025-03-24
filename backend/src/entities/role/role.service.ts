@@ -12,7 +12,7 @@ import { rule, validateRequest } from "@/lib/crud/config/validation/request.vali
 import { handleService } from "@/lib/crud/service/config.service";
 import { Service } from "@/lib/crud/service/decorator.service";
 
-import { RoleModel } from "@/models/interface/role.interface";
+import { Role } from "@/models/interface/role.interface";
 
 
 // Nombre del servicio
