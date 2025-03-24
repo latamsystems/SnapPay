@@ -24,7 +24,7 @@ ModelModel.init({
     autoIncrement: true
   },
   name_model: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(255),
     allowNull: false
   },
   id_brand: {

@@ -3,7 +3,7 @@ import { Model } from "@/models/interface/model.interface";
 import { User } from "@/models/interface/user.interface";
 import { Status } from "@/models/interface/status.interface";
 
-// Status interface
+// Device interface
 export interface Device {
   id_device: number;
   price_device: number;

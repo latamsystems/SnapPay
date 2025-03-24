@@ -30,7 +30,7 @@ FineModel.init({
     autoIncrement: true
   },
   value_fine: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.DOUBLE,
     allowNull: false
   },
   id_user: {

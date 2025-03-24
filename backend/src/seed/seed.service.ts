@@ -26,6 +26,7 @@ export class SeedService {
             { id_status: 3, name_status: "PAGADO" },
             { id_status: 4, name_status: "PENDIENTE" },
             { id_status: 5, name_status: "BLOQUEADO" },
+            { id_status: 6, name_status: "RECHAZADO" },
         ];
 
         await seedValidator(models.Status, status, "id_status");

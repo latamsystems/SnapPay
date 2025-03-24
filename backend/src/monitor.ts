@@ -32,8 +32,8 @@ export function connectDB() {
   const connection = async () => {
     try {
       await dbConnection.sync({ alter: true });
-      await dbConnection.sync({ force: true });
-      
+      await dbConnection.sync({ force: false });
+
       consoleHelper.debug(`Base de datos: ${chalk.cyanBright.bold(DB_NAME)}`, false);
     } catch (error) {
       consoleHelper.error('Error al iniciar la base de datos.', false);

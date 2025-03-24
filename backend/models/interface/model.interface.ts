@@ -1,7 +1,7 @@
 import { Optional } from "sequelize";
 import { Brand } from "@/models/interface/brand.interface";
 
-// Status interface
+// Model interface
 export interface Model {
   id_model: number;
   name_model: string;

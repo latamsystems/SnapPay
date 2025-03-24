@@ -5,6 +5,8 @@ import { Status } from "@/models/interface/status.interface";
 // Client interface
 export interface Client {
     id_client: number;
+    fid: string;
+    fcm_token: string;
     firstname_client: string;
     lastname_client: string;
     identification_client: string;

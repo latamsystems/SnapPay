@@ -98,6 +98,7 @@ const generateModelCode = (
             let typeStr = 'DataTypes.STRING';
             if (cleanType === 'number') typeStr = 'DataTypes.INTEGER.UNSIGNED';
             if (cleanType === 'Date') typeStr = 'DataTypes.DATE';
+            if (cleanType === 'boolean') typeStr = 'DataTypes.BOOLEAN';
 
             const isPrimary = f === fields[0];
             const isCreatedAt = f.name.startsWith('created_at');

@@ -2,7 +2,7 @@ import { Optional } from "sequelize";
 import { User } from "@/models/interface/user.interface";
 import { Status } from "@/models/interface/status.interface";
 
-// Status interface
+// Fine interface
 export interface Fine {
   id_fine: number;
   value_fine: number;

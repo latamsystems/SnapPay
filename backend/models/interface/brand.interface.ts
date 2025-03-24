@@ -1,6 +1,6 @@
 import { Optional } from "sequelize";
 
-// Status interface
+// Brand interface
 export interface Brand {
   id_brand: number;
   name_brand: string;

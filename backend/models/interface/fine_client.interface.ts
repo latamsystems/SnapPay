@@ -2,7 +2,7 @@ import { Optional } from "sequelize";
 import { Fine } from "@/models/interface/fine.interface";
 import { Client } from "@/models/interface/client.interface";
 
-// Role interface
+// Fine_Client interface
 export interface Fine_Client {
   id_fine_client: number;
   id_fine: number;
