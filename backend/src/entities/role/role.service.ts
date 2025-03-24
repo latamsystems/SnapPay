@@ -14,7 +14,6 @@ import { Service } from "@/lib/crud/service/decorator.service";
 
 import { Role } from "@/models/interface/role.interface";
 
-
 // Nombre del servicio
 const consoleHelper = new Console("role Service");
 

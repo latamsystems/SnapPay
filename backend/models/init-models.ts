@@ -11,6 +11,7 @@ import User from '@/models/core/user.model';
 import Brand from '@/models/entities/brand.model';
 import Role from '@/models/entities/role.model';
 import Status from '@/models/entities/status.model';
+import Fine_Client from '@/models/junctions/fine_client.model';
 
 const models = {
   Client,
@@ -21,6 +22,7 @@ const models = {
   Brand,
   Role,
   Status,
+  Fine_Client,
 };
 
 export default models;

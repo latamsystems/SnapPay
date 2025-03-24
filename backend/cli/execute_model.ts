@@ -15,7 +15,8 @@ const BASE_DIR = process.cwd();
 const INTERFACE_DIR = path.resolve(BASE_DIR, 'models/interface');
 const OUTPUT_DIRS = {
     'Entities': path.resolve(BASE_DIR, 'models/entities'),
-    'Core': path.resolve(BASE_DIR, 'models/core')
+    'Core': path.resolve(BASE_DIR, 'models/core'),
+    'Junctions': path.resolve(BASE_DIR, 'models/junctions')
 };
 
 const getInterfaceFiles = () =>
@@ -52,6 +53,12 @@ const parseFields = (content: string) => {
     return fields;
 };
 
+const capitalizeEntityForJunction = (name: string): string => {
+    return name
+        .split('_')
+        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+        .join('_');
+};
 
 const generateModelCode = (
     modelName: string,
@@ -59,7 +66,7 @@ const generateModelCode = (
     creationInterface: string,
     originalInterface: string
 ): string => {
-    const className = `${modelName.charAt(0).toUpperCase() + modelName.slice(1)}Model`;
+    const className = `${modelName.split('_').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join('_')}Model`;
     const tableName = modelName.toLowerCase();
 
     const imports = [
@@ -137,7 +144,6 @@ ${associations.join('\n')}
 export default ${className};`;
 };
 
-
 // Función principal
 (async () => {
     const interfaces = getInterfaceFiles();
@@ -163,8 +169,13 @@ export default ${className};`;
 
     const filePath = path.join(INTERFACE_DIR, selectedInterface);
     const content = fs.readFileSync(filePath, 'utf8');
-    const interfaceName = extractInterfaceName(selectedInterface);
-    const modelName = interfaceName;
+    let interfaceName = extractInterfaceName(selectedInterface);
+
+    if (selectedOutput === 'Junctions') {
+        interfaceName = capitalizeEntityForJunction(interfaceName);
+    }
+
+    const modelName = extractInterfaceName(selectedInterface);
     const creationInterface = `${interfaceName.charAt(0).toUpperCase() + interfaceName.slice(1)}CreationAttributes`;
     const originalInterface = `${interfaceName.charAt(0).toUpperCase() + interfaceName.slice(1)}`;
 
@@ -178,5 +189,4 @@ export default ${className};`;
         fs.writeFileSync(outputPath, modelCode, 'utf8');
         consoleHelper.success(`Modelo generado: ${chalk.blueBright(modelName)}`);
     }
-
 })();

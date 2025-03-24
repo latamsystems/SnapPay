@@ -12,24 +12,24 @@ import { rule, validateRequest } from "@/lib/crud/config/validation/request.vali
 import { handleService } from "@/lib/crud/service/config.service";
 import { Service } from "@/lib/crud/service/decorator.service";
 
-import { Fine } from "@/models/interface/fine.interface";
+import { Fine_Client } from "@/models/interface/fine_client.interface";
 
 // Nombre del servicio
-const consoleHelper = new Console("fine Service");
+const consoleHelper = new Console("fine_client Service");
 
 // =============================================================================
 // =============================================================================
 
 const config: FindOptions = {
     include: [
-        { model: models.User, as: 'user' },
-        { model: models.Status, as: 'status' }
+        { model: models.Fine, as : 'fine' },
+        { model: models.Client, as : 'client' },
     ]
-} 
+}
 
-export default { crud: CrudService(models.Fine, consoleHelper, config) };
+export default { crud: CrudService(models.Fine_Client, consoleHelper, config) };
 
 // =============================================================================
 // =============================================================================
 
-export class FineService { }
+export class Fine_ClientService { }

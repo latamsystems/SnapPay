@@ -33,7 +33,10 @@ function buscarArchivosModel(directorio: string): void {
       relativePath = relativePath.replace('.ts', ''); // 🔹 Remover extensión .ts
 
       const modelName = archivo.replace('.model.ts', '');
-      const modelNamePascal = modelName.charAt(0).toUpperCase() + modelName.slice(1);
+      const modelNamePascal = modelName
+        .split('_')
+        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+        .join('_');
 
       // Construir las líneas de importación y exportación en TypeScript
       importStatements.push(`import ${modelNamePascal} from '@/models/${relativePath}';`);
