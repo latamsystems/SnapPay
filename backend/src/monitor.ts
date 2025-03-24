@@ -6,7 +6,6 @@ import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
 import { dbConnection } from '@/src/database';
 import { setupWebSocket, getIo } from '@/src/websocket';
-import models from '@/models/init-models';
 
 // Instancias de consola personalizadas
 const consoleHelper = new Console('SERVER');
@@ -20,9 +19,8 @@ export function listen(server: HttpServer | HttpsServer, port: string | number):
   });
 
   if (SHOW_COMMANDS === 'true') {
-    // consoleHelper.debug(`${chalk.blue('> npm run create')} → Agregar los datos quemados.`, false);
-    // consoleHelper.debug(`${chalk.blue('> npm run delete')} → Eliminar datos en la base de datos.`, false);
-    consoleHelper.debug(`${chalk.blue('> npm run model')} → Agregar modelos para su uso`, false);
+    consoleHelper.debug(`${chalk.blue('> npm run init_model')} → Agregar modelos para la inicialización`, false);
+    consoleHelper.debug(`${chalk.blue('> npm run model')} → Agregar modelo en base a la interface`, false);
     consoleHelper.debug(`${chalk.blue('> npm run entity')} → Generar cruds automaticos de entidades`, false);
   }
 }
@@ -34,7 +32,8 @@ export function connectDB() {
   const connection = async () => {
     try {
       await dbConnection.sync({ alter: true });
-      await dbConnection.sync({ force: false });
+      await dbConnection.sync({ force: true });
+      
       consoleHelper.debug(`Base de datos: ${chalk.cyanBright.bold(DB_NAME)}`, false);
     } catch (error) {
       consoleHelper.error('Error al iniciar la base de datos.', false);

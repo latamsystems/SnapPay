@@ -67,9 +67,30 @@ const defaultError = async (error: any, consoleHelper: Console) => {
 
     // Si el error es de llave foránea
     if (error.name === 'SequelizeForeignKeyConstraintError') {
-        const foreignKeyMessage = error?.parent?.sqlMessage || "Este registro no se puede eliminar porque tiene historial.";
-        consoleHelper?.error(foreignKeyMessage);
-        return HttpResponse.errorResponse(400, "Este registro no se puede eliminar porque tiene historial.");
+        const sql = error?.parent?.sql?.toUpperCase() || '';
+
+        if (sql.includes('DELETE')) {
+            const errorMessage = "Este registro no se puede eliminar porque tiene historial.";
+            consoleHelper?.error(errorMessage);
+            return HttpResponse.errorResponse(400, errorMessage);
+        }
+
+        if (sql.includes('INSERT')) {
+            const errorMessage = "No se puede registrar porque una de las relaciones no existe.";
+            consoleHelper?.error(errorMessage);
+            return HttpResponse.errorResponse(400, errorMessage);
+        }
+
+        if (sql.includes('UPDATE')) {
+            const errorMessage = "No se puede actualizar porque una de las relaciones no existe.";
+            consoleHelper?.error(errorMessage);
+            return HttpResponse.errorResponse(400, errorMessage);
+        }
+
+        // Caso genérico
+        const fallbackMessage = error?.parent?.sqlMessage || "Error de clave foránea.";
+        consoleHelper?.error(fallbackMessage);
+        return HttpResponse.errorResponse(400, fallbackMessage);
     }
 
     // Verificación directa por el nombre del error
