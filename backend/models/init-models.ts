@@ -5,6 +5,7 @@
 
 import Client from '@/models/core/client.model';
 import Device from '@/models/core/device.model';
+import Fine from '@/models/core/fine.model';
 import Model from '@/models/core/model.model';
 import User from '@/models/core/user.model';
 import Brand from '@/models/entities/brand.model';
@@ -14,6 +15,7 @@ import Status from '@/models/entities/status.model';
 const models = {
   Client,
   Device,
+  Fine,
   Model,
   User,
   Brand,
