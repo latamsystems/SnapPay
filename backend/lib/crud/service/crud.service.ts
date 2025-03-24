@@ -19,6 +19,7 @@ const CrudService = (model: any, consoleHelper: Console, config: any = {}, servi
     // Detecta la clave primaria del modelo
     const primaryKeyField = Object.keys(model.primaryKeys || { id: "id" })[0] || "id";
     const modelName = model.name.toLowerCase();
+    const nameModel = modelName.replace(/model$/, '');
 
     return {
         // Obtener todos los registros
@@ -34,7 +35,7 @@ const CrudService = (model: any, consoleHelper: Console, config: any = {}, servi
                     // Obtener los registros con paginación y ordenamiento aplicado
                     const result = await model.findAll(queryResult.queryOptions);
 
-                    return HttpResponse.success(reqMsg.success, { [modelName]: result, }, queryResult);
+                    return HttpResponse.success(reqMsg.success, { [nameModel]: result, }, queryResult);
                 },
                 params: [queryParams]
             }),
@@ -55,7 +56,7 @@ const CrudService = (model: any, consoleHelper: Console, config: any = {}, servi
                     // Verificar si el registro fue encontrado
                     if (!result) return HttpResponse.notFound({ message: reqMsg.notFound, field: primaryKeyField });
 
-                    return HttpResponse.success(reqMsg.success, { [modelName]: result });
+                    return HttpResponse.success(reqMsg.success, { [nameModel]: result });
                 },
                 params: [id]
             }),
@@ -76,7 +77,7 @@ const CrudService = (model: any, consoleHelper: Console, config: any = {}, servi
 
                     // Emitir evento a todos los clientes conectados
                     const io = getIo();
-                    io.emit(`${[modelName]}:created`, result);
+                    io.emit(`${[nameModel]}:created`, result);
 
                     return HttpResponse.success(reqMsg.success);
                 },
@@ -103,7 +104,7 @@ const CrudService = (model: any, consoleHelper: Console, config: any = {}, servi
 
                     // Emitir evento a todos los clientes conectados
                     const io = getIo();
-                    io.emit(`${[modelName]}:updated`, result);
+                    io.emit(`${[nameModel]}:updated`, result);
 
                     return HttpResponse.success(reqMsg.success);
                 },
@@ -126,7 +127,7 @@ const CrudService = (model: any, consoleHelper: Console, config: any = {}, servi
 
                     // Emitir evento a todos los clientes conectados
                     const io = getIo();
-                    io.emit(`${[modelName]}:deleted`, result);
+                    io.emit(`${[nameModel]}:deleted`, result);
 
                     return HttpResponse.success(reqMsg.success);
                 },

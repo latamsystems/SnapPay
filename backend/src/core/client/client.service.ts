@@ -1,5 +1,5 @@
 
-import sequelize from "sequelize";
+import sequelize, { FindOptions } from "sequelize";
 import Console from '@/helpers/console';
 import HttpResponse from '@/helpers/httpResponse';
 
@@ -21,7 +21,14 @@ const consoleHelper = new Console("client Service");
 // =============================================================================
 // =============================================================================
 
-export default { crud: CrudService(models.Client, consoleHelper) };
+const config: FindOptions = {
+    include: [
+        { model: models.User, as: "user", attributes: { exclude: ["password_user"] } },
+        { model: models.Status, as: "status" },
+    ]
+}
+
+export default { crud: CrudService(models.Client, consoleHelper, config) };
 
 // =============================================================================
 // =============================================================================

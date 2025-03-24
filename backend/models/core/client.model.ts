@@ -34,23 +34,23 @@ ClientModel.init({
     autoIncrement: true
   },
   firstname_client: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(100),
     allowNull: false
   },
   lastname_client: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(100),
     allowNull: false
   },
   identification_client: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(10),
     allowNull: false
   },
   phone_client: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(10),
     allowNull: false
   },
   email_client: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(255),
     allowNull: false
   },
   id_user: {

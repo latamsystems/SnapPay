@@ -1,4 +1,4 @@
-import sequelize from "sequelize";
+import sequelize, { FindOptions } from "sequelize";
 import bcrypt from 'bcrypt';
 import Console from '@/helpers/console';
 import HttpResponse from '@/helpers/httpResponse';
@@ -21,7 +21,7 @@ const consoleHelper = new Console("User Service");
 // =============================================================================
 
 // Configuración de la consulta
-const config = {
+const config: FindOptions = {
     attributes: { exclude: ["password_user"] },
     include: [
         { model: models.Status, as: "status" },
