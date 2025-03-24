@@ -1,4 +1,4 @@
-// user.interface.ts
+import { Optional } from "sequelize";
 import { Role } from "@/models/interface/role.interface";
 import { Status } from "@/models/interface/status.interface";
 
@@ -22,5 +22,4 @@ export interface User {
 }
 
 // Atributos opcionales para crear
-import { Optional } from "sequelize";
 export interface UserCreationAttributes extends Optional<User, 'id_user' | 'resetPasswordToken_user' | 'resetPasswordExpires_user' | 'inactive_in_user'> {}

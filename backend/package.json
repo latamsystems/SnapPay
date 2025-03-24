@@ -10,6 +10,7 @@
     "create": "npx sequelize db:seed:all",
     "delete": "npx sequelize db:seed:undo:all",
     "model": "ts-node cli/execute_model.ts",
+    "init_model": "ts-node cli/execute_init_model.ts",
     "entity": "ts-node cli/execute_entities.ts"
   },
   "author": "Josue Velasquez",
@@ -68,6 +69,7 @@
     "@types/node": "^22.13.5",
     "@types/nodemailer": "^6.4.17",
     "@types/sequelize": "^4.28.20",
+    "inquirer": "^12.5.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
   }
