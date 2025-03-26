@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "AJVD v1",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/index.ts",
-    "start": "node src/index.ts",
+    "start": "node dist/index.ts",
     "model": "ts-node cli/execute_model.ts",
     "init_model": "ts-node cli/execute_init_model.ts",
     "entity": "ts-node cli/execute_entities.ts"
