@@ -13,8 +13,11 @@ RUN npm install --legacy-peer-deps
 # Copia todo el código del proyecto
 COPY . .
 
+# Compila el código
+RUN npm run build
+
 # Expón el puerto (debe coincidir con el usado en tu Express)
-EXPOSE 3000
+EXPOSE 3001
 
 # Comando para iniciar el servidor
 CMD ["npm", "start"]

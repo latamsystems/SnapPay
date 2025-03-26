@@ -57,40 +57,38 @@ jobs:
       # Generar archivo .env desde secretos
       - name: Generate .env file on server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
-            # echo "Creando carpetas necesarias..."
-            # sudo mkdir -p /var/www/snappay/backend
-            # sudo chmod -R 755 /var/www/snappay
-
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
             echo "Limpiando archivo .env anterior (si existe)..."
             rm -f /var/www/snappay/backend/.env
 
             echo "Generando nuevo archivo .env..."
+            mkdir -p /var/www/snappay/backend
 
-            cat <<EOT >> /var/www/snappay/backend/.env
-              TIMEZONE=${{ vars.TIMEZONE }}
-              APP_NAME=${{ vars.APP_NAME }}
-              PORT=${{ vars.PORT }}
-              TIME_RESET_PASSWD=${{ vars.TIME_RESET_PASSWD }}
-              TIME_SESION=${{ vars.TIME_SESION }}
-              LIMIT_FILE=${{ vars.LIMIT_FILE }}
-              SHOW_APIS=${{ vars.SHOW_APIS }}
-              SHOW_COMMANDS=${{ vars.SHOW_COMMANDS }}
-              PRODUCTION=${{ vars.PRODUCTION }}
-              DIALECT=${{ vars.DIALECT }}
-              EMAIL_SERVICE=${{ vars.EMAIL_SERVICE }}
-              TOKEN_SECRET=${{ secrets.TOKEN_SECRET }}
-              HOST=${{ secrets.HOST }}
-              DB_NAME=${{ secrets.DB_NAME }}
-              DB_USER=${{ secrets.DB_USER }}
-              DB_PASSW=${{ secrets.DB_PASSW }}
-              EMAIL_USER=${{ secrets.EMAIL_USER }}
-              EMAIL_PASSWD=${{ secrets.EMAIL_PASSWD }}
-              EMAIL_SEND=${{ secrets.EMAIL_SEND }}
-              SSL_KEY=${{ secrets.SSL_KEY }}
-              SSL_CERT=${{ secrets.SSL_CERT }}
-              EOT
+            cat > /var/www/snappay/backend/.env <<EOT
+            TIMEZONE=${{ vars.TIMEZONE }}
+            APP_NAME=${{ vars.APP_NAME }}
+            PORT=${{ vars.PORT }}
+            TIME_RESET_PASSWD=${{ vars.TIME_RESET_PASSWD }}
+            TIME_SESION=${{ vars.TIME_SESION }}
+            LIMIT_FILE=${{ vars.LIMIT_FILE }}
+            SHOW_APIS=${{ vars.SHOW_APIS }}
+            SHOW_COMMANDS=${{ vars.SHOW_COMMANDS }}
+            PRODUCTION=${{ vars.PRODUCTION }}
+            DIALECT=${{ vars.DIALECT }}
+            EMAIL_SERVICE=${{ vars.EMAIL_SERVICE }}
+            TOKEN_SECRET=${{ secrets.TOKEN_SECRET }}
+            HOST=${{ secrets.HOST }}
+            DB_NAME=${{ secrets.DB_NAME }}
+            DB_USER=${{ secrets.DB_USER }}
+            DB_PASSW=${{ secrets.DB_PASSW }}
+            EMAIL_USER=${{ secrets.EMAIL_USER }}
+            EMAIL_PASSWD=${{ secrets.EMAIL_PASSWD }}
+            EMAIL_SEND=${{ secrets.EMAIL_SEND }}
+            SSL_KEY=${{ secrets.SSL_KEY }}
+            SSL_CERT=${{ secrets.SSL_CERT }}
+            EOT
           EOF
+
 
 
       # Copia los archivos del backend al servidor
