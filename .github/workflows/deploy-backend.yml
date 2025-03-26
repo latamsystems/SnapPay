@@ -122,7 +122,7 @@ jobs:
             docker run -d \
               --name snappay-backend \
               --network snappay-net \
-              -p 3000:3000 \
+              -p 3001:3000 \
               --env-file /var/www/snappay/backend/.env \
               --restart always \
               snappay-backend
