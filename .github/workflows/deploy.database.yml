@@ -1,0 +1,49 @@
+name: Deploy Database MySQL
+
+on:
+  workflow_dispatch:  # Solo ejecución manual desde GitHub Actions
+
+jobs:
+  deploy-database:
+    name: Deploy MySQL Container
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy MySQL Docker container
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
+            echo "Creando red Docker (snappay-net) si no existe..."
+            docker network inspect snappay-net >/dev/null 2>&1 || docker network create snappay-net
+
+            echo "Eliminando contenedor MySQL previo (si existe)..."
+            docker rm -f snappay-mysql || true
+
+            echo "Desplegando contenedor MySQL..."
+            docker run -d \
+              --name snappay-mysql \
+              --network snappay-net \
+              -e MYSQL_ROOT_PASSWORD=${{ secrets.DB_ROOT_PASSWORD }} \
+              -e MYSQL_DATABASE=${{ secrets.DB_NAME }} \
+              -e MYSQL_USER=${{ secrets.DB_USER }} \
+              -e MYSQL_PASSWORD=${{ secrets.DB_PASSW }} \
+              -p 3308:3306 \
+              --restart always \
+              mysql:8.0.41
+
+            echo "Contenedor MySQL desplegado con éxito."
+          EOF
+
+
+# Hacer la conexion manual a la misma red el backend y el contenedor de MySQL
+# docker network connect snappay-net snappay-backend
+
+# Verificar la red creada
+# docker network inspect snappay-net

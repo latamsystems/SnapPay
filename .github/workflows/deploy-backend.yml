@@ -1,0 +1,157 @@
+# Automatización con deploy de github
+
+# // Generar key
+# ssh-keygen -t rsa -b 4096 -C "josue27.velasquez9@gmail.com"
+
+# // Configuración publica 
+# ssh-copy-id -i ~/.ssh/id_rsa root@34.136.101.16
+
+# // Obtener key publica
+# cat ~/.ssh/id_rsa.pub
+
+# // Obtener key privada
+# cat ~/.ssh/id_rsa
+
+name: Deploy Backend Express
+
+on:
+  push:
+    paths:
+      - 'backend/**'
+    branches:
+      - main # Rama de despliegue
+  workflow_dispatch:
+
+jobs:
+  deploy-backend:
+    name: Deploy Backend
+    runs-on: ubuntu-latest
+
+    steps:
+      # Clona el repositorio
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Configura el acceso SSH
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+
+      # Verificar e instalar Node.js
+      - name: Install Node.js
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
+          echo "Verificando instalación de Node.js..."
+          if ! command -v node &> /dev/null; then
+            echo "Instalando Node.js..."
+            curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+            sudo apt install -y nodejs
+          else
+            echo "Node.js ya está instalado."
+          fi
+          EOF
+
+
+      # Generar archivo .env desde secretos
+      - name: Generate .env file on server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
+            # echo "Creando carpetas necesarias..."
+            # sudo mkdir -p /var/www/snappay/backend
+            # sudo chmod -R 755 /var/www/snappay
+
+            echo "Limpiando archivo .env anterior (si existe)..."
+            rm -f /var/www/snappay/backend/.env
+
+            echo "Generando nuevo archivo .env..."
+
+            cat <<EOT >> /var/www/snappay/backend/.env
+              TIMEZONE=${{ vars.TIMEZONE }}
+              APP_NAME=${{ vars.APP_NAME }}
+              PORT=${{ vars.PORT }}
+              TIME_RESET_PASSWD=${{ vars.TIME_RESET_PASSWD }}
+              TIME_SESION=${{ vars.TIME_SESION }}
+              LIMIT_FILE=${{ vars.LIMIT_FILE }}
+              SHOW_APIS=${{ vars.SHOW_APIS }}
+              SHOW_COMMANDS=${{ vars.SHOW_COMMANDS }}
+              PRODUCTION=${{ vars.PRODUCTION }}
+              DIALECT=${{ vars.DIALECT }}
+              EMAIL_SERVICE=${{ vars.EMAIL_SERVICE }}
+              TOKEN_SECRET=${{ secrets.TOKEN_SECRET }}
+              HOST=${{ secrets.HOST }}
+              DB_NAME=${{ secrets.DB_NAME }}
+              DB_USER=${{ secrets.DB_USER }}
+              DB_PASSW=${{ secrets.DB_PASSW }}
+              EMAIL_USER=${{ secrets.EMAIL_USER }}
+              EMAIL_PASSWD=${{ secrets.EMAIL_PASSWD }}
+              EMAIL_SEND=${{ secrets.EMAIL_SEND }}
+              SSL_KEY=${{ secrets.SSL_KEY }}
+              SSL_CERT=${{ secrets.SSL_CERT }}
+              EOT
+          EOF
+
+
+      # Copia los archivos del backend al servidor
+      - name: Deploy Backend
+        run: |
+          echo "Copiando archivos al servidor..."
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "mkdir -p /var/www/snappay/backend"
+          scp -r ./backend/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/snappay/backend
+          echo "Datos copiados correctamente"
+
+
+      # Ejecutar DockerFile (CON DOCKER)
+      - name: Ejecutar backend en Docker
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
+            echo "Verificando si el contenedor 'snappay-backend' ya está corriendo..."
+
+            if docker ps -a --format '{{.Names}}' | grep -q '^snappay-backend$'; then
+              echo "El contenedor ya existe. Eliminando para recrearlo con la red y variables actualizadas..."
+              docker stop snappay-backend || true
+              docker rm snappay-backend || true
+            fi
+
+            echo "Verificando si la red 'snappay-net' existe..."
+            docker network inspect snappay-net >/dev/null 2>&1 || docker network create snappay-net
+
+            echo "Reconstruyendo imagen Docker desde /var/www/snappay/backend..."
+            docker build -t snappay-backend /var/www/snappay/backend
+
+            echo "Levantando contenedor actualizado en red 'snappay-net'..."
+            docker run -d \
+              --name snappay-backend \
+              --network snappay-net \
+              -p 3000:3000 \
+              --env-file /var/www/snappay/backend/.env \
+              --restart always \
+              snappay-backend
+
+            echo "Contenedor de backend ejecutado correctamente y conectado a la red."
+          EOF
+
+
+# // Comandos para ejecutar certbot
+# sudo certbot --nginx -d snappay-rest.dudu.com.ec -d www.snappay-rest.dudu.com.ec
+
+# // Comandos para configurar nginx
+# sudo nano /etc/nginx/sites-available/snappay-rest.dudu.com.ec
+
+
+
+
+# - Iniciar servidor
+# systemctl enable node-server-snappay.service
+# systemctl start node-server-snappay.service
+# systemctl stop node-server-snappay.service
+# systemctl status node-server-snappay.service
+
+# journalctl -u node-server-snappay.service -f
+
+# sudo systemctl restart nginx
+
+# sudo systemctl daemon-reload
+# sudo systemctl restart node-server-snappay.service
+# tail -f /var/www/snappay/backend.log

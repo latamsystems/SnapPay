@@ -7,8 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/index.ts",
     "start": "node src/index.ts",
-    "create": "npx sequelize db:seed:all",
-    "delete": "npx sequelize db:seed:undo:all",
     "model": "ts-node cli/execute_model.ts",
     "init_model": "ts-node cli/execute_init_model.ts",
     "entity": "ts-node cli/execute_entities.ts"
