@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Expón el puerto (debe coincidir con el usado en tu Express)
-EXPOSE 3001
+EXPOSE 3000
 
 # Comando para iniciar el servidor
 CMD ["npm", "start"]
