@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "AJVD v1",
   "main": "dist/src/index.js",
-  "type": "esnext",
+
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
