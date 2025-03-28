@@ -30,6 +30,6 @@ fun HomeScreen(navigationToDetail: (String) -> Unit) {
 
         Button(onClick = {
             navigationToDetail(text)
-        }) { Text("Navegar a Login") }
+        }) { Text("Navegar a Detail") }
     }
 }

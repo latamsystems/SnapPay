@@ -1,9 +1,10 @@
 package com.example.snappay.core.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.snappay.core.navigation.type.settingsInfoType
 import com.example.snappay.core.screen.DetailsScreen
@@ -13,8 +14,7 @@ import com.example.snappay.core.screen.SettingsScreen
 import kotlin.reflect.typeOf
 
 @Composable
-fun NavigationWarper() {
-    var navController = rememberNavController()
+fun NavigationWarper(navController: NavHostController) {
 
     NavHost(navController, startDestination = Login) {
 
@@ -41,10 +41,10 @@ fun NavigationWarper() {
                     navController.navigate(Settings(it))
                 },
                 navigationToLogin = {
-                    navController.navigateUp()
-//                  navController.navigate(Login){
-//                    popUpTo<Login>{inclusive = false}
-//                  }
+//                    navController.navigateUp()
+                  navController.navigate(Login){
+                    popUpTo<Login>{inclusive = false}
+                  }
                 }
             )
         }
