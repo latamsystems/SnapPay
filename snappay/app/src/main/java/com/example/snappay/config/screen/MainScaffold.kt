@@ -36,6 +36,13 @@ fun MainScaffold() {
     val routeKey = getRouteKey(currentDestination)
     val config = screenConfigs[routeKey] ?: ScreenConfig()
 
+    // Cierra el drawer automáticamente al navegar
+    LaunchedEffect(currentDestination) {
+        if (drawerState.isOpen) {
+            drawerState.close()
+        }
+    }
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -50,14 +57,20 @@ fun MainScaffold() {
                         label = { Text("Inicio") },
                         selected = routeKey == Home::class,
                         onClick = {
-                            navController.navigate(Home)
+                            scope.launch {
+                                drawerState.close()
+                                navController.navigate(Home)
+                            }
                         }
                     )
                     NavigationDrawerItem(
                         label = { Text("Detalle") },
                         selected = routeKey == Detail::class,
                         onClick = {
-                            navController.navigate(Detail("Desde Drawer"))
+                            scope.launch {
+                                drawerState.close()
+                                navController.navigate(Detail("Desde Drawer"))
+                            }
                         }
                     )
                 }
@@ -86,14 +99,22 @@ fun MainScaffold() {
                             icon = { Icon(Icons.Default.Home, contentDescription = "Inicio") },
                             label = { Text("Inicio") },
                             selected = routeKey == Home::class,
-                            onClick = { navController.navigate(Home) }
+                            onClick = {
+                                scope.launch {
+                                    drawerState.close()
+                                    navController.navigate(Home)
+                                }
+                            }
                         )
                         NavigationBarItem(
                             icon = { Icon(Icons.Default.Star, contentDescription = "Detalle") },
                             label = { Text("Detalle") },
                             selected = routeKey == Detail::class,
                             onClick = {
-                                navController.navigate(Detail("Desde Bottom Bar"))
+                                scope.launch {
+                                    drawerState.close()
+                                    navController.navigate(Detail("Desde Bottom Bar"))
+                                }
                             }
                         )
                         NavigationBarItem(
@@ -101,7 +122,10 @@ fun MainScaffold() {
                             label = { Text("Ajustes") },
                             selected = routeKey == Settings::class,
                             onClick = {
-                                navController.navigate(Settings(SettingInfo("Desde bottom bar", 475)))
+                                scope.launch {
+                                    drawerState.close()
+                                    navController.navigate(Settings(SettingInfo("Desde bottom bar", 475)))
+                                }
                             }
                         )
                     }
@@ -118,8 +142,8 @@ fun MainScaffold() {
             val scrollState = rememberScrollState()
             Column(
                 modifier = Modifier
-                .verticalScroll(scrollState)
-                .padding(innerPadding)
+                    .verticalScroll(scrollState)
+                    .padding(innerPadding)
             ) {
                 NavigationWarper(navController)
             }
