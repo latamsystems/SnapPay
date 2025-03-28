@@ -1,7 +1,6 @@
 package com.example.snappay.core.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,42 +15,42 @@ import kotlin.reflect.typeOf
 @Composable
 fun NavigationWarper(navController: NavHostController) {
 
-    NavHost(navController, startDestination = Login) {
+    NavHost(navController, startDestination = AppScreen.Login) {
 
         // Login
-        composable<Login>{
+        composable<AppScreen.Login>{
             LoginScreen {
-                navController.navigate(Home)
+                navController.navigate(AppScreen.Home)
             }
         }
 
         // Home
-        composable<Home>{
+        composable<AppScreen.Home>{
             HomeScreen { name ->
-                navController.navigate(Detail(name = name))
+                navController.navigate(AppScreen.Detail(name = name))
             }
         }
 
         // Detalles
-        composable<Detail>{ backStackEntry ->
-            val detail = backStackEntry.toRoute<Detail>()
+        composable<AppScreen.Detail>{ backStackEntry ->
+            val detail = backStackEntry.toRoute<AppScreen.Detail>()
             DetailsScreen(
                 name = detail.name,
                 navigationToSettings = {
-                    navController.navigate(Settings(it))
+                    navController.navigate(AppScreen.Settings(it))
                 },
                 navigationToLogin = {
 //                    navController.navigateUp()
-                  navController.navigate(Login){
-                    popUpTo<Login>{inclusive = false}
+                  navController.navigate(AppScreen.Login){
+                    popUpTo<AppScreen.Login>{inclusive = false}
                   }
                 }
             )
         }
 
         //  Configuraciones
-        composable<Settings>(typeMap = mapOf(typeOf<SettingInfo>() to settingsInfoType)) { backstackEntry ->
-            val setting : Settings = backstackEntry.toRoute()
+        composable<AppScreen.Settings>(typeMap = mapOf(typeOf<SettingInfo>() to settingsInfoType)) { backstackEntry ->
+            val setting : AppScreen.Settings = backstackEntry.toRoute()
             SettingsScreen(setting.info) {
                 navController.popBackStack()
             }

@@ -43,6 +43,8 @@ android {
 
 dependencies {
 
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+
     // Ktor
     implementation("io.ktor:ktor-client-core:2.3.5")
     implementation("io.ktor:ktor-client-cio:2.3.5")
