@@ -23,8 +23,14 @@ const consoleHelper = new Console("device Service");
 
 const config: FindOptions = {
     include: [
-        { model: models.Model, as: 'model' },
-        { model: models.User, as: 'user' },
+        {
+            model: models.Model, as: 'model',
+            include: [{ model: models.Brand, as: 'brand' }]
+        },
+        {
+            model: models.User, as: 'user',
+            attributes: { exclude: ['password_user'] }
+        },
         { model: models.Status, as: 'status' },
     ]
 }

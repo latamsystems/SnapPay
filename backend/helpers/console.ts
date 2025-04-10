@@ -1,5 +1,12 @@
 import chalk from 'chalk';
 
+interface ConsoleProms {
+  message: string;
+  showCallerDetails?: boolean;
+  dbs?: string[]
+}
+
+
 class Console {
   private readonly moduleName: string;
   private showCallerDetails: boolean;
@@ -43,7 +50,7 @@ class Console {
 
 
   // Registrar con timestamp
-  private logWithTimestamp(message: string): void {
+  private logWithTimestamp({ message, dbs }: { message: string, dbs?: string[] }): void {
     const currentDate = new Date();
     const localDate = currentDate.toLocaleDateString();
     const localHour = currentDate.toLocaleTimeString();
@@ -53,33 +60,33 @@ class Console {
   }
 
   // Éxito
-  public success(message: string, showCallerDetails: boolean = true): void {
+  public success({ message, showCallerDetails = true, dbs }: ConsoleProms): void {
     this.showCallerDetails = showCallerDetails;
-    this.logWithTimestamp(`${chalk.greenBright('⣿ SUCCESS ✔ ⣿')} ${message}`);
+    this.logWithTimestamp({ message: `${chalk.greenBright('⣿ SUCCESS ✔ ⣿')} ${message}`, dbs });
   }
 
   // Información
-  public info(message: string, showCallerDetails: boolean = true): void {
+  public info({ message, showCallerDetails = true, dbs }: ConsoleProms): void {
     this.showCallerDetails = showCallerDetails;
-    this.logWithTimestamp(`${chalk.blueBright('⣿ INFO 🛈 ⣿')} ${message}`);
+    this.logWithTimestamp({ message: `${chalk.blueBright('⣿ INFO 🛈 ⣿')} ${message}`, dbs });
   }
 
   // Advertencia
-  public warn(message: string, showCallerDetails: boolean = true): void {
+  public warn({ message, showCallerDetails = true, dbs }: ConsoleProms): void {
     this.showCallerDetails = showCallerDetails;
-    this.logWithTimestamp(`${chalk.yellowBright('⣿ WARNING ⚠ ⣿')} ${message}`);
+    this.logWithTimestamp({ message: `${chalk.yellowBright('⣿ WARNING ⚠ ⣿')} ${message}`, dbs });
   }
 
   // Error
-  public error(message: string, showCallerDetails: boolean = true): void {
+  public error({ message, showCallerDetails = true, dbs }: ConsoleProms): void {
     this.showCallerDetails = showCallerDetails;
-    this.logWithTimestamp(`${chalk.redBright('⣿ ERROR ✘ ⣿')} ${message}`);
+    this.logWithTimestamp({ message: `${chalk.redBright('⣿ ERROR ✘ ⣿')} ${message}`, dbs });
   }
 
   // Debug
-  public debug(message: string, showCallerDetails: boolean = true): void {
+  public debug({ message, showCallerDetails = true, dbs }: ConsoleProms): void {
     this.showCallerDetails = showCallerDetails;
-    this.logWithTimestamp(`${chalk.magentaBright('⣿ DEBUG 🛠  ⣿')} ${message}`);
+    this.logWithTimestamp({ message: `${chalk.magentaBright('⣿ DEBUG 🛠  ⣿')} ${message}`, dbs });
   }
 }
 

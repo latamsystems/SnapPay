@@ -52,7 +52,7 @@ const serviceMethods = {
 
             // Generar hash de la nueva contraseña
             const password = await bcrypt.hash(formData.identification_user, 10);
-            
+
             // Crear
             const result = await models.User.create({ ...formData, password_user: password, id_status: 1 });
 
@@ -60,7 +60,7 @@ const serviceMethods = {
             const io = getIo();
             io.emit('user:created', result);
 
-            return HttpResponse.success(reqMsg.success);
+            return HttpResponse.success({ message: reqMsg.success });
         },
         params: [formData]
     }),
@@ -89,7 +89,7 @@ const serviceMethods = {
             const io = getIo();
             io.emit('user:updated', result);
 
-            return HttpResponse.success(reqMsg.success);
+            return HttpResponse.success({ message: reqMsg.success });
         },
         params: [id_user, formData]
     })
@@ -129,7 +129,7 @@ export class UserService {
         // Actualizar datos
         await models.User.update(formData, { where: { id_user } });
 
-        return HttpResponse.success(reqMsg.success);
+        return HttpResponse.success({ message: reqMsg.success });
     }
 
     // =============================================================================
@@ -172,7 +172,7 @@ export class UserService {
             }
         );
 
-        return HttpResponse.success(reqMsg.success);
+        return HttpResponse.success({ message: reqMsg.success });
     }
 
     // =============================================================================
@@ -201,7 +201,7 @@ export class UserService {
         const io = getIo();
         io.emit('user:deactivate', { id_user });
 
-        return HttpResponse.success(reqMsg.success);
+        return HttpResponse.success({ message: reqMsg.success });
     }
 
     // =============================================================================
@@ -230,7 +230,7 @@ export class UserService {
         const io = getIo();
         io.emit('user:activate', { id_user });
 
-        return HttpResponse.success(reqMsg.success);
+        return HttpResponse.success({ message: reqMsg.success });
     }
 
     // =============================================================================
@@ -259,7 +259,7 @@ export class UserService {
         // Actualizar datos
         await models.User.update({ password_user }, { where: { id_user } });
 
-        return HttpResponse.success(reqMsg.success);
+        return HttpResponse.success({ message: reqMsg.success });
     }
 
     // =============================================================================
@@ -296,7 +296,7 @@ export class UserService {
 
         if (!code) return HttpResponse.notFound({ message: reqMsg.notFoundCode, field: "email_user, verification_code" });
 
-        return HttpResponse.success(reqMsg.success);
+        return HttpResponse.success({ message: reqMsg.success });
     }
 
     // =============================================================================
@@ -343,7 +343,7 @@ export class UserService {
         // Actualizar datos
         await models.User.update({ password_user }, { where: { id_user: code.id_user } });
 
-        return HttpResponse.success(reqMsg.success);
+        return HttpResponse.success({ message: reqMsg.success });
     }
 
 

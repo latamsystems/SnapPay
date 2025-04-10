@@ -28,7 +28,7 @@ async function eliminarTablas() {
             .filter((nombre: any) => !tablasExcluidas.includes(nombre));
 
         if (tablasAEliminar.length === 0) {
-            consoleHelper.info('No hay tablas para eliminar. Todas las tablas están excluidas.', false);
+            consoleHelper.info({message: 'No hay tablas para eliminar. Todas las tablas están excluidas.', showCallerDetails: false});
             return;
         }
 
@@ -36,11 +36,11 @@ async function eliminarTablas() {
         const dropStatement = `DROP TABLE IF EXISTS ${tablasAEliminar.join(', ')};`;
         await dbConnection.query(dropStatement);
 
-        consoleHelper.success('Tablas eliminadas exitosamente', false);
+        consoleHelper.success({message: 'Tablas eliminadas exitosamente', showCallerDetails: false});
         console.log(tablasAEliminar);
 
     } catch (error) {
-        consoleHelper.error('Error al eliminar las tablas', false);
+        consoleHelper.error({message: 'Error al eliminar las tablas', showCallerDetails: false});
         console.error(error);
     } finally {
         // Reactivar las restricciones de clave foránea

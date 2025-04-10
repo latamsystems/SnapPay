@@ -24,13 +24,13 @@ export function Controller(config: HandlerConfig): MethodDecorator {
                 .then((result: any) => {
 
                     if (result.error) {
-                        return new ApiRequest().handleErrorResponse(res, result)
+                        return new ApiRequest().handleErrorResponse({ res, result })
                     }
 
-                    return new ApiRequest().success(res, result.message, result.data, result.meta)
+                    return new ApiRequest().success({ res, msg: result.message, data: result.data, meta: result.meta, dbs: result.dbs })
                 })
-                .catch((error: Error) => {
-                    return new ApiRequest().error(res, error.message)
+                .catch((error: any) => {
+                    return new ApiRequest().error({ res, msg: error.message, dbs: error.dbs })
                 })
         }
 

@@ -11,4 +11,4 @@ import { Controller } from '@/lib/crud/controller/decorator.controller';
 export class DeviceController { }
 
 // Exporta el CRUD con los métodos personalizados
-export const crud = CrudController(deviceService.crud);
+export const crud = CrudController({service: deviceService.crud});

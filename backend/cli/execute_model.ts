@@ -149,7 +149,7 @@ export default ${className};`;
 (async () => {
     const interfaces = getInterfaceFiles();
     if (interfaces.length === 0) {
-        consoleHelper.info(`No se encontraron interfaces en ${INTERFACE_DIR}`);
+        consoleHelper.info({message: `No se encontraron interfaces en ${INTERFACE_DIR}`});
         return;
     }
 
@@ -185,9 +185,9 @@ export default ${className};`;
     const outputPath = path.join(OUTPUT_DIRS[selectedOutput], `${modelName}.model.ts`);
 
     if (fs.existsSync(outputPath)) {
-        consoleHelper.info(`El archivo de: ${chalk.redBright(modelName)} ya existe. No se sobrescribió.`);
+        consoleHelper.info({message: `El archivo de: ${chalk.redBright(modelName)} ya existe. No se sobrescribió.`});
     } else {
         fs.writeFileSync(outputPath, modelCode, 'utf8');
-        consoleHelper.success(`Modelo generado: ${chalk.blueBright(modelName)}`);
+        consoleHelper.success({message: `Modelo generado: ${chalk.blueBright(modelName)}`});
     }
 })();

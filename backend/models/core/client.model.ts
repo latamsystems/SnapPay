@@ -83,7 +83,7 @@ ClientModel.init({
   },
   created_at_client: {
     type: DataTypes.DATE,
-    allowNull: false,
+    allowNull: true,
     defaultValue: DataTypes.NOW
   },
   inactive_in_client: {

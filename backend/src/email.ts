@@ -34,7 +34,7 @@ export const sendResetEmail = async (
   text: string,
   html: string
 ): Promise<void> => {
-  
+
   const mailOptions = {
     from: EMAIL_SEND,
     to: email,
@@ -45,9 +45,9 @@ export const sendResetEmail = async (
 
   try {
     await transporter.sendMail(mailOptions);
-    consoleHelper.success(`Correo enviado a: ${email}`, false);
+    consoleHelper.success({ message: `Correo enviado a: ${email}`, showCallerDetails: false });
   } catch (error) {
-    consoleHelper.error(`Error al enviar correo a ${email}`, false);
+    consoleHelper.error({ message: `Error al enviar correo a ${email}`, showCallerDetails: false });
     console.error(error);
     throw error;
   }

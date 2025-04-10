@@ -37,17 +37,17 @@ export const isTokenRevoked = (token: string) => {
 
 export class AuthService {
 
-/**
- * Autenticación de cliente por ID (FALTA FUNCIONALIDAD)
- * @param formData 
- * @param reqMsg 
- * @returns 
- */
+  /**
+   * Autenticación de cliente por ID (FALTA FUNCIONALIDAD)
+   * @param formData 
+   * @param reqMsg 
+   * @returns 
+   */
   @Service
   static async accessUser(formData: User, reqMsg: Record<string, string>) {
 
 
-    return HttpResponse.success(reqMsg.success);
+    return HttpResponse.success({ message: reqMsg.success });
   }
 
   // =============================================================================
@@ -79,7 +79,7 @@ export class AuthService {
     if (!user || !(await bcrypt.compare(password_user, user.password_user))) return HttpResponse.notFound({ message: reqMsg.incorrectCredentials, field: "email_user, password_user" });
 
     // Validar estado
-    if (user.id_status === 2) return HttpResponse.forbidden(reqMsg.inactiveAccount);
+    if (user.id_status === 2) return HttpResponse.forbidden({ message: reqMsg.inactiveAccount });
 
     // Obtener solo la primera palabra del nombre y apellido
     const firstname = user.firstname_user.split(' ')[0];
@@ -93,7 +93,7 @@ export class AuthService {
       id_role: user.id_role,
     }, TOKEN_SECRET, { expiresIn: DEFAULT_EXPIRATION_SECONDS });
 
-    return HttpResponse.success(`${reqMsg.success} ${user.email_user}`, { token });
+    return HttpResponse.success({ message: `${reqMsg.success} ${user.email_user}`, data: { token } });
   }
 
   // =============================================================================
@@ -107,7 +107,7 @@ export class AuthService {
   @Service
   static async getUserDetails(data: any, reqMsg: Record<string, string>) {
     // Verifica si el usuario está autenticado
-    if (!data) return HttpResponse.forbidden(reqMsg.forbidden);
+    if (!data) return HttpResponse.forbidden({ message: reqMsg.forbidden });
 
     // Los datos del usuario decodificados están disponibles
     const { id_user, firstname_user, lastname_user, id_role } = data.user;
@@ -116,7 +116,7 @@ export class AuthService {
     const exp = data.exp;
 
     // Devuelve los detalles del usuario
-    return HttpResponse.success(reqMsg.success, { id_user, firstname_user, lastname_user, id_role, exp });
+    return HttpResponse.success({ message: reqMsg.success, data: { id_user, firstname_user, lastname_user, id_role, exp } });
   }
 
   // =============================================================================
@@ -138,7 +138,7 @@ export class AuthService {
       revokeToken(token);
     }
 
-    return HttpResponse.success(reqMsg.success);
+    return HttpResponse.success({ message: reqMsg.success });
   }
 
   // =============================================================================
@@ -167,7 +167,7 @@ export class AuthService {
     // Revocar el token antiguo
     revokeToken(oldToken);
 
-    return HttpResponse.success(reqMsg.success, { token: newToken });
+    return HttpResponse.success({ message: reqMsg.success, data: { token: newToken } });
   }
 }
 

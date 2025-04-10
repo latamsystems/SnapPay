@@ -8,6 +8,10 @@ import { seedValidator } from '@/lib/crud/config/validation/seed.validation';
 import { Status } from '@/models/interface/status.interface';
 import { Role } from '@/models/interface/role.interface';
 import { User } from '@/models/interface/user.interface';
+import { Brand } from '@/models/interface/brand.interface';
+import { Model } from '@/models/interface/model.interface';
+import { Device } from '@/models/interface/device.interface';
+import { Client } from '@/models/interface/client.interface';
 
 export class SeedService {
 
@@ -67,6 +71,51 @@ export class SeedService {
 
         await seedValidator(models.User, users, "id_user");
 
-        return HttpResponse.success(reqMsg.success);
+        // Crear datos marcas
+        const brands: Brand[] = [
+            { id_brand: 1, name_brand: "Infinix" },
+            { id_brand: 2, name_brand: "Samsung" },
+            { id_brand: 3, name_brand: "Xiaomi" },
+            { id_brand: 4, name_brand: "Huawei" },
+            { id_brand: 5, name_brand: "Apple" },
+        ]
+
+        await seedValidator(models.Brand, brands, "id_brand");
+
+        // Crear modelos
+        const model: Model[] = [
+            { id_model: 1, name_model: "Note 12 Pro 5G", id_brand: 1 },
+            { id_model: 2, name_model: "Iphone 13", id_brand: 5 },
+            { id_model: 3, name_model: "Galaxy S23", id_brand: 2 },
+            { id_model: 4, name_model: "Galaxy S22", id_brand: 2 },
+            { id_model: 5, name_model: "Redmi Note 11", id_brand: 3 },
+            { id_model: 6, name_model: "P40 Pro", id_brand: 4 },
+            { id_model: 7, name_model: "Iphone 14", id_brand: 5 },
+        ]
+
+        await seedValidator(models.Model, model, "id_model");
+
+        // Crear dispositivos
+        const devices: Device[] = [
+            { id_device: 1, price_device: 180.0, id_model: 1, id_user: 1, id_status: 1 },
+            { id_device: 2, price_device: 600.0, id_model: 2, id_user: 1, id_status: 1 },
+            { id_device: 3, price_device: 450.0, id_model: 3, id_user: 1, id_status: 1 },
+            { id_device: 4, price_device: 400.0, id_model: 4, id_user: 1, id_status: 1 },
+            { id_device: 5, price_device: 300.0, id_model: 5, id_user: 1, id_status: 1 },
+            { id_device: 6, price_device: 200.0, id_model: 6, id_user: 1, id_status: 1 },
+            { id_device: 7, price_device: 1000.0, id_model: 7, id_user: 1, id_status: 1 },
+        ]
+
+        await seedValidator(models.Device, devices, "id_device");
+
+        // Crear clientes
+        const clients: Client[] = [
+            { id_client: 1, firstname_client: 'Armando Josue', lastname_client: 'Velasquez Delgado', identification_client: '2350793218', email_client: 'josue27.velasquez9@gmail.com', phone_client: '0980167849', id_user: 1, id_status: 1},
+            { id_client: 2, firstname_client: 'Alicia Melinda', lastname_client: 'Velasquez Delgado', identification_client: '2350793226', email_client: 'josuearmando814@gmail.com', phone_client: '0980167849', id_user: 1, id_status: 1},
+        ]
+        
+        await seedValidator(models.Client, clients, "id_client");
+
+        return HttpResponse.success({ message: reqMsg.success });
     }
 }

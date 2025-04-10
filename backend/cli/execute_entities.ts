@@ -132,7 +132,7 @@ const createFiles = (entity: string, basePath: string): void => {
   }
 
   const relativePath = path.relative(process.cwd(), basePath);
-  consoleHelper.success(`Entidad generada: ${chalk.greenBright(entity)} en ${chalk.redBright(relativePath)}`, false);
+  consoleHelper.success({message: `Entidad generada: ${chalk.greenBright(entity)} en ${chalk.redBright(relativePath)}`, showCallerDetails: false});
 };
 
 /**
@@ -160,7 +160,7 @@ const buscarArchivosModel = (directorio: string): string[] => {
 
 const generateFromModels = (modelsPath: string, basePath: string, type: string): void => {
   if (!fs.existsSync(modelsPath)) {
-    consoleHelper.error(`El directorio de Models ${type} no existe`, false);
+    consoleHelper.error({message: `El directorio de Models ${type} no existe`, showCallerDetails: false});
     console.error(modelsPath);
     return;
   }

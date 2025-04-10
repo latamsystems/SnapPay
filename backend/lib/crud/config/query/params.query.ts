@@ -1,4 +1,5 @@
 import { Sequelize, Op } from "sequelize";
+import { NormalizedQueryParams, QueryParams } from "@/lib/crud/config/query/params.interface";
 
 // ============================================================================
 
@@ -45,15 +46,16 @@ const configQuery = async (config: any, queryParams: any, model: any, id: number
  * @param queryParams - Parámetros de consulta
  * @param primaryKeyField - Clave primaria del modelo
  */
-const extractQueryParams = (queryParams: any, primaryKeyField: string) => ({
-    page: Math.max(parseInt(queryParams.page, 10) || 1, 1),
+const extractQueryParams = (queryParams: QueryParams, primaryKeyField: string): NormalizedQueryParams => ({
+    page: Math.max(parseInt(queryParams.page ?? '1', 10), 1),
     filter: queryParams.filter || {},
-    search: queryParams.search || "",
+    search: queryParams.search ?? '',
     searchFields: queryParams.searchFields || [],
-    limit: parseInt(queryParams.limit, 10) > 0 ? parseInt(queryParams.limit, 10) : 1000,
-    sortBy: queryParams.sortBy || primaryKeyField,
-    sortOrder: (queryParams.sortOrder || "DESC").toUpperCase(),
+    limit: parseInt(queryParams.limit ?? '1000', 10),
+    sortBy: queryParams.sortBy ?? primaryKeyField,
+    sortOrder: (queryParams.sortOrder ?? 'DESC').toUpperCase() as 'ASC' | 'DESC',
 });
+
 
 // ============================================================================
 

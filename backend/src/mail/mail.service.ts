@@ -54,6 +54,6 @@ export class MailService {
 
         // Enviar el correo electrónico
         await sendResetEmail(email_user, subject, text, html);
-        return HttpResponse.success(reqMsg.success, { mail: email_user, time: expirationTime });
+        return HttpResponse.success({ message: reqMsg.success, data: { mail: email_user, time: expirationTime } });
     }
 }

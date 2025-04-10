@@ -3,12 +3,6 @@ import Console from "@/helpers/console";
 
 // ============================================================================
 
-interface HandleServiceProps<T, U extends any[]> {
-    consoleHelper: Console;
-    serviceFunction: (...args: U) => Promise<T>;
-    params: U;
-}
-
 /**
  * Método centralizado para manejar las operaciones de servicio
  * @param consoleHelper - Instancia de Console para logs
@@ -18,17 +12,18 @@ interface HandleServiceProps<T, U extends any[]> {
 const handleService = async <T, U extends any[]>({
     consoleHelper,
     serviceFunction,
-    params
+    params,
 }: HandleServiceProps<T, U>): Promise<T> => {
+
     try {
         // Ejecutar el servicio
         const result: T = await serviceFunction(...params || []);
 
         // Registrar el mensaje correcto basado en el resultado
-        return defaultResult(result, consoleHelper);
+        return defaultResult({ result, consoleHelper });
 
     } catch (error: any) {
-        return defaultError(error, consoleHelper);
+        return defaultError({ error, consoleHelper });
     }
 };
 
@@ -39,11 +34,12 @@ const handleService = async <T, U extends any[]>({
  * @param result 
  * @param consoleHelper 
  */
-const defaultResult = (result: any, consoleHelper: Console) => {
+const defaultResult = ({ result, consoleHelper }: { result: any, consoleHelper: Console }) => {
+
     if ((result)?.error) {
-        consoleHelper.info((result).message);
+        consoleHelper.info({ message: (result).message, dbs: [result.dbs] });
     } else {
-        consoleHelper.success((result).message);
+        consoleHelper.success({ message: (result).message, dbs: [result.dbs] });
     }
 
     return result;
@@ -57,11 +53,11 @@ const defaultResult = (result: any, consoleHelper: Console) => {
  * @param consoleHelper 
  * @returns 
  */
-const defaultError = async (error: any, consoleHelper: Console) => {
+const defaultError = async ({ error, consoleHelper }: { error: any, consoleHelper: Console }) => {
 
     // Si el error es un HttpResponse, devolverlo tal cual
     if (error?.error) {
-        consoleHelper?.error(error.message);
+        consoleHelper?.error({ message: error.message, dbs: [error.dbs] });
         return error;
     }
 
@@ -71,41 +67,49 @@ const defaultError = async (error: any, consoleHelper: Console) => {
 
         if (sql.includes('DELETE')) {
             const errorMessage = "Este registro no se puede eliminar porque tiene historial.";
-            consoleHelper?.error(errorMessage);
-            return HttpResponse.errorResponse(400, errorMessage);
+            consoleHelper?.error({ message: errorMessage });
+            return HttpResponse.errorResponse({ code: 400, message: errorMessage, dbs: [error.dbs] });
         }
 
         if (sql.includes('INSERT')) {
             const errorMessage = "No se puede registrar porque una de las relaciones no existe.";
-            consoleHelper?.error(errorMessage);
-            return HttpResponse.errorResponse(400, errorMessage);
+            consoleHelper?.error({ message: errorMessage });
+            return HttpResponse.errorResponse({ code: 400, message: errorMessage, dbs: [error.dbs] });
         }
 
         if (sql.includes('UPDATE')) {
             const errorMessage = "No se puede actualizar porque una de las relaciones no existe.";
-            consoleHelper?.error(errorMessage);
-            return HttpResponse.errorResponse(400, errorMessage);
+            consoleHelper?.error({ message: errorMessage });
+            return HttpResponse.errorResponse({ code: 400, message: errorMessage, dbs: [error.dbs] });
         }
 
         // Caso genérico
         const fallbackMessage = error?.parent?.sqlMessage || "Error de clave foránea.";
-        consoleHelper?.error(fallbackMessage);
-        return HttpResponse.errorResponse(400, fallbackMessage);
+        consoleHelper?.error({ message: fallbackMessage });
+        return HttpResponse.errorResponse({ code: 400, message: fallbackMessage, dbs: [error.dbs] });
     }
 
     // Verificación directa por el nombre del error
     if (error.name === 'SequelizeUniqueConstraintError') {
         const duplicateMessage = error?.parent?.sqlMessage || "El valor ya existe y debe ser único.";
-        consoleHelper?.error(duplicateMessage);
-        return HttpResponse.errorResponse(400, duplicateMessage);
+        consoleHelper?.error({ message: duplicateMessage });
+        return HttpResponse.errorResponse({ code: 400, message: duplicateMessage, dbs: [error.dbs] });
     }
 
     // Si no es un error de unicidad, manejar como error genérico
-    consoleHelper?.error(error.message);
-    return HttpResponse.errorResponse(500, error.message);
+    consoleHelper?.error({ message: error.message });
+    console.log(error)
+    return HttpResponse.errorResponse({ code: 500, message: error.message, dbs: [error.dbs] });
 }
+
 
 // ============================================================================
 
 export { handleService, defaultResult, defaultError };
 
+
+interface HandleServiceProps<T, U extends any[]> {
+    consoleHelper: Console;
+    serviceFunction: (...args: U) => Promise<T>;
+    params: U;
+}

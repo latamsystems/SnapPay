@@ -13,29 +13,29 @@ import { FindOptions } from 'sequelize';
  * Métodos personalizados del controlador
  */
 const controllerMethods = {
-    create: async (req: Request, res: Response) => handleController(
-        req, res, userService.crud.create,
-        {
+    create: async (req: Request, res: Response) => handleController({
+        req, res, serviceFunction: userService.crud.create,
+        resMsg: {
             success: 'Registro creado exitosamente.',
             sameIdentification: 'Ya existe un usuario registrado con esa identificación.',
             sameEmail: 'Ya existe un usuario con ese correo eléctronico.',
         },
-        [req.body],
-    ),
-    update: async (req: Request, res: Response) => handleController(
-        req, res, userService.crud.update,
-        {
+        params: [req.body],
+    }),
+    update: async (req: Request, res: Response) => handleController({
+        req, res, serviceFunction: userService.crud.update,
+        resMsg: {
             success: 'Registro actualizado exitosamente.',
             notFound: 'Registro no encontrado.',
             sameIdentification: 'Ya existe un usuario registrado con esa identificación.',
             sameEmail: 'Ya existe un usuario con ese correo eléctronico.',
         },
-        [req.params.id, req.body],
-    ),
+        params: [req.params.id, req.body],
+    }),
 }
 
 // Exporta el CRUD con los métodos personalizados
-export const crud = CrudController(userService.crud, controllerMethods);
+export const crud = CrudController({service: userService.crud, controllerMethods});
 
 // =============================================================================
 // =============================================================================

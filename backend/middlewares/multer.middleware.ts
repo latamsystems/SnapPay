@@ -35,7 +35,7 @@ const storage: StorageEngine = multer.diskStorage({
 
     if (!fileNameRegex.test(fileName)) {
       const errorMessage = 'El nombre del archivo contiene caracteres no válidos';
-      consoleHelper.error(errorMessage);
+      consoleHelper.error({ message: errorMessage });
       return cb(new Error(errorMessage));
     }
 

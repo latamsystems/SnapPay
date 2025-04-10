@@ -67,4 +67,4 @@ export default models;
 fs.writeFileSync(initModelsFile, fileContent, 'utf8');
 
 // Confirmación
-consoleHelper.success(`Archivo generado: ${initModelsFile}`);
+consoleHelper.success({message: `Archivo generado: ${initModelsFile}`});

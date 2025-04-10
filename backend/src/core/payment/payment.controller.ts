@@ -11,4 +11,4 @@ import { Controller } from '@/lib/crud/controller/decorator.controller';
 export class PaymentController { }
 
 // Exporta el CRUD con los métodos personalizados
-export const crud = CrudController(paymentService.crud);
+export const crud = CrudController({service: paymentService.crud});

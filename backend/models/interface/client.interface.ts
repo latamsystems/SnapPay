@@ -5,8 +5,8 @@ import { Status } from "@/models/interface/status.interface";
 // Client interface
 export interface Client {
     id_client: number;
-    fid: string;
-    fcm_token: string;
+    fid?: string;
+    fcm_token?: string;
     firstname_client: string;
     lastname_client: string;
     identification_client: string;
@@ -14,7 +14,7 @@ export interface Client {
     email_client: string;
     id_user: number;
     id_status: number;
-    created_at_client: Date;
+    created_at_client?: Date;
     inactive_in_client?: Date | null;
 
     user?: User;

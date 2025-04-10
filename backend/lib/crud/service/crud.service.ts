@@ -1,9 +1,10 @@
 import HttpResponse from "@/helpers/httpResponse";
 import { getIo } from "@/src/websocket";
 import { handleService } from "./config.service";
-import { configQuery } from "../config/query/params.query";
-import { entityVerifyAtLeastOne, entityVerifyBooleanOnly, entityVerifyDefault } from "../config/validation/entity.validation";
+import { configQuery } from "@/lib/crud/config/query/params.query";
+import { entityVerifyAtLeastOne, entityVerifyBooleanOnly, entityVerifyDefault } from "@/lib/crud/config/validation/entity.validation";
 import Console from "@/helpers/console";
+import { getNameDatabase } from "@/lib/crud/config/validation/request.validation";
 
 // ============================================================================
 
@@ -21,6 +22,9 @@ const CrudService = (model: any, consoleHelper: Console, config: any = {}, servi
     const modelName = model.name.toLowerCase();
     const nameModel = modelName.replace(/model$/, '');
 
+    // Obtener el nombre de la base de datos
+    const dbName = getNameDatabase(model);
+
     return {
         // Obtener todos los registros
         getAll: serviceMethods.getAll
@@ -35,9 +39,14 @@ const CrudService = (model: any, consoleHelper: Console, config: any = {}, servi
                     // Obtener los registros con paginación y ordenamiento aplicado
                     const result = await model.findAll(queryResult.queryOptions);
 
-                    return HttpResponse.success(reqMsg.success, { [nameModel]: result, }, queryResult);
+                    return HttpResponse.success({
+                        message: reqMsg.success,
+                        data: { [nameModel]: result, },
+                        meta: queryResult,
+                        dbs: [dbName]
+                    });
                 },
-                params: [queryParams]
+                params: [queryParams],
             }),
 
         // Obtener un registro por ID
@@ -54,9 +63,16 @@ const CrudService = (model: any, consoleHelper: Console, config: any = {}, servi
                     const result = await model.findOne(queryOptions);
 
                     // Verificar si el registro fue encontrado
-                    if (!result) return HttpResponse.notFound({ message: reqMsg.notFound, field: primaryKeyField });
+                    if (!result) return HttpResponse.notFound({
+                        message: reqMsg.notFound, field: primaryKeyField,
+                        dbs: [dbName]
+                    });
 
-                    return HttpResponse.success(reqMsg.success, { [nameModel]: result });
+                    return HttpResponse.success({
+                        message: reqMsg.success,
+                        data: { [nameModel]: result },
+                        dbs: [dbName]
+                    });
                 },
                 params: [id]
             }),
@@ -70,7 +86,10 @@ const CrudService = (model: any, consoleHelper: Console, config: any = {}, servi
 
                     // Validar campos obligatorios
                     const validationError: any = entityVerifyDefault(model, formData);
-                    if (validationError) return HttpResponse.badRequest(validationError);
+                    if (validationError) return HttpResponse.badRequest({
+                        ...validationError,
+                        dbs: [dbName]
+                    });
 
                     // Crear el registro
                     const result = await model.create(formData);
@@ -79,7 +98,10 @@ const CrudService = (model: any, consoleHelper: Console, config: any = {}, servi
                     const io = getIo();
                     io.emit(`${[nameModel]}:created`, result);
 
-                    return HttpResponse.success(reqMsg.success);
+                    return HttpResponse.success({
+                        message: reqMsg.success,
+                        dbs: [dbName]
+                    });
                 },
                 params: [formData]
             }),
@@ -93,11 +115,17 @@ const CrudService = (model: any, consoleHelper: Console, config: any = {}, servi
 
                     // Verificar si el registro existe
                     const record = await model.findOne({ where: { [primaryKeyField]: id } });
-                    if (!record) return HttpResponse.notFound({ message: reqMsg.notFound, field: primaryKeyField });
+                    if (!record) return HttpResponse.notFound({
+                        message: reqMsg.notFound, field: primaryKeyField,
+                        dbs: [dbName]
+                    });
 
                     // Validar al menos un campo obligatorio
                     const validationError = entityVerifyAtLeastOne(model, formData);
-                    if (validationError) return HttpResponse.badRequest(validationError);
+                    if (validationError) return HttpResponse.badRequest({
+                        ...validationError,
+                        dbs: [dbName]
+                    });
 
                     // Actualizar el registro
                     const result = await model.update(formData, { where: { [primaryKeyField]: id } });
@@ -106,7 +134,10 @@ const CrudService = (model: any, consoleHelper: Console, config: any = {}, servi
                     const io = getIo();
                     io.emit(`${[nameModel]}:updated`, result);
 
-                    return HttpResponse.success(reqMsg.success);
+                    return HttpResponse.success({
+                        message: reqMsg.success,
+                        dbs: [dbName]
+                    });
                 },
                 params: [id, formData]
             }),
@@ -120,16 +151,23 @@ const CrudService = (model: any, consoleHelper: Console, config: any = {}, servi
 
                     // Verificar si el registro existe
                     const record = await model.findOne({ where: { [primaryKeyField]: id } });
-                    if (!record) return HttpResponse.notFound({ message: reqMsg.notFound, field: primaryKeyField });
+                    if (!record) return HttpResponse.notFound({
+                        message: reqMsg.notFound,
+                        field: primaryKeyField,
+                        dbs: [dbName]
+                    });
 
                     // Eliminar el registro
                     const result = await model.destroy({ where: { [primaryKeyField]: id } });
 
                     // Emitir evento a todos los clientes conectados
                     const io = getIo();
-                    io.emit(`${[nameModel]}:deleted`, result);
+                    io.emit(`${[modelName]}:deleted`, result);
 
-                    return HttpResponse.success(reqMsg.success);
+                    return HttpResponse.success({
+                        message: reqMsg.success,
+                        dbs: [dbName]
+                    });
                 },
                 params: [id]
             }),
@@ -143,11 +181,18 @@ const CrudService = (model: any, consoleHelper: Console, config: any = {}, servi
 
                     // Verificar si el registro existe
                     const record = await model.findOne({ where: { [primaryKeyField]: id } });
-                    if (!record) return HttpResponse.notFound({ message: reqMsg.notFound, field: primaryKeyField });
+                    if (!record) return HttpResponse.notFound({
+                        message: reqMsg.notFound,
+                        field: primaryKeyField,
+                        dbs: [dbName]
+                    });
 
                     // Validar al menos un campo obligatorio
                     const validationError: any = entityVerifyBooleanOnly(model, formData);
-                    if (validationError) return HttpResponse.badRequest(validationError);
+                    if (validationError) return HttpResponse.badRequest({
+                        ...validationError,
+                        dbs: [dbName]
+                    });
 
                     // Actualizar el registro
                     const result = await model.update(formData, { where: { [primaryKeyField]: id } });
@@ -156,7 +201,10 @@ const CrudService = (model: any, consoleHelper: Console, config: any = {}, servi
                     const io = getIo();
                     io.emit(`${[modelName]}:enabled`, result);
 
-                    return HttpResponse.success(reqMsg.success);
+                    return HttpResponse.success({
+                        message: reqMsg.success,
+                        dbs: [dbName]
+                    });
                 },
                 params: [id, formData]
             }),

@@ -28,22 +28,22 @@ export function setupWebSocket(server: HttpServer | HttpsServer): Server {
   });
 
   io.on('connection', (socket: Socket) => {
-    consoleHelper.debug(`Cliente conectado: ${chalk.blueBright(socket.id)}`);
+    consoleHelper.debug({message: `Cliente conectado: ${chalk.blueBright(socket.id)}`});
 
     // Manejar autenticación de usuario
     socket.on('user_connected', (userId: string, firstname: string, lastname: string) => {
       connectedUsers[userId] = { socketId: socket.id, firstname, lastname };
-      consoleHelper.debug(`Usuario conectado: ${chalk.green(userId)} → ${chalk.green.bold(firstname)} ${chalk.green.bold(lastname)} con socket id: ${chalk.blueBright(socket.id)}`);
+      consoleHelper.debug({message: `Usuario conectado: ${chalk.green(userId)} → ${chalk.green.bold(firstname)} ${chalk.green.bold(lastname)} con socket id: ${chalk.blueBright(socket.id)}`});
     });
 
     // Manejar desconexión de usuario
     socket.on('disconnect', () => {
-      consoleHelper.debug(`Cliente desconectado: ${chalk.blueBright(socket.id)}`);
+      consoleHelper.debug({message: `Cliente desconectado: ${chalk.blueBright(socket.id)}`});
 
       // Eliminar usuario de la lista de conectados
       for (const userId in connectedUsers) {
         if (connectedUsers[userId].socketId === socket.id) {
-          consoleHelper.debug(`Usuario desconectado: ${chalk.green(userId)} → ${chalk.green.bold(connectedUsers[userId].firstname)} ${chalk.green.bold(connectedUsers[userId].lastname)}`);
+          consoleHelper.debug({message: `Usuario desconectado: ${chalk.green(userId)} → ${chalk.green.bold(connectedUsers[userId].firstname)} ${chalk.green.bold(connectedUsers[userId].lastname)}`});
           delete connectedUsers[userId];
           break;
         }
@@ -52,7 +52,7 @@ export function setupWebSocket(server: HttpServer | HttpsServer): Server {
 
     // Manejar errores en la conexión
     socket.on('error', (error: Error) => {
-      consoleHelper.error('Error en la conexión del cliente: ' + error.message);
+      consoleHelper.error({message: 'Error en la conexión del cliente: ' + error.message});
     });
   });
 

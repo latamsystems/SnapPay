@@ -15,13 +15,13 @@ const consoleHelper = new Console('SERVER');
 // Mensaje de servidor corriendo
 export function listen(server: HttpServer | HttpsServer, port: string | number): void {
   server.listen(port, () => {
-    consoleHelper.debug(`Servidor corriendo en el puerto: ${chalk.cyanBright.bold(port)}`, false);
+    consoleHelper.debug({message: `Servidor corriendo en el puerto: ${chalk.cyanBright.bold(port)}`, showCallerDetails: false});
   });
 
   if (SHOW_COMMANDS === 'true') {
-    consoleHelper.debug(`${chalk.blue('> npm run init_model')} → Agregar modelos para la inicialización`, false);
-    consoleHelper.debug(`${chalk.blue('> npm run model')} → Agregar modelo en base a la interface`, false);
-    consoleHelper.debug(`${chalk.blue('> npm run entity')} → Generar cruds automaticos de entidades`, false);
+    consoleHelper.debug({message: `${chalk.blue('> npm run init_model')} → Agregar modelos para la inicialización`, showCallerDetails: false});
+    consoleHelper.debug({message: `${chalk.blue('> npm run model')} → Agregar modelo en base a la interface`, showCallerDetails: false});
+    consoleHelper.debug({message: `${chalk.blue('> npm run entity')} → Generar cruds automaticos de entidades`, showCallerDetails: false});
   }
 }
 
@@ -34,9 +34,9 @@ export function connectDB() {
       await dbConnection.sync({ alter: true });
       await dbConnection.sync({ force: false });
 
-      consoleHelper.debug(`Base de datos: ${chalk.cyanBright.bold(DB_NAME)}`, false);
+      consoleHelper.debug({message: `Base de datos: ${chalk.cyanBright.bold(DB_NAME)}`, showCallerDetails: false});
     } catch (error) {
-      consoleHelper.error('Error al iniciar la base de datos.', false);
+      consoleHelper.error({message: 'Error al iniciar la base de datos.', showCallerDetails: false});
       console.error(error);
     }
   }
@@ -50,9 +50,9 @@ export function webSocket(server: HttpServer | HttpsServer): void {
   const io = setupWebSocket(server);
 
   if (io) {
-    consoleHelper.debug(`Servidor ${chalk.cyanBright.bold('WebSocket')} iniciado correctamente`, false);
+    consoleHelper.debug({message: `Servidor ${chalk.cyanBright.bold('WebSocket')} iniciado correctamente`, showCallerDetails: false});
   } else {
-    consoleHelper.error('Error al iniciar el servidor WebSocket', false);
+    consoleHelper.error({message: 'Error al iniciar el servidor WebSocket', showCallerDetails: false});
   }
 }
 
@@ -61,7 +61,7 @@ export function webSocket(server: HttpServer | HttpsServer): void {
 // Mensaje de rutas cargadas
 export function logRouteLoaded(routePath: string): void {
   if (SHOW_APIS === 'true') {
-    consoleHelper.debug(`${chalk.gray('Ruta cargada:')} ${chalk.redBright.bold(routePath)}`, false);
+    consoleHelper.debug({message: `${chalk.gray('Ruta cargada:')} ${chalk.redBright.bold(routePath)}`, showCallerDetails: false});
   }
 }
 

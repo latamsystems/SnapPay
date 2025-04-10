@@ -9,25 +9,18 @@ import ApiResponse from '@/helpers/apiResponse';
  * @param resMsg - Mensajes de respuesta
  * @param params - Parámetros adicionales opcionales
  */
-const handleController = async (
-    req: Request,
-    res: Response,
-    serviceFunction: (...args: any[]) => Promise<any>,
-    resMsg: Record<string, string>,
-    params: any[] = []
-): Promise<Response | void> => {
+const handleController = async ({ req, res, serviceFunction, resMsg, params = [] }: HandleControllerPromps): Promise<Response | void> => {
     try {
         const result = await serviceFunction(...params, resMsg);
-
         // Manejar respuestas de error
         if (result.error) {
-            return new ApiResponse().handleErrorResponse(res, result);
+            return new ApiResponse().handleErrorResponse({ res, result });
         }
 
         // Respuesta de éxito
-        return new ApiResponse().success(res, result.message, result.data, result.meta);
+        return new ApiResponse().success({ res, msg: result.message, data: result.data, meta: result.meta, dbs: result.dbs });
     } catch (error: any) {
-        return new ApiResponse().error(res, error.message);
+        return new ApiResponse().error({ res, msg: error.message, dbs: error.dbs });
     }
 };
 
@@ -37,5 +30,10 @@ const handleController = async (
 export { handleController };
 
 
-
-
+interface HandleControllerPromps {
+    req: Request;
+    res: Response;
+    serviceFunction: (...args: any[]) => Promise<any>;
+    resMsg: Record<string, string>;
+    params?: any[];
+}

@@ -2,16 +2,16 @@ class HttpResponse {
     /**
      * 🔹 Respuesta estándar para errores
      */
-    static errorResponse(code: any, message: any, field: any = null, extraField: any = {}) {
+    static errorResponse({ code, message, field, fields, dbs }: ErrorProms) {
 
         // Verifica si extraField es un objeto, si no, lo envuelve en uno
-        const extra = typeof extraField === 'object' ? extraField : { extraField };
-
+        const extra = typeof fields === 'object' ? fields : { fields };
         return {
             error: true,
             code,
             message,
-            ...field ? { field } : { ...extra }
+            ...(dbs ? { dbs } : null),
+            ...field ? { field } : { ...extra },
         };
     }
 
@@ -19,50 +19,51 @@ class HttpResponse {
     /**
      * 🔹 No autenticado (401 Unauthorized)
      */
-    static unauthorized({ message, field }: any) {
-        return this.errorResponse(401, message, field);
+    static unauthorized({ message, field, dbs }: ResponseProms) {
+        return this.errorResponse({ code: 401, message, field, dbs });
     }
 
 
     /**
      * 🔹 Recurso no encontrado (404 Not Found)
      */
-    static notFound({ message, field }: any) {
-        return this.errorResponse(404, message, field);
+    static notFound({ message, field, dbs }: ResponseProms) {
+        return this.errorResponse({ code: 404, message, field, dbs });
     }
 
 
     /**
      * 🔹 Datos incorrectos (400 Bad Request)
      */
-    static badRequest({ message, ...extraField }: any) {
-        return this.errorResponse(400, message, null, extraField);
+    static badRequest({ message, field, dbs, ...fields }: ResponseProms) {
+        return this.errorResponse({ code: 400, message, field, fields, dbs });
     }
 
 
     /**
      * 🔹 Conflicto (409 Conflict)
      */
-    static conflict({ message, field }: any) {
-        return this.errorResponse(409, message, field);
+    static conflict({ message, field, dbs }: ResponseProms) {
+        return this.errorResponse({ code: 409, message, field, dbs });
     }
 
 
     /**
      * 🔹 Prohibido (403 Forbidden)
      */
-    static forbidden({message}: any) {
-        return this.errorResponse(403, message);
+    static forbidden({ message, dbs }: ResponseProms) {
+        return this.errorResponse({ code: 403, message, dbs });
     }
 
-    
+
     /**
      * 🔹 Éxito (Retorna el formato esperado por el controlador)
      */
-    static success(message: any, data: any = {}, meta: any = null) {
+    static success({ message, data, meta, dbs = null }: SuccessProms) {
         return {
             error: false,
             message,
+            ...(dbs ? { dbs } : null),
             data,
             ...(meta ? {
                 meta: {
@@ -76,13 +77,43 @@ class HttpResponse {
                         by: meta?.queryOptions?.order[0][0],
                         order: meta?.queryOptions?.order[0][1],
                     }
-                }
-            } : null)
+                },
+            } : null),
         };
     }
 }
 
 export default HttpResponse;
+
+interface ResponseProms {
+    message: string;
+    dbs?: any;
+    field?: string | null;
+    fields?: any;
+}
+
+interface ErrorProms {
+    code: number;
+    dbs?: any;
+    message: string;
+    field?: string | null;
+    fields?: any;
+}
+
+interface SuccessProms {
+    message: any;
+    dbs?: any;
+    data?: any;
+    meta?: {
+        currentPage: number;
+        totalPages: number;
+        totalRecords: number;
+        queryOptions?: {
+            limit: number;
+            order: any[];
+        };
+    };
+}
 
 // 200	OK ->                     Operación exitosa.
 // 201	Created ->                Recurso creado correctamente.

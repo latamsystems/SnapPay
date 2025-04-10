@@ -27,8 +27,8 @@ export const verifyToken = (req: AuthenticatedRequest, res: Response, next: Next
 
     if (!token) {
       const infoMessage = 'No se recibió ningún token.';
-      consoleHelper.info(infoMessage);
-      new ApiResponse().handleErrorResponse(res, { code: 401, error: true, message: infoMessage });
+      consoleHelper.info({ message: infoMessage });
+      new ApiResponse().handleErrorResponse({ res, result: { code: 401, error: true, message: infoMessage } });
       return;
     }
 
@@ -37,8 +37,8 @@ export const verifyToken = (req: AuthenticatedRequest, res: Response, next: Next
 
     if (isTokenRevoked(tokenWithoutBearer)) {
       const infoMessage = 'Token revocado';
-      consoleHelper.info(infoMessage);
-      new ApiResponse().handleErrorResponse(res, { code: 401, error: true, message: infoMessage });
+      consoleHelper.info({ message: infoMessage });
+      new ApiResponse().handleErrorResponse({ res, result: { code: 401, error: true, message: infoMessage } });
       return;
     }
 
@@ -46,13 +46,13 @@ export const verifyToken = (req: AuthenticatedRequest, res: Response, next: Next
     const decoded = jwt.verify(tokenWithoutBearer, TOKEN_SECRET) as JwtPayload & { id_role?: number };
     req.user = decoded;
 
-    consoleHelper.success(`Token válido para usuario ID: ${decoded.id_user}`);
+    consoleHelper.success({ message: `Token válido para usuario ID: ${decoded.id_user}` });
 
     next();
   } catch (error: any) {
     const errorMessage = 'Token inválido';
-    consoleHelper.error(errorMessage);
-    new ApiResponse().handleErrorResponse(res, { code: 403, error: true, message: errorMessage });
+    consoleHelper.error({ message: errorMessage });
+    new ApiResponse().handleErrorResponse({ res, result: { code: 403, error: true, message: errorMessage } });
     return;
   }
 };
@@ -67,8 +67,8 @@ export const checkRole = (rolesPermitidos: number[]) => {
   return (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     if (!req.user) {
       const infoMessage = 'Usuario no autenticado';
-      consoleHelper.info(infoMessage);
-      new ApiResponse().handleErrorResponse(res, { code: 401, error: true, message: infoMessage });
+      consoleHelper.info({ message: infoMessage });
+      new ApiResponse().handleErrorResponse({ res, result: { code: 401, error: true, message: infoMessage } });
       return;
     }
 
@@ -76,19 +76,19 @@ export const checkRole = (rolesPermitidos: number[]) => {
 
     if (!id_role) {
       const infoMessage = 'No se encontró rol en el token';
-      consoleHelper.info(infoMessage);
-      new ApiResponse().handleErrorResponse(res, { code: 403, error: true, message: infoMessage });
+      consoleHelper.info({ message: infoMessage });
+      new ApiResponse().handleErrorResponse({ res, result: { code: 403, error: true, message: infoMessage } });
       return;
     }
 
     if (!rolesPermitidos.includes(id_role)) {
       const infoMessage = 'Acceso denegado, rol insuficiente';
-      consoleHelper.info(infoMessage);
-      new ApiResponse().handleErrorResponse(res, { code: 403, error: true, message: infoMessage });
+      consoleHelper.info({ message: infoMessage });
+      new ApiResponse().handleErrorResponse({ res, result: { code: 403, error: true, message: infoMessage } });
       return;
     }
 
-    consoleHelper.success(`Acceso permitido para el rol: ${id_role}`);
+    consoleHelper.success({ message: `Acceso permitido para el rol: ${id_role}` });
     next();
   };
 };

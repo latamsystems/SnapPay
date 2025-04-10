@@ -24,12 +24,12 @@ export function Service(target: any, propertyKey: string, descriptor: PropertyDe
         try {
             // Ejecutar el servicio
             const result = await originalMethod.apply(this, args);
-    
+
             // Registrar el mensaje correcto basado en el resultado
-            return defaultResult(result, consoleHelper);
-    
+            return defaultResult({ result, consoleHelper });
+
         } catch (error: any) {
-            return defaultError(error, consoleHelper);
+            return defaultError({ error, consoleHelper });
         }
     };
 

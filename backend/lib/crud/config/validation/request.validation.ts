@@ -85,7 +85,7 @@ const validateFieldTypes = (): ValidationRule => ({ model, formData }) => {
         }
     });
 
-    if (errors.length > 0) throw HttpResponse.badRequest({ message: "Errores de validación en los campos.", fields: errors });
+    if (errors.length > 0) throw HttpResponse.badRequest({ message: "Errores de validación en los campos.", fields: errors, dbs: getNameDatabase(model) });
 }
 
 
@@ -96,7 +96,7 @@ const validateFieldTypes = (): ValidationRule => ({ model, formData }) => {
  * @param {Array} fields - Campos requeridos
  * @param {String} formData - Datos a validar
  */
-const requiredFields = (fields: string[]): ValidationRule => ({ formData }) => {
+const requiredFields = (fields: string[]): ValidationRule => ({ model, formData }) => {
     const errorMessage = "Faltan campos obligatorios";
 
     const missingFields = fields.filter((field: string) =>
@@ -105,7 +105,7 @@ const requiredFields = (fields: string[]): ValidationRule => ({ formData }) => {
         formData[field] === ""
     );
 
-    if (missingFields.length > 0) throw HttpResponse.badRequest({ message: errorMessage, missingFields });
+    if (missingFields.length > 0) throw HttpResponse.badRequest({ message: errorMessage, fields: missingFields, dbs: getNameDatabase(model) });
 };
 
 // =============================================================================
@@ -120,7 +120,7 @@ const recordExists = (id: number, errorMessage: string): ValidationRule => async
     const primaryKeyField = model.primaryKeyAttributes[0] || "id";
     const record = await model.findOne({ where: { [primaryKeyField]: id } });
 
-    if (!record) throw HttpResponse.notFound({ message: errorMessage, field: primaryKeyField });
+    if (!record) throw HttpResponse.notFound({ message: errorMessage, field: primaryKeyField, dbs: getNameDatabase(model) });
 }
 
 // =============================================================================
@@ -138,11 +138,11 @@ const uniqueField = (field: string, errorMessage: string, id?: number): Validati
 
     const record = await model.findOne({ where: { [field]: formData[field] } });
 
-    if (!id && record) throw HttpResponse.conflict({ message: errorMessage, field });
+    if (!id && record) throw HttpResponse.conflict({ message: errorMessage, field, dbs: getNameDatabase(model) });
 
     if (id && record) {
         const primaryKey = record.getDataValue(primaryKeyField as keyof typeof record);
-        if (primaryKey !== Number(id)) throw HttpResponse.conflict({ message: errorMessage, field });
+        if (primaryKey !== Number(id)) throw HttpResponse.conflict({ message: errorMessage, field, dbs: getNameDatabase(model) });
     }
 };
 
@@ -154,11 +154,11 @@ const uniqueField = (field: string, errorMessage: string, id?: number): Validati
  * @param {String} field - Campo a verificar
  * @param {Object} formData - Datos a validar
  */
-const validEmail = (field: string): ValidationRule => ({ formData }) => {
+const validEmail = (field: string): ValidationRule => ({ model, formData }) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (formData[field] && !emailRegex.test(formData[field])) {
-        throw HttpResponse.badRequest({ message: 'Correo electrónico inválido.', field });
+        throw HttpResponse.badRequest({ message: 'Correo electrónico inválido.', field, dbs: getNameDatabase(model) });
     }
 };
 
@@ -177,7 +177,7 @@ const checkCurrentPassword = (id: number, passwd: string, newPasswd: string): Va
     const record = await model.findOne({ where: { [primaryKeyField]: id } });
 
     if (!record) {
-        throw HttpResponse.notFound({ message: "Usuario no encontrado.", field: primaryKeyField });
+        throw HttpResponse.notFound({ message: "Usuario no encontrado.", field: primaryKeyField, dbs: getNameDatabase(model) });
     }
 
     // Verificamos que `record` no sea null antes de acceder a sus propiedades
@@ -187,12 +187,24 @@ const checkCurrentPassword = (id: number, passwd: string, newPasswd: string): Va
     const isSamePassword = await bcrypt.compare(formData[newPasswd], record.getDataValue(passwd));
 
     if (!isValidPassword) {
-        throw HttpResponse.unauthorized({ message: "La clave es incorrecta.", field: passwd });
+        throw HttpResponse.unauthorized({ message: "La clave es incorrecta.", field: passwd, dbs: getNameDatabase(model) });
     }
     if (isSamePassword) {
-        throw HttpResponse.conflict({ message: "La nueva clave es igual a la anterior.", field: newPasswd });
+        throw HttpResponse.conflict({ message: "La nueva clave es igual a la anterior.", field: newPasswd, dbs: getNameDatabase(model) });
     }
 };
+
+// =============================================================================
+
+/**
+ * Obtener el nombre de la base de datos 
+ * @param model - Modelo de Sequelize
+ * @returns 
+ */
+export const getNameDatabase = (model: ModelStatic<Model<any, any>>) => {
+    // Obtener el nombre de la base de datos
+    return model?.sequelize?.config?.database ?? 'Desconocida';
+}
 
 // =============================================================================
 
@@ -203,5 +215,5 @@ export const rule = {
     recordExists,
     uniqueField,
     validEmail,
-    checkCurrentPassword
+    checkCurrentPassword,
 };

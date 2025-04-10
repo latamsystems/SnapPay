@@ -10,7 +10,7 @@ import { Controller } from '@/lib/crud/controller/decorator.controller';
 // =============================================================================
 
 // Exporta el CRUD con los métodos personalizados
-export const crud = CrudController(clientService.crud);
+export const crud = CrudController({service: clientService.crud});
 
 // =============================================================================
 // =============================================================================
