@@ -27,8 +27,8 @@ fun getRouteKey(route: String?): KClass<*>? {
 fun accessScreen(): Map<KClass<*>, ScreenConfig> {
     return mapOf(
         AppScreen.Login::class to ScreenConfig(showTopBar = false, showBottomBar = false, showFab = false, showDrawer = false),
-        AppScreen.Home::class to ScreenConfig(title = "Inicio"),
-        AppScreen.Detail::class to ScreenConfig(title = "Detalle", showFab = false),
-        AppScreen.Settings::class to ScreenConfig(title = "Ajustes", showBottomBar = false)
+        AppScreen.Home::class to ScreenConfig(title = "Inicio", showDrawer = false),
+        AppScreen.Detail::class to ScreenConfig(title = "Detalle", showFab = false, showDrawer = false),
+        AppScreen.Settings::class to ScreenConfig(title = "Ajustes", showBottomBar = false, showDrawer = false)
     )
 }

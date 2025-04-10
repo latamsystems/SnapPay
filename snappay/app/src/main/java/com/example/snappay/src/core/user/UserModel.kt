@@ -17,17 +17,9 @@ data class UserModel(
     val resetPasswordExpires_user: String? = null,
     val created_at_user: String,
     val inactive_in_user: String? = null,
-    val role: RoleModel,
-    val status: StatusModel
-)
 
-
-// UserResponse.kt
-@Serializable
-data class UserResponse(
-    val ok: Boolean,
-    val msg: String,
-    val data: UserData
+    val role: RoleModel? = null,
+    val status: StatusModel? = null,
 )
 
 @Serializable

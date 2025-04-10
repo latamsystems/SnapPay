@@ -38,6 +38,21 @@ export const isTokenRevoked = (token: string) => {
 export class AuthService {
 
   /**
+ * Autenticación
+ * @param formData 
+ * @param reqMsg 
+ * @returns 
+ */
+  @Service
+  static async accessUser(formData: User, reqMsg: Record<string, string>) {
+
+
+    return HttpResponse.success(reqMsg.success);
+  }
+
+  // =============================================================================
+
+  /**
    * Autenticación
    * @param formData 
    * @param reqMsg 

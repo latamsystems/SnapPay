@@ -7,6 +7,23 @@ import { Controller } from '@/lib/crud/controller/decorator.controller';
 export class AuthController {
 
   /**
+ * Autenticación
+ * @param req
+ */
+  @Controller({
+    service: AuthService.accessUser,
+    messages: {
+      success: 'Se ha conectado el usuario:',
+      incorrectCredentials: 'Usuario o contraseña incorrectos.',
+      inactiveAccount: 'El usuario esta inactivo.',
+    },
+    extractParams: (req: Request) => [req.body]
+  })
+  static accessUser() { void 0 }
+
+  // =============================================================================
+
+  /**
    * Autenticación
    * @param req
    */

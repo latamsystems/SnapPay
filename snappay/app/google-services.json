@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "865932798463",
+    "project_id": "snappay-cf721",
+    "storage_bucket": "snappay-cf721.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:865932798463:android:00d50572d18e9580145fca",
+        "android_client_info": {
+          "package_name": "com.example.snappay"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyM2_mJ_EXo2-MbUMD3P7KUWShcbbXZ6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
