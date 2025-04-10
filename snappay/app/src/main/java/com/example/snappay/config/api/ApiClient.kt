@@ -12,7 +12,7 @@ import kotlinx.serialization.json.Json
 object ApiClient {
     private const val BASE_URL = "https://snappay-rest.dudu.com.ec/api/v1"
 
-    var token: String? = null // Token dinámico
+    var token: String? = null
 
     val client = HttpClient(CIO) {
         install(ContentNegotiation) {
@@ -29,10 +29,17 @@ object ApiClient {
         }
     }
 
-    // Método para obtener la URL completa
+
+    /**
+     * Genera la URL completa para una ruta específica.
+     */
     fun getUrl(path: String): String = "$BASE_URL/$path"
 
-    // Método para verificar si el token ha expirado
+
+    /**
+     * Verifica si el token ha expirado.
+     * Devuelve true si el token ha expirado o no es válido, de lo contrario devuelve false.
+     */
     fun isTokenExpired(): Boolean {
         val token = token ?: return true
         val parts = token.split(".")

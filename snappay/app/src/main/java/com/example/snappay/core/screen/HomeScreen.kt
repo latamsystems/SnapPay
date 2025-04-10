@@ -13,11 +13,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.example.snappay.src.auth.SessionManager
 
 @Composable
 fun HomeScreen(navigationToDetail: (String) -> Unit) {
 
     var text by remember { mutableStateOf("") }
+    val user by SessionManager.user.collectAsState()
 
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         Text("Home Screen")
@@ -27,6 +29,8 @@ fun HomeScreen(navigationToDetail: (String) -> Unit) {
             onValueChange = { text = it },
             label = { Text(text = "ingresa tu nombre") }
         )
+
+        Text("Hola " + (user?.firstname_user + " " + user?.lastname_user) ?: "Invitado")
 
         Button(onClick = {
             navigationToDetail(text)

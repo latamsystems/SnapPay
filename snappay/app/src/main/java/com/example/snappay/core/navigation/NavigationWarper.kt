@@ -12,19 +12,19 @@ import com.example.snappay.core.screen.DetailsScreen
 import com.example.snappay.core.screen.HomeScreen
 import com.example.snappay.core.screen.LoginScreen
 import com.example.snappay.core.screen.SettingsScreen
+import com.example.snappay.src.auth.SessionManager
 import kotlin.reflect.typeOf
 
 @Composable
 fun NavigationWarper(navController: NavHostController) {
 
-    NavHost(navController, startDestination =
-        if (ApiClient.token != null) { AppScreen.Home } else { AppScreen.Login }
-    ) {
+    NavHost(navController, startDestination = AppScreen.Home) {
 
         // Login
         composable<AppScreen.Login>{
-            if (ApiClient.token != null) {
+            if (SessionManager.isLoggedIn()) {
                 LaunchedEffect(Unit) {
+                    navController.popBackStack()
                     navController.navigate(AppScreen.Home) {
                         launchSingleTop = true
                         popUpTo(AppScreen.Login) { inclusive = true }
@@ -63,7 +63,7 @@ fun NavigationWarper(navController: NavHostController) {
 
         //  Configuraciones
         composable<AppScreen.Settings>(typeMap = mapOf(typeOf<SettingInfo>() to settingsInfoType)) { backstackEntry ->
-            if (ApiClient.token != null && !ApiClient.isTokenExpired()) {
+            if (SessionManager.isLoggedIn() && !ApiClient.isTokenExpired()) {
                 val setting: AppScreen.Settings = backstackEntry.toRoute()
                 SettingsScreen(
                     settingsInfo = setting.info,
