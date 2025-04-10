@@ -4,6 +4,7 @@ import userService, { UserService } from "@/src/core/user/user.service";
 import { handleController } from '@/lib/crud/controller/config.controller';
 import { CrudController } from '@/lib/crud/controller/crud.controller';
 import { Controller } from '@/lib/crud/controller/decorator.controller';
+import { FindOptions } from 'sequelize';
 
 // =============================================================================
 // =============================================================================

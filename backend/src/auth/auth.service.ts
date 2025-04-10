@@ -37,8 +37,8 @@ export const isTokenRevoked = (token: string) => {
 
 export class AuthService {
 
-  /**
- * Autenticación
+/**
+ * Autenticación de cliente por ID (FALTA FUNCIONALIDAD)
  * @param formData 
  * @param reqMsg 
  * @returns 

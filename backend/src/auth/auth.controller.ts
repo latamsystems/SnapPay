@@ -7,9 +7,9 @@ import { Controller } from '@/lib/crud/controller/decorator.controller';
 export class AuthController {
 
   /**
- * Autenticación
- * @param req
- */
+   * Autenticación de cliente por ID (FALTA FUNCIONALIDAD)
+   * @param req
+   */
   @Controller({
     service: AuthService.accessUser,
     messages: {
@@ -71,6 +71,11 @@ export class AuthController {
 
   // =============================================================================
 
+  /**
+   * Renovar token
+   * @param req
+   * @param res
+   */
   @Controller({
     service: AuthService.renewToken,
     messages: {

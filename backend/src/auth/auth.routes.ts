@@ -20,6 +20,7 @@ router.get('/connected-users', (req: Request, res: Response) => {
 
 // Autenticación y manejo de usuarios
 router.post('/access', AuthController.accessUser);
+
 router.post('/login', AuthController.authenticateUser);
 router.get('/userDetails', verifyToken, AuthController.getUserDetails);
 router.get('/logout', verifyToken, AuthController.logoutUser);
