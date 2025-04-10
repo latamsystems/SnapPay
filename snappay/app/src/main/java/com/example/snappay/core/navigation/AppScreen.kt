@@ -11,8 +11,21 @@ sealed class AppScreen {
     object Home
 
     @Serializable
+    object Payments
+
+    @Serializable
+    object Settings
+
+
+
+    // Examples
+
+    @Serializable
+    object First
+
+    @Serializable
     data class Detail(val name: String)
 
     @Serializable
-    data class Settings(val info: SettingInfo)
+    data class Last(val info: LastInfo)
 }

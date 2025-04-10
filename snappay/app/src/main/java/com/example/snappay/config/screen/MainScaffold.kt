@@ -9,16 +9,16 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.snappay.core.navigation.*
-import com.example.snappay.ui.components.*
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScaffold() {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+//    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val navController = rememberNavController()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
@@ -27,6 +27,10 @@ fun MainScaffold() {
     val screenConfigs = accessScreen()
     val routeKey = getRouteKey(currentDestination)
     val config = screenConfigs[routeKey] ?: ScreenConfig()
+
+    val drawerState = remember(config.showDrawer) {
+        DrawerState(initialValue = DrawerValue.Closed)
+    }
 
     // Cierra el drawer automáticamente al navegar
     LaunchedEffect(currentDestination) {
@@ -54,6 +58,7 @@ fun MainScaffold() {
                     AppTopBar (
                         title = config.title,
                         scope = scope,
+                        showDrawer = config.showDrawer,
                         onMenuClick = { drawerState.open() }
                     )
                 }
@@ -79,6 +84,7 @@ fun MainScaffold() {
                 modifier = Modifier
                     .verticalScroll(scrollState)
                     .padding(innerPadding)
+                    .padding(16.dp)
             ) {
                 NavigationWarper(navController)
             }

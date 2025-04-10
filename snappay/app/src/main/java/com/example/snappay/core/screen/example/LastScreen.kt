@@ -1,4 +1,4 @@
-package com.example.snappay.core.screen
+package com.example.snappay.core.screen.example
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,14 +10,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.snappay.core.navigation.LastInfo
 import com.example.snappay.src.auth.AuthService
 import com.example.snappay.src.example.MainScreen
 import kotlinx.coroutines.launch
 
 @Composable
-fun SettingsScreen(navigationToBack: () -> Unit, onLogout: () -> Unit) {
+fun LastScreen(lastInfo: LastInfo, navigationToBack: () -> Unit, onLogout: () -> Unit) {
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
     var logoutMsg by remember { mutableStateOf<String?>(null) }
 
     Column(
@@ -25,12 +28,9 @@ fun SettingsScreen(navigationToBack: () -> Unit, onLogout: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-
-
-        Text("Settings Screen")
-
-
-
+        Text("Last Screen")
+        Text(lastInfo.name)
+        Text("${lastInfo.age}")
 
         MainScreen()
 

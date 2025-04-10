@@ -55,25 +55,3 @@ object ApiClient {
         return exp <= now
     }
 }
-
-
-//object ApiClient {
-//
-//    private const val BASE_URL = "https://snappay-rest.dudu.com.ec/api/v1"
-//    private const val TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxLCJmaXJzdG5hbWVfdXNlciI6IkFkbWluIiwibGFzdG5hbWVfdXNlciI6IlNpc3RlbWEiLCJpZF9yb2xlIjoxLCJpYXQiOjE3NDQyNDIzNzgsImV4cCI6MTc0NDI0NTk3OH0.BJ9xY-GSmnGXLkQa_Lypv6tZfADub-mi0g6jyr5TjdU"
-//
-//    val client = HttpClient(CIO) {
-//        install(ContentNegotiation) {
-//            json(Json { ignoreUnknownKeys = true })
-//        }
-//
-//        install(DefaultRequest) {
-//            headers {
-//                append(HttpHeaders.Authorization, "Bearer $TOKEN")
-//                append(HttpHeaders.ContentType, "application/json")
-//            }
-//        }
-//    }
-//
-//    fun getUrl(path: String): String = "$BASE_URL/$path"
-//}

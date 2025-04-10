@@ -6,4 +6,4 @@ import kotlinx.serialization.Serializable
 
 @Parcelize
 @Serializable
-data class SettingInfo(val name: String, val age: Int): Parcelable
+data class LastInfo(val name: String, val age: Int): Parcelable

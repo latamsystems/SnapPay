@@ -17,7 +17,7 @@ fun getRouteKey(route: String?): KClass<*>? {
     return when {
         route?.contains(AppScreen.Login::class.simpleName ?: "") == true -> AppScreen.Login::class
         route?.contains(AppScreen.Home::class.simpleName ?: "") == true -> AppScreen.Home::class
-        route?.contains(AppScreen.Detail::class.simpleName ?: "") == true -> AppScreen.Detail::class
+        route?.contains(AppScreen.Payments::class.simpleName ?: "") == true -> AppScreen.Payments::class
         route?.contains(AppScreen.Settings::class.simpleName ?: "") == true -> AppScreen.Settings::class
         else -> null
     }
@@ -27,8 +27,8 @@ fun getRouteKey(route: String?): KClass<*>? {
 fun accessScreen(): Map<KClass<*>, ScreenConfig> {
     return mapOf(
         AppScreen.Login::class to ScreenConfig(showTopBar = false, showBottomBar = false, showFab = false, showDrawer = false),
-        AppScreen.Home::class to ScreenConfig(title = "Inicio", showDrawer = false),
-        AppScreen.Detail::class to ScreenConfig(title = "Detalle", showFab = false, showDrawer = false),
-        AppScreen.Settings::class to ScreenConfig(title = "Ajustes", showBottomBar = false, showDrawer = false)
+        AppScreen.Home::class to ScreenConfig(title = "Inicio", showDrawer = true),
+        AppScreen.Payments::class to ScreenConfig(title = "Pagos", showDrawer = false),
+        AppScreen.Settings::class to ScreenConfig(title = "Ajustes", showFab = false, showDrawer = false)
     )
 }
