@@ -18,7 +18,6 @@ import com.example.snappay.core.navigation.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScaffold() {
-//    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val navController = rememberNavController()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
@@ -58,7 +57,6 @@ fun MainScaffold() {
                     AppTopBar (
                         title = config.title,
                         scope = scope,
-                        showDrawer = config.showDrawer,
                         onMenuClick = { drawerState.open() }
                     )
                 }
@@ -75,7 +73,9 @@ fun MainScaffold() {
             },
             floatingActionButton = {
                 if (config.showFab) {
-                    AppFloatingActionButton (onClick = { /* Acción del FAB */ })
+                    AppFloatingActionButton (onClick = {
+                        navController.navigate(AppScreen.Pay)
+                    })
                 }
             }
         ) { innerPadding ->

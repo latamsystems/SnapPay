@@ -18,6 +18,8 @@ fun getRouteKey(route: String?): KClass<*>? {
         route?.contains(AppScreen.Login::class.simpleName ?: "") == true -> AppScreen.Login::class
         route?.contains(AppScreen.Home::class.simpleName ?: "") == true -> AppScreen.Home::class
         route?.contains(AppScreen.Payments::class.simpleName ?: "") == true -> AppScreen.Payments::class
+        route?.contains(AppScreen.Pay::class.simpleName ?: "") == true -> AppScreen.Pay::class
+        route?.contains(AppScreen.Fine::class.simpleName ?: "") == true -> AppScreen.Fine::class
         route?.contains(AppScreen.Settings::class.simpleName ?: "") == true -> AppScreen.Settings::class
         else -> null
     }
@@ -27,8 +29,10 @@ fun getRouteKey(route: String?): KClass<*>? {
 fun accessScreen(): Map<KClass<*>, ScreenConfig> {
     return mapOf(
         AppScreen.Login::class to ScreenConfig(showTopBar = false, showBottomBar = false, showFab = false, showDrawer = false),
-        AppScreen.Home::class to ScreenConfig(title = "Inicio", showDrawer = true),
-        AppScreen.Payments::class to ScreenConfig(title = "Pagos", showDrawer = false),
-        AppScreen.Settings::class to ScreenConfig(title = "Ajustes", showFab = false, showDrawer = false)
+        AppScreen.Home::class to ScreenConfig(title = "Inicio"),
+        AppScreen.Payments::class to ScreenConfig(title = "Pagos"),
+        AppScreen.Pay::class to ScreenConfig(title = "Pagar", showFab = false),
+        AppScreen.Fine::class to ScreenConfig(title = "Multas"),
+        AppScreen.Settings::class to ScreenConfig(title = "Ajustes", showFab = false)
     )
 }

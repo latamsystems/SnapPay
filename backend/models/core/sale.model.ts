@@ -11,7 +11,7 @@ class SaleModel extends Model<Sale, SaleCreationAttributes> implements Sale {
   public id_sale!: number;
   public imei_sale!: string;
   public fees_sale!: number;
-  public isFine_sale!: boolean;
+  public isFine_sale?: boolean;
   public id_client!: number;
   public id_device!: number;
   public id_user!: number;
@@ -42,7 +42,8 @@ SaleModel.init({
   },
   imei_sale: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   fees_sale: {
     type: DataTypes.INTEGER.UNSIGNED,
@@ -50,7 +51,8 @@ SaleModel.init({
   },
   isFine_sale: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
+    defaultValue: false
   },
   id_client: {
     type: DataTypes.INTEGER.UNSIGNED,

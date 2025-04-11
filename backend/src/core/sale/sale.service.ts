@@ -24,7 +24,10 @@ const config: FindOptions = {
     include: [
         { model: models.Client, as: 'client' },
         { model: models.Device, as: 'device' },
-        { model: models.User, as: 'user' },
+        { 
+            model: models.User, as: 'user',
+            attributes: { exclude: ["password_user"] }
+        },
         { model: models.Status, as: 'status' }
     ]
 }

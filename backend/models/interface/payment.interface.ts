@@ -9,7 +9,7 @@ export interface Payment {
     media_payment: string;
     id_status: number;
     validated_in_payment?: Date | null;
-    created_at_payment: Date;
+    created_at_payment?: Date;
 
     status?: Status;
 };

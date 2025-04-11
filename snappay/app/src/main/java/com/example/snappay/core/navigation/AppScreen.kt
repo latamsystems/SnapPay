@@ -5,16 +5,31 @@ import kotlinx.serialization.Serializable
 sealed class AppScreen {
 
     @Serializable
-    object Login
-
-    @Serializable
     object Home
 
     @Serializable
     object Payments
 
     @Serializable
+    object Pay
+
+    @Serializable
+    object Fine
+
+
+    // Admin
+
+    @Serializable
+    object Login
+
+    @Serializable
     object Settings
+
+
+
+
+
+
 
 
 

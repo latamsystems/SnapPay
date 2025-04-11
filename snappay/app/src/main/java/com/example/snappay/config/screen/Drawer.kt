@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Payments
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -83,13 +83,13 @@ fun AppDrawer(
 
         // Ítems de navegación
         NavigationDrawerItem(
-            icon = { Icon(Icons.Default.Payments, contentDescription = null) },
-            label = { Text("Pagos") },
-            selected = routeKey == AppScreen.Payments::class,
+            icon = { Icon(Icons.Default.Settings, contentDescription = null) },
+            label = { Text("Ajustes") },
+            selected = routeKey == AppScreen.Settings::class,
             onClick = {
                 scope.launch {
                     closeDrawer()
-                    navController.navigate(AppScreen.Payments)
+                    navController.navigate(AppScreen.Settings)
                 }
             },
             modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
