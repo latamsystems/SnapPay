@@ -23,7 +23,7 @@ object GenericService {
 
             if (response.status.isSuccess()) {
                 val base: BaseResponse<D> = response.body()
-                return@withContext mapper(base.data)
+                return@withContext mapper(base.data as D)
             } else {
                 throw parseApiException(response)
             }
@@ -44,7 +44,7 @@ object GenericService {
             val response: HttpResponse = ApiClient.client.get(ApiClient.getUrl("$endpoint/$id"))
             if (response.status.isSuccess()) {
                 val base: BaseResponse<D> = response.body()
-                return@withContext mapper(base.data)
+                return@withContext mapper(base.data as D)
             } else {
                 throw parseApiException(response)
             }

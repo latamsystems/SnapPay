@@ -52,7 +52,7 @@
     "swagger-autogen": "^2.23.7",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
-    "tedious": "^18.2.4",
+    "tedious": "  ^18.2.4",
     "util": "^0.12.5",
     "uuid": "^9.0.1"
   },

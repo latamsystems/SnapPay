@@ -33,7 +33,7 @@ object AuthService {
 
             if (response.status.isSuccess()) {
                 val body: BaseResponse<LoginData> = response.body()
-                ApiClient.token = body.data.token
+                ApiClient.token = body.data?.token
                 return@withContext body.msg
             } else {
                 throw parseApiException(response)
@@ -57,7 +57,7 @@ object AuthService {
         if (response.status.isSuccess()) {
             val body: BaseResponse<UserDetails> = response.body()
             SessionManager.setUser(body.data)
-            return@withContext body.data
+            return@withContext body.data as UserDetails
         } else {
             throw parseApiException(response)
         }

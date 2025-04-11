@@ -8,7 +8,7 @@ object SessionManager {
     private val _user = MutableStateFlow<UserDetails?>(null)
     val user: StateFlow<UserDetails?> = _user
 
-    fun setUser(details: UserDetails) {
+    fun setUser(details: UserDetails?) {
         _user.value = details
     }
 

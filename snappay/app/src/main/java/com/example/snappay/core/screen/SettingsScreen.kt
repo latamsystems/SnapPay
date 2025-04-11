@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.snappay.src.admin.settings.ClientSyncScreen
 import com.example.snappay.src.auth.AuthService
 import com.example.snappay.src.example.MainScreen
 import kotlinx.coroutines.launch
@@ -29,7 +30,7 @@ fun SettingsScreen(navigationToBack: () -> Unit, onLogout: () -> Unit) {
 
         Text("Settings Screen")
 
-
+        ClientSyncScreen()
 
 
         MainScreen()

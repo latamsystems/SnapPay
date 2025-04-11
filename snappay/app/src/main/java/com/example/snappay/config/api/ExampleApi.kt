@@ -20,7 +20,7 @@ class ExampleApi {
 
             if (response.status.isSuccess()) {
                 val base: BaseResponse<ClientData> = response.body()
-                return@withContext base.data.client
+                return@withContext base.data?.client ?: emptyList()
             } else {
                 throw parseApiException(response)
             }
