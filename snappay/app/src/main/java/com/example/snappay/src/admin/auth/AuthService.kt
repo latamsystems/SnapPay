@@ -1,20 +1,21 @@
-package com.example.snappay.src.auth
+package com.example.snappay.src.admin.auth
 
-import com.example.snappay.config.api.exeption.parseApiException
 import com.example.snappay.config.api.ApiClient
 import com.example.snappay.config.api.BaseResponse
+import com.example.snappay.config.api.exeption.parseApiException
+import com.example.snappay.src.admin.auth.SessionManager
 import io.ktor.client.call.body
-import io.ktor.client.statement.HttpResponse
-import io.ktor.client.request.post
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.request.get
+import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 object AuthService {
 

@@ -1,4 +1,4 @@
-package com.example.snappay.core.screen
+package com.example.snappay.core.screen.admin
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.snappay.R
-import com.example.snappay.src.auth.AuthViewModel
+import com.example.snappay.src.admin.auth.AuthViewModel
 
 @Composable
 fun LoginScreen(navigationToHome: () -> Unit, navigationToSettings: () -> Unit, viewModel: AuthViewModel = viewModel()) {

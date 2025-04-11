@@ -11,13 +11,13 @@ import com.example.snappay.core.navigation.type.lastInfoType
 import com.example.snappay.core.screen.FineScreen
 import com.example.snappay.core.screen.HomeScreen
 import com.example.snappay.core.screen.example.DetailsScreen
-import com.example.snappay.core.screen.LoginScreen
+import com.example.snappay.core.screen.admin.LoginScreen
 import com.example.snappay.core.screen.PayScreen
 import com.example.snappay.core.screen.PaymentsScreen
-import com.example.snappay.core.screen.SettingsScreen
+import com.example.snappay.core.screen.admin.SettingsScreen
 import com.example.snappay.core.screen.example.FirstScreen
 import com.example.snappay.core.screen.example.LastScreen
-import com.example.snappay.src.auth.SessionManager
+import com.example.snappay.src.admin.auth.SessionManager
 import kotlin.reflect.typeOf
 
 @Composable

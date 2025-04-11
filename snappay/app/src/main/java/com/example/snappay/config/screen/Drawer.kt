@@ -22,8 +22,8 @@ import com.example.snappay.core.navigation.AppScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import androidx.navigation.NavHostController
-import com.example.snappay.src.auth.AuthService
-import com.example.snappay.src.auth.SessionManager
+import com.example.snappay.src.admin.auth.AuthService
+import com.example.snappay.src.admin.auth.SessionManager
 import kotlin.reflect.KClass
 
 @Composable

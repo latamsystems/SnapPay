@@ -1,4 +1,4 @@
-package com.example.snappay.src.auth
+package com.example.snappay.src.admin.auth
 
 import kotlinx.serialization.Serializable
 

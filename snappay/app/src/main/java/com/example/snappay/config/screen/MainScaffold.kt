@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.snappay.core.navigation.*
-import com.example.snappay.src.auth.SessionManager
+import com.example.snappay.src.admin.auth.SessionManager
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)

@@ -49,7 +49,7 @@ export class ClientService {
         if (!client) return HttpResponse.notFound({ message: reqMsg.notFound, field: "fid" });
 
         // Devuelve los detalles del usuario
-        return HttpResponse.success({message: reqMsg.success, data: client});
+        return HttpResponse.success({ message: reqMsg.success, data: { client } });
     }
 
 
@@ -91,7 +91,7 @@ export class ClientService {
         const io = getIo();
         io.emit('client:sync', result);
 
-        return HttpResponse.success({message: `${reqMsg.success} ${valid_identification.firstname_client} ${valid_identification.lastname_client}`});
+        return HttpResponse.success({ message: `${reqMsg.success} ${valid_identification.firstname_client} ${valid_identification.lastname_client}` });
     }
 
 }

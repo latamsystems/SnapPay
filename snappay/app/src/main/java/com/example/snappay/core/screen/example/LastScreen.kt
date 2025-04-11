@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.snappay.core.navigation.LastInfo
-import com.example.snappay.src.auth.AuthService
+import com.example.snappay.src.admin.auth.AuthService
 import com.example.snappay.src.example.MainScreen
 import kotlinx.coroutines.launch
 

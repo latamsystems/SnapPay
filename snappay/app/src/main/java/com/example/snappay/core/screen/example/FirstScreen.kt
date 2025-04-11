@@ -13,7 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.snappay.src.auth.SessionManager
+import com.example.snappay.src.admin.auth.SessionManager
 
 @Composable
 fun FirstScreen(navigationToDetail: (String) -> Unit) {

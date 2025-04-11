@@ -1,4 +1,4 @@
-package com.example.snappay.core.screen
+package com.example.snappay.core.screen.admin
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
