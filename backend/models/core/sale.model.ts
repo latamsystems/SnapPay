@@ -9,6 +9,8 @@ import Status from '@/models/entities/status.model';
 // Definir el modelo en TypeScript extendiendo Sequelize Model
 class SaleModel extends Model<Sale, SaleCreationAttributes> implements Sale {
   public id_sale!: number;
+  public fid!: string;
+  public fcm_token!: string;
   public imei_sale!: string;
   public fees_sale!: number;
   public isFine_sale?: boolean;
@@ -39,6 +41,16 @@ SaleModel.init({
     allowNull: false,
     primaryKey: true,
     autoIncrement: true
+  },
+  fid: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    unique: true
+  },
+  fcm_token: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    unique: true
   },
   imei_sale: {
     type: DataTypes.STRING,

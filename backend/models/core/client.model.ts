@@ -7,8 +7,6 @@ import Status from '@/models/entities/status.model';
 // Definir el modelo en TypeScript extendiendo Sequelize Model
 class ClientModel extends Model<Client, ClientCreationAttributes> implements Client {
   public id_client!: number;
-  public fid!: string;
-  public fcm_token!: string;
   public firstname_client!: string;
   public lastname_client!: string;
   public identification_client!: string;
@@ -34,16 +32,6 @@ ClientModel.init({
     allowNull: false,
     primaryKey: true,
     autoIncrement: true
-  },
-  fid: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    unique: true
-  },
-  fcm_token: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    unique: true
   },
   firstname_client: {
     type: DataTypes.STRING(100),

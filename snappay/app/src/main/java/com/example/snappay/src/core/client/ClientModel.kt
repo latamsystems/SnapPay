@@ -24,6 +24,11 @@ data class ClientModel(
 )
 
 @Serializable
+data class ClientWarper(
+    val client: ClientModel
+)
+
+@Serializable
 data class ClientData(
     val client: List<ClientModel>
 )

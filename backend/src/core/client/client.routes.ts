@@ -7,9 +7,6 @@ import { crud, ClientController } from "@/src/core/client/client.controller";
 const router = Router();
 
 // EndPoints
-router.get('/firebase/:idf', ClientController.firebaseClient);
-router.put('/sync', verifyToken, ClientController.syncClient);
-
 router.use("/", verifyToken, crudRoutes(crud)); // CRUD
 
 export default router;

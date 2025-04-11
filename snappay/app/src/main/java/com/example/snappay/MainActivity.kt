@@ -2,13 +2,17 @@ package com.example.snappay
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.lifecycle.lifecycleScope
 import com.example.snappay.config.screen.MainScaffold
+import com.example.snappay.src.auth.ClientAuthService
 import com.example.snappay.ui.theme.SnappayTheme
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
@@ -25,6 +29,9 @@ class MainActivity : ComponentActivity() {
 //        UserManager.checkOrCreateUser(this) { uid ->
 //            Log.d("FIREBASE", "✅ Usuario listo con UID: $uid")
 //        }
+
+        // Login automático del cliente
+        signClient()
 
         enableEdgeToEdge()
         setContent {
@@ -65,6 +72,21 @@ class MainActivity : ComponentActivity() {
                         Log.e("FIREBASE", "Error al autenticar", task.exception)
                     }
                 }
+        }
+    }
+
+
+    private fun signClient() {
+        lifecycleScope.launch {
+            try {
+                val msg = ClientAuthService.loginWithFid()
+                Log.d("CLIENT_LOGIN", "$msg")
+                Toast.makeText(this@MainActivity, msg, Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                val errorMsg = "Error al autenticar cliente: ${e.message}"
+                Log.e("CLIENT_LOGIN", "$errorMsg")
+                Toast.makeText(this@MainActivity, errorMsg, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

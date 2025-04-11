@@ -7,6 +7,8 @@ import { Status } from '@/models/interface/status.interface';
 // Sale interface
 export interface Sale {
   id_sale: number;
+  fid?: string;
+  fcm_token?: string;
   imei_sale: string;
   fees_sale: number;
   isFine_sale?: boolean;
