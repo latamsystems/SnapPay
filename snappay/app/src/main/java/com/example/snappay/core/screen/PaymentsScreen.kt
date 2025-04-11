@@ -1,69 +1,113 @@
 package com.example.snappay.core.screen
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.snappay.src.auth.SessionSaleManager
-import com.example.snappay.src.junctions.sale_payment.Sale_PaymentModel
-import com.example.snappay.src.junctions.sale_payment.Sale_PaymentService
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberAsyncImagePainter
+import com.example.snappay.src.junctions.sale_payment.PaymentsViewModel
 
 @Composable
-fun PaymentsScreen() {
-    val sale by SessionSaleManager.sale.collectAsState()
-    val scope = rememberCoroutineScope()
+fun PaymentsScreen(viewModel: PaymentsViewModel = viewModel()) {
+    val pagos by viewModel.pagos.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+    val error by viewModel.error.collectAsState()
 
-    var pagos by remember { mutableStateOf<List<Sale_PaymentModel>>(emptyList()) }
-    var error by remember { mutableStateOf<String?>(null) }
-    var isLoading by remember { mutableStateOf(true) }
+    var selectedImage by remember { mutableStateOf<String?>(null) }
 
-    LaunchedEffect(sale?.id_sale) {
-        sale?.id_sale?.let { id ->
-            isLoading = true
-            try {
-                pagos = Sale_PaymentService.getBySaleId(id)
-            } catch (e: Exception) {
-                error = e.message
-            } finally {
-                isLoading = false
-            }
-        }
+    LaunchedEffect(Unit) {
+        viewModel.loadPayments()
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(20.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-
+    Box(modifier = Modifier.fillMaxSize()) {
         when {
             isLoading -> {
-                CircularProgressIndicator()
+                Box(Modifier.fillMaxSize(), Alignment.Center) {
+                    CircularProgressIndicator()
+                }
             }
+
             error != null -> {
-                Text("Error: $error", color = MaterialTheme.colorScheme.error)
+                Box(Modifier.fillMaxSize(), Alignment.Center) {
+                    Text("Error: $error", color = MaterialTheme.colorScheme.error)
+                }
             }
+
             pagos.isEmpty() -> {
-                Text("No hay pagos aún.")
+                Box(Modifier.fillMaxSize(), Alignment.Center) {
+                    Text("No hay pagos aún.")
+                }
             }
+
             else -> {
-                pagos.forEach { pago ->
-                    pago.payment?.let { p ->
-                        Card(
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
-                        ) {
-                            Column(Modifier.padding(16.dp)) {
-                                Text("Documento: ${p.numDocument_payment}", style = MaterialTheme.typography.bodyMedium)
-                                Text("Valor: \$${p.value_payment}")
-                                Text("Fecha: ${p.created_at_payment.substringBefore("T")}")
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(20.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    pagos.forEach { pago ->
+                        pago.payment?.let { p ->
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+                            ) {
+                                Column(Modifier.padding(16.dp)) {
+                                    Text("Documento: ${p.numDocument_payment}")
+                                    Text("Valor: \$${p.value_payment}")
+                                    Text("Fecha: ${p.created_at_payment.substringBefore("T")}")
+                                    Text("Estado: ${estadoTexto(p.id_status)}")
+
+                                    if (!p.media_payment.isNullOrBlank()) {
+                                        Spacer(modifier = Modifier.height(8.dp))
+                                        Image(
+                                            painter = rememberAsyncImagePainter(p.media_payment),
+                                            contentDescription = "Voucher",
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(150.dp)
+                                                .clickable {
+                                                    selectedImage = p.media_payment
+                                                }
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
         }
+
+        // Fullscreen image preview
+        selectedImage?.let { imageUrl ->
+            AlertDialog(
+                onDismissRequest = { selectedImage = null },
+                confirmButton = {},
+                text = {
+                    Image(
+                        painter = rememberAsyncImagePainter(imageUrl),
+                        contentDescription = "Comprobante",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(400.dp)
+                    )
+                }
+            )
+        }
+    }
+}
+
+fun estadoTexto(statusId: Int): String {
+    return when (statusId) {
+        3 -> "✅ Pagado"
+        4 -> "⏳ Pendiente"
+        6 -> "❌ Rechazado"
+        else -> "Desconocido"
     }
 }
