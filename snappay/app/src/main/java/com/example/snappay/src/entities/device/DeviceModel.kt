@@ -1,4 +1,4 @@
-package com.example.snappay.src.core.device
+package com.example.snappay.src.entities.device
 
 import com.example.snappay.src.core.user.UserModel
 import com.example.snappay.src.entities.status.StatusModel

@@ -6,4 +6,5 @@ import kotlinx.serialization.Serializable
 data class SyncModel(
     val id_sale: Int,
     val fid: String,
+    val identification_client: String
 )

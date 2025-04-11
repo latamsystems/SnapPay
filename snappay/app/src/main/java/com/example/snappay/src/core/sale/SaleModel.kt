@@ -1,7 +1,7 @@
 package com.example.snappay.src.core.sale
 
 import com.example.snappay.src.core.client.ClientModel
-import com.example.snappay.src.core.device.DeviceModel
+import com.example.snappay.src.entities.device.DeviceModel
 import com.example.snappay.src.core.user.UserModel
 import com.example.snappay.src.entities.status.StatusModel
 import kotlinx.serialization.Serializable

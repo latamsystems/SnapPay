@@ -103,14 +103,6 @@ export class SaleService {
         const valid_idf = await models.Sale.findOne({ where: { fid } });
         if (valid_idf && valid_idf.fid !== fid) return HttpResponse.conflict({ message: reqMsg.sameId, field: "fid" });
 
-        // // Obtener la venta
-        // const sale = await models.Sale.findOne({
-        //     where: { id_sale },
-        //     include: [
-        //         { model: models.Client, as: "client" },
-        //     ]
-        // });
-
         // Actualizar cliente
         const result = await models.Sale.update({ fid }, { where: { id_sale } });
 

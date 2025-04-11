@@ -7,6 +7,7 @@ import { crud, Sale_PaymentController } from "@/src/junctions/sale_payment/sale_
 const router = Router();
 
 // EndPoints
+router.get('/', crud.getAll);
 
 router.use("/", verifyToken, crudRoutes(crud)); // CRUD
 

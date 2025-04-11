@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import android.widget.Toast
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.platform.LocalContext
 import com.example.snappay.src.core.sale.SaleService
 
@@ -21,6 +22,7 @@ fun ClientSyncScreen() {
 
     var idSale by remember { mutableStateOf("") }
     var fid by remember { mutableStateOf("") }
+    var identificationClient by remember { mutableStateOf("") }
     var message by remember { mutableStateOf<String?>(null) }
     var isLoading by remember { mutableStateOf(false) }
 
@@ -51,13 +53,19 @@ fun ClientSyncScreen() {
             label = { Text("FID") },
             enabled = !isLoading
         )
+        OutlinedTextField(
+            value = identificationClient,
+            onValueChange = { identificationClient = it },
+            label = { Text("Identificación Cliente") },
+            enabled = !isLoading
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onClick = {
                 // Validación
-                if (idSale.isBlank() || fid.isBlank()) {
+                if (idSale.isBlank() || fid.isBlank() || identificationClient.isBlank()) {
                     Toast.makeText(context, "Completa todos los campos", Toast.LENGTH_SHORT).show()
                     return@Button
                 }
@@ -69,9 +77,16 @@ fun ClientSyncScreen() {
                         val request = SyncModel(
                             id_sale = idSale.toInt(),
                             fid = fid,
+                            identification_client = identificationClient
                         )
                         val msg = SaleService.syncSale(request)
                         message = msg
+
+                        // Limpiar campos
+                        idSale = ""
+                        fid = ""
+                        identificationClient = ""
+
                     } catch (e: Exception) {
                         message = e.message
                     } finally {
@@ -88,6 +103,8 @@ fun ClientSyncScreen() {
                         .width(20.dp),
                     strokeWidth = 2.dp
                 )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Sincronizando...", color = MaterialTheme.colorScheme.primary)
             } else {
                 Text("Enviar sincronización")
             }

@@ -1,5 +1,6 @@
 package com.example.snappay.core.screen
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -16,6 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.snappay.src.auth.SessionClientManager
 import com.example.snappay.src.auth.SessionSaleManager
+import androidx.compose.ui.res.painterResource
+import com.example.snappay.R
+import com.example.snappay.src.common.NoAuthScreen
 
 @Composable
 fun HomeScreen() {
@@ -142,17 +146,7 @@ fun HomeScreen() {
 
 
         } ?: run {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "Cliente no autenticado",
-                    style = MaterialTheme.typography.bodyLarge.copy(color = Color.Gray)
-                )
-            }
-
+            NoAuthScreen()
         }
     }
 }
