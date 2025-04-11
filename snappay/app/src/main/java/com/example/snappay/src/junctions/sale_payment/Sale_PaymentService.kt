@@ -1,5 +1,6 @@
 package com.example.snappay.src.junctions.sale_payment
 
+import com.example.snappay.config.api.ApiClient
 import com.example.snappay.config.api.GenericService
 
 object Sale_PaymentService {
@@ -10,5 +11,9 @@ object Sale_PaymentService {
         ) { data: Sale_PaymentData ->
             data.sale_payment
         }
+    }
+
+    suspend fun delete(id: Int) {
+        GenericService.delete<Any>("sale_payment", id)
     }
 }

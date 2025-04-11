@@ -38,6 +38,14 @@ const controllerMethods = {
         },
         params: [req.params.id, req.body],
     }),
+    delete: async (req: Request, res: Response) => handleController({
+        req, res, serviceFunction: sale_paymentService.crud.delete,
+        resMsg: {
+            success: 'Registro eliminado exitosamente.',
+            notFound: 'Registro no encontrado.',
+        },
+        params: [req.params.id],
+    }),
 }
 
 // Exporta el CRUD con los métodos personalizados

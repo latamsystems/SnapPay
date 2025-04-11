@@ -180,6 +180,54 @@ const serviceMethods = {
             return HttpResponse.success({ message: reqMsg.success });
         },
         params: [id_sale_payment, formData]
+    }),
+    delete: (id_sale_payment: number, reqMsg: Record<string, string>) => handleService({
+        consoleHelper, async serviceFunction(...args) {
+            const [id_sale_payment] = args as [number];
+
+            // Reglas de validación
+            await validateRequest<Sale_Payment>({
+                model: models.Sale_Payment,
+                rules: [
+                    rule.recordExists(id_sale_payment, reqMsg.notFound),
+                ],
+            });
+
+            // Obtener el pago
+            const sale_payment = await models.Sale_Payment.findOne({
+                where: { id_sale_payment },
+                include: [
+                    {
+                        model: models.Payment,
+                        as: 'payment'
+                    }
+                ]
+            })
+
+            // Transaccion
+            let transaction = await dbConnection.transaction();
+
+            // Eliminar el pago
+            const delete_sale_payment = await models.Sale_Payment.destroy({
+                where: { id_sale_payment }, transaction
+            });
+
+            // Eliminar el pago
+            await models.Payment.destroy({
+                where: { id_payment: sale_payment?.payment?.id_payment }, transaction
+            });
+
+            // Confirmar transacción
+            await transaction.commit();
+
+            // Emitir evento a todos los clientes conectados
+            const io = getIo();
+            io.emit('sale_payment:deleted', delete_sale_payment);
+
+
+            return HttpResponse.success({ message: reqMsg.success });
+        },
+        params: [id_sale_payment]
     })
 };
 

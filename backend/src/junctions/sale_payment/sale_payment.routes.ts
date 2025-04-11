@@ -8,6 +8,7 @@ const router = Router();
 
 // EndPoints
 router.get('/', crud.getAll);
+router.delete('/:id', crud.delete);
 
 router.use("/", verifyToken, crudRoutes(crud)); // CRUD
 

@@ -26,8 +26,7 @@ fun HomeScreen() {
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(20.dp),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalAlignment = Alignment.Start
     ) {
