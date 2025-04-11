@@ -30,15 +30,23 @@ fun NavigationWarper(navController: NavHostController) {
             if (SessionManager.isLoggedIn()) {
                 LaunchedEffect(Unit) {
                     navController.popBackStack()
-                    navController.navigate(AppScreen.Home) {
+                    navController.navigate(AppScreen.Settings) {
                         launchSingleTop = true
                         popUpTo(AppScreen.Login) { inclusive = true }
                     }
                 }
             } else {
-                LoginScreen(navigationToHome = {
-                    navController.navigate(AppScreen.Home)
-                })
+                LoginScreen(
+                    navigationToHome = {
+                        navController.navigate(AppScreen.Home)
+                    },
+                    navigationToSettings = {
+                        navController.navigate(AppScreen.Settings) {
+                            launchSingleTop = true
+                            popUpTo(AppScreen.Login) { inclusive = true }
+                        }
+                    },
+                )
             }
         }
 

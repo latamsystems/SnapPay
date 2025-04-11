@@ -17,7 +17,7 @@ class AuthViewModel : ViewModel() {
     private val _message = MutableStateFlow("")
     val message: StateFlow<String> = _message
 
-    fun login(navigationToHome: () -> Unit) {
+    fun login(navigationToSettings: () -> Unit) {
         if (email.isBlank() || password.isBlank()) {
             _message.value = "Completa todos los campos."
             return
@@ -29,7 +29,7 @@ class AuthViewModel : ViewModel() {
                 val msg = AuthService.login(email, password)
                 AuthService.getUserDetails()
                 _message.value = msg
-                navigationToHome()
+                navigationToSettings() // ⬅️ CAMBIO AQUÍ
             } catch (e: ApiException) {
                 _message.value = e.message ?: "Error de autenticación"
             } catch (e: Exception) {
@@ -39,4 +39,5 @@ class AuthViewModel : ViewModel() {
             }
         }
     }
+
 }

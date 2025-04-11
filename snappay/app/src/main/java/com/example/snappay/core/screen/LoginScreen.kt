@@ -23,7 +23,7 @@ import com.example.snappay.R
 import com.example.snappay.src.auth.AuthViewModel
 
 @Composable
-fun LoginScreen(navigationToHome: () -> Unit, viewModel: AuthViewModel = viewModel()) {
+fun LoginScreen(navigationToHome: () -> Unit, navigationToSettings: () -> Unit, viewModel: AuthViewModel = viewModel()) {
     val isDark = isSystemInDarkTheme()
     val logoRes = if (isDark) R.drawable.logo_white else R.drawable.logo_black
     val message by viewModel.message.collectAsState()
@@ -84,7 +84,7 @@ fun LoginScreen(navigationToHome: () -> Unit, viewModel: AuthViewModel = viewMod
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(
-                onClick = { viewModel.login(navigationToHome) },
+                onClick = { viewModel.login(navigationToSettings) },
                 modifier = Modifier.fillMaxWidth(),
                 enabled = !viewModel.isLoading
             ) {
@@ -122,5 +122,8 @@ fun LoginScreen(navigationToHome: () -> Unit, viewModel: AuthViewModel = viewMod
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(navigationToHome = {})
+    LoginScreen(
+        navigationToHome = {},
+        navigationToSettings = {}
+    )
 }
