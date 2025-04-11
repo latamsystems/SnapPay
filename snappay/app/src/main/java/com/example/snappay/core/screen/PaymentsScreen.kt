@@ -37,17 +37,13 @@ fun PaymentsScreen() {
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(
-            text = "💸 Pagos realizados",
-            style = MaterialTheme.typography.titleLarge
-        )
 
         when {
             isLoading -> {
                 CircularProgressIndicator()
             }
             error != null -> {
-                Text("❌ Error: $error", color = MaterialTheme.colorScheme.error)
+                Text("Error: $error", color = MaterialTheme.colorScheme.error)
             }
             pagos.isEmpty() -> {
                 Text("No hay pagos aún.")

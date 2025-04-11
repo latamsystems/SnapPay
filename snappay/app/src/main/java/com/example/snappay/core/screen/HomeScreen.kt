@@ -17,8 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.snappay.src.auth.SessionClientManager
 import com.example.snappay.src.auth.SessionSaleManager
-import androidx.compose.ui.res.painterResource
-import com.example.snappay.R
 import com.example.snappay.src.common.NoAuthScreen
 
 @Composable

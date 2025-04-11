@@ -93,7 +93,7 @@ const serviceMethods = {
                 numDocument_payment: formData.numDocument_payment,
                 value_payment: formData.value_payment,
                 media_payment: formData.media_payment,
-                id_status: 1,
+                id_status: 4,
             }, { transaction });
 
             // Crear tabla de rompimiento
