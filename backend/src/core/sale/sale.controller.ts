@@ -43,6 +43,7 @@ export class SaleController {
         messages: {
             success: 'Se ha sincronizado el cliente:',
             notFound: 'La venta con ese id no existe.',
+            notFoundIdentification: 'La venta no coincide con la identificación del cliente',
             sameId: 'El ID de Authenticación ya se encuentra registrado por otro cliente.',
         },
         extractParams: (req: Request) => [req.body]

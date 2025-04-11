@@ -9,6 +9,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SaleModel(
     val id_sale: Int,
+    val fid: String? = null,
+    val fcm_token: String? = null,
     val imei_sale: String,
     val fees_sale: Int,
     val isFine_sale: Boolean,
@@ -24,6 +26,11 @@ data class SaleModel(
     val device: DeviceModel? = null,
     val user: UserModel? = null,
     val status: StatusModel? = null
+)
+
+@Serializable
+data class SaleDataWarper(
+    val sale: SaleModel
 )
 
 @Serializable

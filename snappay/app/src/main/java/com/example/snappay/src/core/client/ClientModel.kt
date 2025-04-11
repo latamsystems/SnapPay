@@ -7,8 +7,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ClientModel(
     val id_client: Int,
-    val fid: String? = null,
-    val fcm_token: String? = null,
     val firstname_client: String,
     val lastname_client: String,
     val identification_client: String,

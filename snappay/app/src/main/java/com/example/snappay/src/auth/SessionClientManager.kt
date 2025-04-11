@@ -8,7 +8,7 @@ object SessionClientManager {
     private val _client = MutableStateFlow<ClientModel?>(null)
     val client: StateFlow<ClientModel?> = _client
 
-    fun setClient(data: ClientModel) {
+    fun setClient(data: ClientModel?) {
         _client.value = data
     }
 

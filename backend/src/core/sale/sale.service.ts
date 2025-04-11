@@ -71,9 +71,9 @@ export class SaleService {
      * @returns 
      */
     @Service
-    static async syncSale(formData: Sale, reqMsg: Record<string, string>) {
+    static async syncSale(formData: any, reqMsg: Record<string, string>) {
 
-        const { id_sale, fid } = formData;
+        const { id_sale, fid, identification_client } = formData;
 
         // Reglas de validación
         await validateRequest({
@@ -81,14 +81,10 @@ export class SaleService {
             formData,
             rules: [
                 rule.validateFieldTypes(),
-                rule.requiredFields(['id_sale', 'fid']),
+                rule.requiredFields(['id_sale', 'fid', 'identification_client']),
                 rule.recordExists(id_sale, reqMsg.notFound),
             ],
         });
-
-        // Validar si el id del ya esta registrado
-        const valid_idf = await models.Sale.findOne({ where: { fid } });
-        if (valid_idf && valid_idf.fid !== fid) return HttpResponse.conflict({ message: reqMsg.sameId, field: "fid" });
 
         // Obtener la venta
         const sale = await models.Sale.findOne({
@@ -97,6 +93,23 @@ export class SaleService {
                 { model: models.Client, as: "client" },
             ]
         });
+
+        // Verifico si el identificacion del cliente coincide
+        if (sale?.client?.identification_client !== identification_client) {
+            return HttpResponse.conflict({ message: reqMsg.notFoundIdentification, field: "identification_client" });
+        }
+
+        // Validar si el id del ya esta registrado
+        const valid_idf = await models.Sale.findOne({ where: { fid } });
+        if (valid_idf && valid_idf.fid !== fid) return HttpResponse.conflict({ message: reqMsg.sameId, field: "fid" });
+
+        // // Obtener la venta
+        // const sale = await models.Sale.findOne({
+        //     where: { id_sale },
+        //     include: [
+        //         { model: models.Client, as: "client" },
+        //     ]
+        // });
 
         // Actualizar cliente
         const result = await models.Sale.update({ fid }, { where: { id_sale } });

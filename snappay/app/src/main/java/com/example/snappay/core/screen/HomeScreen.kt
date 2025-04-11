@@ -15,10 +15,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.snappay.src.auth.SessionClientManager
+import com.example.snappay.src.auth.SessionSaleManager
 
 @Composable
 fun HomeScreen() {
     val clientState by SessionClientManager.client.collectAsState()
+    val saleState by SessionSaleManager.sale.collectAsState()
 
     Column(
         modifier = Modifier
@@ -107,6 +109,34 @@ fun HomeScreen() {
                     InfoRow(label = "Cédula", value = client.identification_client)
                     InfoRow(label = "Correo", value = client.email_client)
                     InfoRow(label = "Teléfono", value = client.phone_client)
+                }
+            }
+
+            // Información de la compra
+            saleState?.let { sale ->
+                Surface(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .shadow(3.dp, RoundedCornerShape(16.dp)),
+                    shape = RoundedCornerShape(16.dp),
+                    color = MaterialTheme.colorScheme.onTertiary
+                ) {
+                    Column(
+                        modifier = Modifier.padding(20.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Text(
+                            "📦 Información de la compra",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+
+                        InfoRow(label = "IMEI", value = sale.imei_sale)
+                        InfoRow(label = "Cuotas totales", value = sale.fees_sale.toString())
+                        InfoRow(label = "Fecha de activación", value = sale.activation_at_sale.substringBefore("T"))
+                        InfoRow(label = "¿Tiene multa?", value = if (sale.isFine_sale) "Sí" else "No")
+                    }
                 }
             }
 
