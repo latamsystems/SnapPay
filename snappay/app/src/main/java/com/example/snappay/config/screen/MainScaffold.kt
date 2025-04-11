@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.snappay.core.navigation.*
+import com.example.snappay.src.auth.SessionManager
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,7 +50,8 @@ fun MainScaffold() {
                     closeDrawer = { drawerState.close() }
                 )
             }
-        }
+        },
+        gesturesEnabled = SessionManager.isLoggedIn()
     ) {
         Scaffold(
             topBar = {

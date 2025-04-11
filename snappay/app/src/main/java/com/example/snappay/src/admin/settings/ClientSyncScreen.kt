@@ -97,7 +97,7 @@ fun ClientSyncScreen() {
                     strokeWidth = 2.dp
                 )
             } else {
-                Text("Enviar")
+                Text("Enviar Sincronización")
             }
         }
     }

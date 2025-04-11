@@ -73,16 +73,7 @@ fun NavigationWarper(navController: NavHostController) {
         //  Configuraciones
         composable<AppScreen.Settings> { backstackEntry ->
             if (SessionManager.isLoggedIn() && !ApiClient.isTokenExpired()) {
-                SettingsScreen (
-                    navigationToBack = {
-                        navController.popBackStack()
-                    },
-                    onLogout = {
-                        navController.navigate(AppScreen.Home) {
-                            popUpTo(AppScreen.Login) { inclusive = true }
-                        }
-                    }
-                )
+                SettingsScreen ()
             } else {
                 ApiClient.token = null
                 LaunchedEffect(Unit) {

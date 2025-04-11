@@ -14,6 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.snappay.R
+import com.example.snappay.src.auth.SessionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -56,14 +57,21 @@ fun AppTopBar(
                         .height(40.dp)
                         .padding(horizontal = 10.dp)
                         .clickable {
-                            logoClickCount++
-                            if (logoClickCount >= 5) {
+                            if (!SessionManager.isLoggedIn()){
+                                logoClickCount++
+                                if (logoClickCount >= 5) {
+                                    scope.launch {
+                                        onMenuClick()
+                                        logoClickCount = 0
+                                    }
+                                }
+                            } else {
                                 scope.launch {
                                     onMenuClick()
-                                    logoClickCount = 0
                                 }
                             }
                         }
+
                 )
             }
         )
