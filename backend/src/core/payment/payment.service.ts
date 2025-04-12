@@ -47,7 +47,7 @@ export class PaymentService {
 
         // Reglas de validación
         await validateRequest({
-            model: models.User,
+            model: models.Payment,
             formData,
             rules: [
                 rule.validateFieldTypes(),
