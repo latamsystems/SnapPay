@@ -2,6 +2,7 @@ package com.example.snappay.core.screen
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.*
@@ -16,6 +17,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -55,25 +57,35 @@ fun PaymentsScreen(viewModel: PaymentsViewModel = viewModel()) {
                     Text("Error: $error", color = MaterialTheme.colorScheme.error)
                 }
 
-                pagos.isEmpty() -> Box(Modifier.fillMaxSize(), Alignment.Center) {
-                    Text("No hay pagos aún.")
+                pagos.none { it.payment != null } -> Box(Modifier.fillMaxSize(), Alignment.Center) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Icon(
+                            imageVector = Icons.Default.Pending,
+                            contentDescription = "Sin pagos",
+                            tint = Color.Gray,
+                            modifier = Modifier.size(64.dp)
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            "No hay pagos disponibles",
+                            style = MaterialTheme.typography.titleMedium.copy(color = Color.Gray)
+                        )
+                    }
                 }
 
                 else -> Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     pagos.forEach { pago ->
                         val payment = pago.payment ?: return@forEach
                         var dismissed by remember { mutableStateOf(false) }
                         var offsetX by remember { mutableStateOf(0f) }
                         var showConfirm by remember { mutableStateOf(false) }
+                        var cardWidth by remember { mutableStateOf(1f) }
 
                         if (!dismissed) {
-                            var cardWidth by remember { mutableStateOf(1f) } // para evitar división por cero
-
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -81,10 +93,12 @@ fun PaymentsScreen(viewModel: PaymentsViewModel = viewModel()) {
                                         cardWidth = it.size.width.toFloat()
                                     }
                             ) {
-                                // Fondo con ícono de basura
+                                // Fondo de eliminación
                                 Box(
                                     modifier = Modifier
                                         .matchParentSize()
+                                        .clip(RoundedCornerShape(14.dp))
+                                        .background(Color.Red.copy(alpha = 0.1f))
                                         .padding(end = 24.dp),
                                     contentAlignment = Alignment.CenterEnd
                                 ) {
@@ -96,7 +110,7 @@ fun PaymentsScreen(viewModel: PaymentsViewModel = viewModel()) {
                                     )
                                 }
 
-                                // Card deslizante
+                                // Card principal
                                 Card(
                                     modifier = Modifier
                                         .offset(x = offsetX.dp)
@@ -109,13 +123,11 @@ fun PaymentsScreen(viewModel: PaymentsViewModel = viewModel()) {
                                                     }
                                                 },
                                                 onDragEnd = {
-                                                    val threshold = -cardWidth * 0.2f // antes era 0.8f
-                                                    if (offsetX <= threshold) {
+                                                    if (offsetX <= -cardWidth * 0.2f) {
                                                         showConfirm = true
                                                     } else {
                                                         offsetX = 0f
                                                     }
-
                                                 }
                                             )
                                         }
@@ -124,24 +136,21 @@ fun PaymentsScreen(viewModel: PaymentsViewModel = viewModel()) {
                                                 selectedImage = payment.media_payment
                                             }
                                         },
-                                    shape = RoundedCornerShape(16.dp),
-                                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
-                                    elevation = CardDefaults.cardElevation(4.dp)
+                                    shape = RoundedCornerShape(14.dp),
+                                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+                                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.onSecondary)
                                 ) {
                                     Row(
                                         modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(16.dp),
+                                            .padding(16.dp)
+                                            .fillMaxWidth(),
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
                                         Column(
                                             modifier = Modifier.weight(1f),
                                             verticalArrangement = Arrangement.spacedBy(4.dp)
                                         ) {
-                                            Text(
-                                                "Documento: ${payment.numDocument_payment}",
-                                                fontWeight = FontWeight.SemiBold
-                                            )
+                                            Text("Documento: ${payment.numDocument_payment}", fontWeight = FontWeight.SemiBold)
                                             Text("Valor: \$${payment.value_payment}")
                                             Text("Fecha: ${payment.created_at_payment.substringBefore("T")}")
                                             Text(
@@ -182,7 +191,7 @@ fun PaymentsScreen(viewModel: PaymentsViewModel = viewModel()) {
                                     }
                                 }
 
-                                // Confirmación de eliminación
+                                // Confirmación
                                 if (showConfirm) {
                                     AlertDialog(
                                         onDismissRequest = {
@@ -222,8 +231,6 @@ fun PaymentsScreen(viewModel: PaymentsViewModel = viewModel()) {
                             }
                         }
                     }
-
-
                 }
             }
 

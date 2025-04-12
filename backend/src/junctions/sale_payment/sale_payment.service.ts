@@ -236,4 +236,4 @@ export default { crud: CrudService(models.Sale_Payment, consoleHelper, config, s
 // =============================================================================
 // =============================================================================
 
-export class Sale_PaymentService { }
+export class Sale_PaymentService {}

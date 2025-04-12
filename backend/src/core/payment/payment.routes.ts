@@ -7,6 +7,7 @@ import { crud, PaymentController } from "@/src/core/payment/payment.controller";
 const router = Router();
 
 // EndPoints
+router.put('/status/:id', verifyToken, PaymentController.statusPayment);
 
 router.use("/", verifyToken, crudRoutes(crud)); // CRUD
 

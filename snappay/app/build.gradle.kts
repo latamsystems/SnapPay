@@ -45,8 +45,13 @@ android {
 
 dependencies {
 
-    implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("androidx.compose.material:material-icons-extended")
+
+    // Load Screen
+    implementation("com.google.accompanist:accompanist-swiperefresh:0.33.2-alpha")
+
+    // Imagenes
+    implementation("io.coil-kt:coil-compose:2.4.0")
 
     // Firebase
     implementation("com.google.firebase:firebase-firestore-ktx")

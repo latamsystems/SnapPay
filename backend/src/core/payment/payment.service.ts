@@ -31,4 +31,41 @@ export default { crud: CrudService(models.Payment, consoleHelper, config) };
 // =============================================================================
 // =============================================================================
 
-export class PaymentService { }
+export class PaymentService {
+
+    /**
+     * Actualizar estado de pago
+     * @param id_payment 
+     * @param formData 
+     * @param reqMsg 
+     * @returns 
+     */
+    @Service
+    static async statusPayment(id_payment: number, formData: Payment, reqMsg: Record<string, string>) {
+
+        const { id_status } = formData;
+
+        // Reglas de validación
+        await validateRequest({
+            model: models.User,
+            formData,
+            rules: [
+                rule.validateFieldTypes(),
+                rule.requiredFields(["id_status"]),
+                rule.recordExists(id_payment, reqMsg.notFound),
+            ],
+        });
+
+        // Solo estados permitidis
+        const validStatus = [3, 4, 6];
+        if (!validStatus.includes(id_status)) {
+            return HttpResponse.badRequest({ message: reqMsg.validStatus });
+        }
+
+        // Actualizar datos
+        await models.Payment.update(formData, { where: { id_payment } });
+
+        return HttpResponse.success({ message: reqMsg.success });
+    }
+
+}

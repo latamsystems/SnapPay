@@ -102,7 +102,8 @@ object GenericService {
             try {
                 val response: HttpResponse = ApiClient.client.delete(ApiClient.getUrl("$endpoint/$id"))
                 if (response.status.isSuccess()) {
-                    return@withContext response.body()
+                    val body: BaseResponse<T> = response.body()
+                    return@withContext body
                 } else {
                     throw parseApiException(response)
                 }
@@ -112,4 +113,5 @@ object GenericService {
                 throw parseApiException(e.response)
             }
         }
+
 }

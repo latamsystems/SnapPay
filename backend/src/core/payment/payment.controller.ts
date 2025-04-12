@@ -7,8 +7,30 @@ import { CrudController } from '@/lib/crud/controller/crud.controller';
 import { Controller } from '@/lib/crud/controller/decorator.controller';
 
 // =============================================================================
-
-export class PaymentController { }
+// =============================================================================
 
 // Exporta el CRUD con los métodos personalizados
-export const crud = CrudController({service: paymentService.crud});
+export const crud = CrudController({ service: paymentService.crud });
+
+// =============================================================================
+// =============================================================================
+
+export class PaymentController {
+
+    /**
+     * Actualizar perfil por ID
+     * @param req
+     */
+    @Controller({
+        service: PaymentService.statusPayment,
+        messages: {
+            success: "Pago actualizado exitosamente.",
+            notFound: "Pago no encontrado.",
+            validStatus: "El estado no es correcto.",
+        },
+        extractParams: (req: Request) => [req.params.id, req.body]
+    })
+    static statusPayment() { void 0 }
+
+
+}
