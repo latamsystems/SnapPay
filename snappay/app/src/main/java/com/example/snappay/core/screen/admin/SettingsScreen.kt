@@ -18,15 +18,7 @@ fun SettingsScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-
-
-        Text("Settings Screen")
-
         // Formulario de sincronizacion
         ClientSyncScreen()
-
-
-        MainScreen()
-
     }
 }

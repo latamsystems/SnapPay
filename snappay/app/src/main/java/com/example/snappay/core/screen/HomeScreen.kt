@@ -26,135 +26,118 @@ fun HomeScreen() {
 
     Column(
         modifier = Modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(24.dp),
+            .fillMaxSize()
+            .padding(horizontal = 20.dp, vertical = 24.dp),
+        verticalArrangement = Arrangement.spacedBy(28.dp),
         horizontalAlignment = Alignment.Start
     ) {
         clientState?.let { client ->
 
-            // Obtener primer nombre y apellido
             val firstName = client.firstname_client.split(" ").firstOrNull().orEmpty()
             val lastName = client.lastname_client.split(" ").firstOrNull().orEmpty()
 
-            // Bienvenida personalizada grande
             Text(
-                text = "¡Hola $firstName $lastName 👋!",
-                style = MaterialTheme.typography.headlineLarge.copy(
+                text = "👋 ¡Hola $firstName $lastName!",
+                style = MaterialTheme.typography.headlineMedium.copy(
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
                 )
             )
 
-            // Sección de información general
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .shadow(4.dp, RoundedCornerShape(12.dp)),
-                shape = RoundedCornerShape(12.dp),
-                color = MaterialTheme.colorScheme.surfaceVariant
-            ) {
-                Column(modifier = Modifier.padding(20.dp)) {
-                    Text("📱 Bienvenido a Snap Pay", fontWeight = FontWeight.SemiBold, fontSize = 18.sp)
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Text("Esta app te permite controlar y pagar tu dispositivo.")
-                    Text("Verifica tus cuotas, pagos pendientes y recibe alertas de vencimiento.")
-                }
-            }
+            Text(
+                text = "Te damos la bienvenida a tu espacio de gestión de pagos. Aquí puedes verificar el estado de tu equipo, consultar cuotas y estar al tanto de cualquier novedad.",
+                style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant),
+                modifier = Modifier.padding(end = 12.dp)
+            )
 
-            // Advertencia llamativa
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .shadow(2.dp, RoundedCornerShape(12.dp)),
-                shape = RoundedCornerShape(12.dp),
-                color = Color(0xFFFFEBEE) // rojo claro
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.Warning, contentDescription = null, tint = Color(0xFFD32F2F))
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text("Importante", fontWeight = FontWeight.Bold, color = Color(0xFFD32F2F))
-                    }
-                    Text(
-                        "Si desinstalas esta app, se considerará una falta grave y podrías recibir una multa inmediata.",
-                        color = Color(0xFFD32F2F),
-                        fontSize = 14.sp
-                    )
-                }
-            }
-
-            // Información del cliente con diseño moderno
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .shadow(3.dp, RoundedCornerShape(16.dp)),
-                shape = RoundedCornerShape(16.dp),
+            // Sección general
+            SectionCard(
+                title = "📱 Bienvenido a Snap Pay",
+                subtitle = "Controla tu dispositivo, revisa cuotas, y mantente al tanto de tus pagos.",
                 color = MaterialTheme.colorScheme.onSecondary
-            ) {
-                Column(
-                    modifier = Modifier.padding(20.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Text(
-                        "🧾 Información del cliente",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
+            )
 
-                    InfoRow(label = "Nombre", value = "${client.firstname_client} ${client.lastname_client}")
-                    InfoRow(label = "Cédula", value = client.identification_client)
-                    InfoRow(label = "Correo", value = client.email_client)
-                    InfoRow(label = "Teléfono", value = client.phone_client)
-                }
+            // Advertencia
+            SectionCard(
+                title = "⚠️ Advertencia importante",
+                subtitle = "Desinstalar esta app será considerado una falta grave y podría generar una multa inmediata.",
+                color = Color(0xFFFFEBEE),
+                iconColor = Color(0xFFD32F2F),
+                textColor = Color(0xFFD32F2F)
+            )
+
+            // Datos del cliente
+            SectionCard(title = "🧾 Información del cliente") {
+                InfoRow("Nombre", "${client.firstname_client} ${client.lastname_client}")
+                InfoRow("Cédula", client.identification_client)
+                InfoRow("Correo", client.email_client)
+                InfoRow("Teléfono", client.phone_client)
             }
 
-            // Información de la compra
+            // Datos de la compra
             saleState?.let { sale ->
-                Surface(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .shadow(3.dp, RoundedCornerShape(16.dp)),
-                    shape = RoundedCornerShape(16.dp),
-                    color = MaterialTheme.colorScheme.onTertiary
-                ) {
-                    Column(
-                        modifier = Modifier.padding(20.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        Text(
-                            "📦 Información de la compra",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp,
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
-
-                        InfoRow(label = "IMEI", value = sale.imei_sale)
-                        InfoRow(label = "Cuotas totales", value = sale.fees_sale.toString())
-                        InfoRow(label = "Fecha de activación", value = sale.activation_at_sale.substringBefore("T"))
-                        InfoRow(label = "¿Tiene multa?", value = if (sale.isFine_sale) "Sí" else "No")
-                    }
+                SectionCard(title = "📦 Información de la compra") {
+                    InfoRow("IMEI", sale.imei_sale)
+                    InfoRow("Cuotas totales", sale.fees_sale.toString())
+                    InfoRow("Activación", sale.activation_at_sale.substringBefore("T"))
+                    InfoRow("¿Tiene multa?", if (sale.isFine_sale) "Sí" else "No")
                 }
             }
 
-
-        } ?: run {
-            NoAuthScreen()
-        }
+        } ?: NoAuthScreen()
     }
 }
 
 @Composable
 fun InfoRow(label: String, value: String) {
-    Column {
+    Column(modifier = Modifier.padding(vertical = 4.dp)) {
         Text(label, fontSize = 13.sp, color = MaterialTheme.colorScheme.primary)
         Text(value, fontSize = 15.sp, fontWeight = FontWeight.Medium)
     }
 }
+
+@Composable
+fun SectionCard(
+    title: String,
+    subtitle: String? = null,
+    color: Color = MaterialTheme.colorScheme.onSecondary,
+    iconColor: Color = MaterialTheme.colorScheme.primary,
+    textColor: Color = MaterialTheme.colorScheme.onSurface,
+    content: @Composable (ColumnScope.() -> Unit)? = null
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .shadow(3.dp, RoundedCornerShape(16.dp)),
+        shape = RoundedCornerShape(16.dp),
+        color = color
+    ) {
+        Column(
+            modifier = Modifier.padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = title,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = iconColor
+                )
+            }
+
+            subtitle?.let {
+                Text(
+                    text = it,
+                    fontSize = 14.sp,
+                    color = textColor
+                )
+            }
+
+            content?.invoke(this)
+        }
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable

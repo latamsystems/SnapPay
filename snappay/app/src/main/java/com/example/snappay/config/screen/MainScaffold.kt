@@ -1,12 +1,16 @@
 package com.example.snappay.config.screen
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -74,12 +78,32 @@ fun MainScaffold() {
                 }
             },
             floatingActionButton = {
-                if (config.showFab) {
-                    AppFloatingActionButton (onClick = {
-                        navController.navigate(AppScreen.Pay)
-                    })
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalAlignment = Alignment.End
+                ) {
+                    if (config.showRefreshFab) {
+                        FloatingActionButton(
+                            onClick = {
+                                // Navegación temporal para recargar la vista
+                                navController.navigate(currentDestination ?: "") {
+                                    popUpTo(currentDestination ?: "") { inclusive = true }
+                                }
+                            },
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        ) {
+                            Icon(Icons.Default.Refresh, contentDescription = "Refrescar")
+                        }
+                    }
+
+                    if (config.showFab) {
+                        AppFloatingActionButton(onClick = {
+                            navController.navigate(AppScreen.Pay)
+                        })
+                    }
                 }
             }
+
         ) { innerPadding ->
             val scrollState = rememberScrollState()
             Column(

@@ -10,7 +10,7 @@ data class ScreenConfig(
     val showFab: Boolean = true,
     val showDrawer: Boolean = true,
     val title: String = "Snap Pay",
-    val enableSwipeRefresh: Boolean = false
+    val showRefreshFab: Boolean = false
 )
 
 // Función para obtener la configuración de la pantalla
@@ -31,7 +31,7 @@ fun accessScreen(): Map<KClass<*>, ScreenConfig> {
     return mapOf(
         AppScreen.Login::class to ScreenConfig(showTopBar = false, showBottomBar = false, showFab = false, showDrawer = false),
         AppScreen.Home::class to ScreenConfig(title = "Inicio"),
-        AppScreen.Payments::class to ScreenConfig(title = "Pagos", enableSwipeRefresh = true),
+        AppScreen.Payments::class to ScreenConfig(title = "Pagos", showRefreshFab = true),
         AppScreen.Pay::class to ScreenConfig(title = "Pagar", showFab = false),
         AppScreen.Fine::class to ScreenConfig(title = "Multas"),
         AppScreen.Settings::class to ScreenConfig(title = "Ajustes", showFab = false)

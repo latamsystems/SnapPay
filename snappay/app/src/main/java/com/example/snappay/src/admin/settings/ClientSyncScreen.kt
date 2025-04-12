@@ -35,36 +35,65 @@ fun ClientSyncScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .padding(24.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start
     ) {
-        Text("Sincronizar Compra")
+        // Título
+        Text(
+            text = "Sincronización de Dispositivo",
+            style = MaterialTheme.typography.headlineSmall,
+            color = MaterialTheme.colorScheme.primary
+        )
 
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Subtítulo informativo
+        Text(
+            text = "Por favor, ingresa los datos necesarios para vincular esta venta con el teléfono del cliente. Esta operación sincroniza el dispositivo con la compra actual.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // Formulario
         OutlinedTextField(
             value = idSale,
             onValueChange = { idSale = it },
-            label = { Text("ID Compra") },
-            enabled = !isLoading
+            label = { Text("ID de la Compra") },
+            enabled = !isLoading,
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
         )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
         OutlinedTextField(
             value = fid,
             onValueChange = { fid = it },
-            label = { Text("FID") },
-            enabled = !isLoading
+            label = { Text("FID del Dispositivo") },
+            enabled = !isLoading,
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
         )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
         OutlinedTextField(
             value = identificationClient,
             onValueChange = { identificationClient = it },
-            label = { Text("Identificación Cliente") },
-            enabled = !isLoading
+            label = { Text("Identificación del Cliente") },
+            enabled = !isLoading,
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
+        // Botón
         Button(
             onClick = {
-                // Validación
                 if (idSale.isBlank() || fid.isBlank() || identificationClient.isBlank()) {
                     Toast.makeText(context, "Completa todos los campos", Toast.LENGTH_SHORT).show()
                     return@Button
@@ -82,11 +111,9 @@ fun ClientSyncScreen() {
                         val msg = SaleService.syncSale(request)
                         message = msg
 
-                        // Limpiar campos
                         idSale = ""
                         fid = ""
                         identificationClient = ""
-
                     } catch (e: Exception) {
                         message = e.message
                     } finally {
@@ -94,17 +121,16 @@ fun ClientSyncScreen() {
                     }
                 }
             },
-            enabled = !isLoading
+            enabled = !isLoading,
+            modifier = Modifier.fillMaxWidth()
         ) {
             if (isLoading) {
                 CircularProgressIndicator(
-                    modifier = Modifier
-                        .height(20.dp)
-                        .width(20.dp),
+                    modifier = Modifier.size(20.dp),
                     strokeWidth = 2.dp
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Sincronizando...", color = MaterialTheme.colorScheme.primary)
+                Text("Sincronizando...")
             } else {
                 Text("Enviar sincronización")
             }
