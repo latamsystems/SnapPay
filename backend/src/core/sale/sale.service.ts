@@ -40,7 +40,6 @@ export default { crud: CrudService(models.Sale, consoleHelper, config) };
 
 export class SaleService {
 
-
     /**
      * Obtener datos de la venta por id de firebase
      * @param fid 

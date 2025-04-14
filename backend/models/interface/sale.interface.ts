@@ -12,6 +12,7 @@ export interface Sale {
   fcm_token?: string;
   imei_sale: string;
   fees_sale: number;
+  valPay_sale: number;
   isFine_sale?: boolean;
   id_client: number;
   id_device: number;

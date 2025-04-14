@@ -15,6 +15,7 @@ class SaleModel extends Model<Sale, SaleCreationAttributes> implements Sale {
   public fcm_token!: string;
   public imei_sale!: string;
   public fees_sale!: number;
+  public valPay_sale!: number;
   public isFine_sale?: boolean;
   public id_client!: number;
   public id_device!: number;
@@ -63,6 +64,10 @@ SaleModel.init({
   },
   fees_sale: {
     type: DataTypes.INTEGER.UNSIGNED,
+    allowNull: false
+  },
+  valPay_sale: {
+    type: DataTypes.DOUBLE,
     allowNull: false
   },
   isFine_sale: {
