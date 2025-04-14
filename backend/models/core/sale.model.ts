@@ -5,6 +5,8 @@ import Client from '@/models/core/client.model';
 import Device from '@/models/core/device.model';
 import User from '@/models/core/user.model';
 import Status from '@/models/entities/status.model';
+import TypeFees from '@/models/entities/typeFees.model';
+import TypeFeesModel from '../entities/typeFees.model';
 
 // Definir el modelo en TypeScript extendiendo Sequelize Model
 class SaleModel extends Model<Sale, SaleCreationAttributes> implements Sale {
@@ -18,6 +20,7 @@ class SaleModel extends Model<Sale, SaleCreationAttributes> implements Sale {
   public id_device!: number;
   public id_user!: number;
   public id_status!: number;
+  public id_typeFess!: number;
   public activation_at_sale?: Date | null;
   public finish_at_sale?: Date | null;
   public created_at_sale!: Date;
@@ -31,6 +34,7 @@ class SaleModel extends Model<Sale, SaleCreationAttributes> implements Sale {
     device: Association<SaleModel, Device>;
     user: Association<SaleModel, User>;
     status: Association<SaleModel, Status>;
+    typeFees: Association<TypeFeesModel, TypeFees>;
   };
 }
 
@@ -96,6 +100,14 @@ SaleModel.init({
     references: {
       model: Status,
       key: 'id_status'
+    }
+  },
+  id_typeFess: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    allowNull: false,
+    references: {
+      model: TypeFees,
+      key: 'id_typeFees'
     }
   },
   activation_at_sale: {

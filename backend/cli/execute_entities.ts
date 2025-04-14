@@ -66,7 +66,7 @@ import { Controller } from '@/lib/crud/controller/decorator.controller';
 export class ${capitalizedEntity}Controller { }
 
 // Exporta el CRUD con los métodos personalizados
-export const crud = CrudController(${entity}Service.crud);
+export const crud = CrudController({service: ${entity}Service.crud});
 `;
 };
 

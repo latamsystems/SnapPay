@@ -12,6 +12,7 @@ import { Brand } from '@/models/interface/brand.interface';
 import { Model } from '@/models/interface/model.interface';
 import { Device } from '@/models/interface/device.interface';
 import { Client } from '@/models/interface/client.interface';
+import { TypeFees } from '@/models/interface/typeFees.interface';
 
 export class SeedService {
 
@@ -107,6 +108,15 @@ export class SeedService {
         ]
 
         await seedValidator(models.Device, devices, "id_device");
+
+        // Crear tipos de cuotas
+        const typeFees: TypeFees[] = [
+            { id_typeFees: 1, name_typeFees: "SEMANAL" },
+            { id_typeFees: 2, name_typeFees: "QUINCENAL"},
+            { id_typeFees: 3, name_typeFees: "MENSUAL" },
+        ]
+
+        await seedValidator(models.TypeFees, typeFees, "id_typeFees");
 
         // Crear clientes
         const clients: Client[] = [

@@ -3,6 +3,7 @@ import { Client } from '@/models/interface/client.interface';
 import { Device } from '@/models/interface/device.interface';
 import { User } from '@/models/interface/user.interface';
 import { Status } from '@/models/interface/status.interface';
+import { TypeFees } from './typeFees.interface';
 
 // Sale interface
 export interface Sale {
@@ -16,6 +17,7 @@ export interface Sale {
   id_device: number;
   id_user: number;
   id_status: number;
+  id_typeFess: number;
   activation_at_sale?: Date | null;
   finish_at_sale?: Date | null;
   created_at_sale?: Date;
@@ -24,6 +26,7 @@ export interface Sale {
   device?: Device;
   user?: User;
   status?: Status;
+  typeFees?: TypeFees;
 };
 
 // Definir los atributos opcionales para la creación

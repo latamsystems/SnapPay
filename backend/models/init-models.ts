@@ -13,6 +13,7 @@ import User from '@/models/core/user.model';
 import Brand from '@/models/entities/brand.model';
 import Role from '@/models/entities/role.model';
 import Status from '@/models/entities/status.model';
+import TypeFees from '@/models/entities/typeFees.model';
 import Fine_Client from '@/models/junctions/fine_client.model';
 import Sale_Payment from '@/models/junctions/sale_payment.model';
 
@@ -27,6 +28,7 @@ const models = {
   Brand,
   Role,
   Status,
+  TypeFees,
   Fine_Client,
   Sale_Payment,
 };
