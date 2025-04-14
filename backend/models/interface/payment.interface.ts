@@ -7,6 +7,7 @@ export interface Payment {
     numDocument_payment: string;
     value_payment: number;
     media_payment: string;
+    numQuota: number;
     id_status: number;
     validated_in_payment?: Date | null;
     created_at_payment?: Date;

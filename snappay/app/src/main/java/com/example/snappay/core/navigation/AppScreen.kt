@@ -14,6 +14,9 @@ sealed class AppScreen {
     object Pay
 
     @Serializable
+    object Dates
+
+    @Serializable
     object Fine
 
 

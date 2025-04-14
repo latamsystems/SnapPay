@@ -20,6 +20,7 @@ fun getRouteKey(route: String?): KClass<*>? {
         route?.contains(AppScreen.Home::class.simpleName ?: "") == true -> AppScreen.Home::class
         route?.contains(AppScreen.Payments::class.simpleName ?: "") == true -> AppScreen.Payments::class
         route?.contains(AppScreen.Pay::class.simpleName ?: "") == true -> AppScreen.Pay::class
+        route?.contains(AppScreen.Dates::class.simpleName ?: "") == true -> AppScreen.Dates::class
         route?.contains(AppScreen.Fine::class.simpleName ?: "") == true -> AppScreen.Fine::class
         route?.contains(AppScreen.Settings::class.simpleName ?: "") == true -> AppScreen.Settings::class
         else -> null
@@ -33,6 +34,7 @@ fun accessScreen(): Map<KClass<*>, ScreenConfig> {
         AppScreen.Home::class to ScreenConfig(title = "Inicio"),
         AppScreen.Payments::class to ScreenConfig(title = "Pagos", showRefreshFab = true),
         AppScreen.Pay::class to ScreenConfig(title = "Pagar", showFab = false),
+        AppScreen.Dates::class to ScreenConfig(title = "Fechas"),
         AppScreen.Fine::class to ScreenConfig(title = "Multas"),
         AppScreen.Settings::class to ScreenConfig(title = "Ajustes", showFab = false)
     )

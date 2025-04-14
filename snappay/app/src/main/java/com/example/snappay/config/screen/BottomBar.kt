@@ -26,7 +26,8 @@ fun AppBottomBar(
     val items = listOf(
         Triple("Inicio", Icons.Filled.Home, AppScreen.Home::class),
         Triple("Pagos", Icons.Filled.Payments, AppScreen.Payments::class),
-        Triple("Multas", Icons.Filled.AccessTime, AppScreen.Fine::class)
+        Triple("Multas", Icons.Filled.AccessTime, AppScreen.Fine::class),
+        Triple("Fechas", Icons.Filled.DateRange, AppScreen.Dates::class),
     )
 
     Surface(

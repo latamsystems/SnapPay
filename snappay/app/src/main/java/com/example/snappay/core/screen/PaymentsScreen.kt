@@ -52,7 +52,6 @@ fun PaymentsScreen(viewModel: PaymentsViewModel = viewModel()) {
 
     Box(modifier = Modifier
         .fillMaxSize()
-        .padding(vertical = 24.dp),
         ) {
         clientState?.let {
             when {

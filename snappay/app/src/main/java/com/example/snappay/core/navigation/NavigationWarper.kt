@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.example.snappay.config.api.ApiClient
 import com.example.snappay.core.navigation.type.lastInfoType
+import com.example.snappay.core.screen.DatesScreen
 import com.example.snappay.core.screen.FineScreen
 import com.example.snappay.core.screen.HomeScreen
 import com.example.snappay.core.screen.example.DetailsScreen
@@ -63,6 +64,11 @@ fun NavigationWarper(navController: NavHostController) {
         // Pay
         composable<AppScreen.Pay>{
             PayScreen()
+        }
+
+        // Payments
+        composable<AppScreen.Dates>{
+            DatesScreen()
         }
 
         // Fine

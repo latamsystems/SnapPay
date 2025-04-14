@@ -14,6 +14,7 @@ data class SaleModel(
     val fcm_token: String? = null,
     val imei_sale: String,
     val fees_sale: Int,
+    val valPay_sale: Double,
     val isFine_sale: Boolean,
     val id_client: Int,
     val id_device: Int,
