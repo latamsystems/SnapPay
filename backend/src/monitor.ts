@@ -32,7 +32,7 @@ export function connectDB() {
   const connection = async () => {
     try {
       await dbConnection.sync({ alter: true });
-      await dbConnection.sync({ force: true });
+      await dbConnection.sync({ force: false });
 
       consoleHelper.debug({message: `Base de datos: ${chalk.cyanBright.bold(DB_NAME)}`, showCallerDetails: false});
     } catch (error) {
