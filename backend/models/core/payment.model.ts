@@ -9,7 +9,7 @@ class PaymentModel extends Model<Payment, PaymentCreationAttributes> implements 
   public numDocument_payment!: string;
   public value_payment!: number;
   public media_payment!: string;
-  public numQuota!: number;
+  public numQuota_payment!: number;
   public id_status!: number;
   public validated_in_payment?: Date | null;
   public created_at_payment!: Date;
@@ -40,7 +40,7 @@ PaymentModel.init({
     type: DataTypes.STRING,
     allowNull: false
   },
-  numQuota: {
+  numQuota_payment: {
     type: DataTypes.INTEGER,
     allowNull: false
   },

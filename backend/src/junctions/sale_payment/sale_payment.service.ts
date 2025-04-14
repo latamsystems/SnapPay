@@ -49,19 +49,25 @@ const serviceMethods = {
                 model: models.Sale_Payment,
                 formData,
                 rules: [
-                    rule.requiredFields(['id_sale', 'numDocument_payment', 'value_payment', 'media_payment']),
+                    rule.requiredFields(['id_sale', 'numDocument_payment', 'value_payment', 'media_payment', 'numQuota_payment']),
                 ],
             });
+
+            // ==============================================================
 
             // Validar que id_sale sea un número entero
             if (typeof formData.id_sale !== 'number' || !Number.isInteger(formData.id_sale)) {
                 return HttpResponse.badRequest({ message: reqMsg.validTypeInteger, field: 'id_sale' });
             }
 
+            // ==============================================================
+
             // Validar que value_payment sea un número (decimal o entero)
             if (typeof formData.value_payment !== 'number' || isNaN(formData.value_payment)) {
                 return HttpResponse.badRequest({ message: reqMsg.validTypeNumber, field: 'value_payment' });
             }
+
+            // ==============================================================
 
             // Validar si existe la venta
             const sale = await models.Sale.findOne({ where: { id_sale: formData.id_sale } });
@@ -89,6 +95,32 @@ const serviceMethods = {
 
             if (validPayment.sale_payment.length > 0) return HttpResponse.badRequest({ message: reqMsg.sameNumDocument, field: 'numDocument_payment' });
 
+            // ==============================================================
+
+            // Validar si el número de pago ya esta registrado
+            const validPaymentNum: any = await models.Sale.findOne({
+                where: {
+                    id_sale: formData.id_sale
+                },
+                include: [
+                    {
+                        model: models.Sale_Payment,
+                        as: 'sale_payment',
+                        include: [
+                            {
+                                model: models.Payment,
+                                as: 'payment',
+                                where: { numQuota_payment: formData.numQuota_payment }
+                            }
+                        ]
+                    }
+                ]
+            });
+
+            if (validPaymentNum.sale_payment.length > 0) return HttpResponse.conflict({ message: reqMsg.sameNumQuota, field: 'numQuota_payment' });
+
+            // ==============================================================
+
             // Iniciar transacción
             let transaction = await dbConnection.transaction();
 
@@ -97,6 +129,7 @@ const serviceMethods = {
                 numDocument_payment: formData.numDocument_payment,
                 value_payment: formData.value_payment,
                 media_payment: formData.media_payment,
+                numQuota_payment: formData.numQuota_payment,
                 id_status: 4,
             }, { transaction });
 
@@ -132,19 +165,27 @@ const serviceMethods = {
                 ],
             });
 
+            // ==============================================================
+
             // Validar que id_sale sea un número entero
             if (typeof formData.id_sale !== 'number' || !Number.isInteger(formData.id_sale)) {
                 return HttpResponse.badRequest({ message: reqMsg.validTypeInteger, field: 'id_sale' });
             }
+
+            // ==============================================================
 
             // Validar que value_payment sea un número (decimal o entero)
             if (typeof formData.value_payment !== 'number' || isNaN(formData.value_payment)) {
                 return HttpResponse.badRequest({ message: reqMsg.validTypeNumber, field: 'value_payment' });
             }
 
+            // ==============================================================
+
             // Validar si existe la venta
             const sale = await models.Sale.findOne({ where: { id_sale: formData.id_sale } });
             if (!sale) return HttpResponse.notFound({ message: reqMsg.notFoundSale });
+
+            // ==============================================================
 
             // Validar que el número de documento por cliente no este registrado
             const validPayment: any = await models.Sale.findOne({
@@ -167,6 +208,32 @@ const serviceMethods = {
             });
 
             if (validPayment.sale_payment.length > 0 && validPayment.sale_payment[0].payment.numDocument_payment !== formData.numDocument_payment) return HttpResponse.badRequest({ message: reqMsg.sameNumDocument, field: 'numDocument_payment' });
+            
+            // ==============================================================
+
+            // Validar si el número de pago ya esta registrado
+            const validPaymentNum: any = await models.Sale.findOne({
+                where: {
+                    id_sale: formData.id_sale
+                },
+                include: [
+                    {
+                        model: models.Sale_Payment,
+                        as: 'sale_payment',
+                        include: [
+                            {
+                                model: models.Payment,
+                                as: 'payment',
+                                where: { numQuota_payment: formData.numQuota_payment }
+                            }
+                        ]
+                    }
+                ]
+            });
+
+            if (validPaymentNum.sale_payment.length > 0 && validPaymentNum.sale_payment[0].payment.numQuota_payment !== formData.numQuota_payment) return HttpResponse.conflict({ message: reqMsg.sameNumQuota, field: 'numQuota_payment' });
+
+            // ==============================================================
 
             // Actualizar el pago
             const payment = await models.Payment.update({

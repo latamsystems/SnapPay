@@ -22,6 +22,7 @@ const controllerMethods = {
 
             validTypeInteger: 'El valor debe ser un número entero.',
             validTypeNumber: 'El valor debe ser númerico.',
+            sameNumQuota: 'Ya ha registrado este pago.',
         },
         params: [req.body],
     }),
@@ -35,6 +36,7 @@ const controllerMethods = {
 
             validTypeInteger: 'El valor debe ser un número entero.',
             validTypeNumber: 'El valor debe ser númerico.',
+            sameNumQuota: 'Ya ha registrado este pago.',
         },
         params: [req.params.id, req.body],
     }),
