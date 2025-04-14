@@ -17,7 +17,7 @@ export interface Sale {
   id_device: number;
   id_user: number;
   id_status: number;
-  id_typeFess: number;
+  id_typeFees: number;
   activation_at_sale?: Date | null;
   finish_at_sale?: Date | null;
   created_at_sale?: Date;

@@ -28,7 +28,8 @@ const config: FindOptions = {
             model: models.User, as: 'user',
             attributes: { exclude: ["password_user"] }
         },
-        { model: models.Status, as: 'status' }
+        { model: models.Status, as: 'status' },
+        { model: models.TypeFees, as: 'typeFees' },
     ]
 }
 

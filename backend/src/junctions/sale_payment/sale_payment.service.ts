@@ -27,7 +27,11 @@ associateModels(models);
 
 const config: FindOptions = {
     include: [
-        { model: models.Sale, as: 'sale' },
+        {
+            model: models.Sale, as: 'sale', include: [
+                { model: models.TypeFees, as: 'typeFees' }
+            ]
+        },
         { model: models.Payment, as: 'payment' },
     ]
 }
@@ -236,4 +240,4 @@ export default { crud: CrudService(models.Sale_Payment, consoleHelper, config, s
 // =============================================================================
 // =============================================================================
 
-export class Sale_PaymentService {}
+export class Sale_PaymentService { }

@@ -4,6 +4,7 @@ import com.example.snappay.src.core.client.ClientModel
 import com.example.snappay.src.entities.device.DeviceModel
 import com.example.snappay.src.core.user.UserModel
 import com.example.snappay.src.entities.status.StatusModel
+import com.example.snappay.src.entities.typeFees.TypeFeesModel
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -18,6 +19,7 @@ data class SaleModel(
     val id_device: Int,
     val id_user: Int,
     val id_status: Int,
+    val id_typeFees: Int,
     val activation_at_sale: String,
     val finish_at_sale: String? = null,
     val created_at_sale: String,
@@ -25,7 +27,8 @@ data class SaleModel(
     val client: ClientModel? = null,
     val device: DeviceModel? = null,
     val user: UserModel? = null,
-    val status: StatusModel? = null
+    val status: StatusModel? = null,
+    val typeFees: TypeFeesModel? = null,
 )
 
 @Serializable

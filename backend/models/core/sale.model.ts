@@ -20,7 +20,7 @@ class SaleModel extends Model<Sale, SaleCreationAttributes> implements Sale {
   public id_device!: number;
   public id_user!: number;
   public id_status!: number;
-  public id_typeFess!: number;
+  public id_typeFees!: number;
   public activation_at_sale?: Date | null;
   public finish_at_sale?: Date | null;
   public created_at_sale!: Date;
@@ -102,7 +102,7 @@ SaleModel.init({
       key: 'id_status'
     }
   },
-  id_typeFess: {
+  id_typeFees: {
     type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
     references: {
@@ -133,5 +133,6 @@ SaleModel.belongsTo(Client, { foreignKey: 'id_client', as: 'client' });
 SaleModel.belongsTo(Device, { foreignKey: 'id_device', as: 'device' });
 SaleModel.belongsTo(User, { foreignKey: 'id_user', as: 'user' });
 SaleModel.belongsTo(Status, { foreignKey: 'id_status', as: 'status' });
+SaleModel.belongsTo(TypeFees, { foreignKey: 'id_typeFees', as: 'typeFees' });
 
 export default SaleModel;
