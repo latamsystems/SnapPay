@@ -50,7 +50,10 @@ fun PaymentsScreen(viewModel: PaymentsViewModel = viewModel()) {
         viewModel.loadPayments()
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .padding(vertical = 24.dp),
+        ) {
         clientState?.let {
             when {
                 isLoading -> Box(Modifier.fillMaxSize(), Alignment.Center) {

@@ -55,6 +55,7 @@ export class SaleService {
             where: { fid },
             include: [
                 { model: models.Client, as: "client" },
+                { model: models.TypeFees, as: "typeFees" },
             ]
         });
         if (!sale) return HttpResponse.notFound({ message: reqMsg.notFound, field: "fid" });
