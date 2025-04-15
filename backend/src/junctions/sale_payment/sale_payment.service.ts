@@ -1,5 +1,9 @@
 
 import sequelize, { FindOptions } from "sequelize";
+import fs from 'fs-extra';
+import path from 'path';
+import { DIRECTORY_BACKEND } from "@/src/enviroment";
+
 import Console from '@/helpers/console';
 import HttpResponse from '@/helpers/httpResponse';
 
@@ -40,32 +44,18 @@ const config: FindOptions = {
  * Métodos personalizados para el servicio
  */
 const serviceMethods = {
-    create: (formData: Sale_Payment, reqMsg: Record<string, string>) => handleService({
+    create: (formData: Sale_Payment, media_payment: any, reqMsg: Record<string, string>) => handleService({
         consoleHelper, async serviceFunction(...args) {
             const [formData] = args as [any];
 
             // Reglas de validación
             await validateRequest<Sale_Payment>({
                 model: models.Sale_Payment,
-                formData,
+                formData: { ...formData, media_payment },
                 rules: [
                     rule.requiredFields(['id_sale', 'numDocument_payment', 'value_payment', 'media_payment', 'numQuota_payment']),
                 ],
             });
-
-            // ==============================================================
-
-            // Validar que id_sale sea un número entero
-            if (typeof formData.id_sale !== 'number' || !Number.isInteger(formData.id_sale)) {
-                return HttpResponse.badRequest({ message: reqMsg.validTypeInteger, field: 'id_sale' });
-            }
-
-            // ==============================================================
-
-            // Validar que value_payment sea un número (decimal o entero)
-            if (typeof formData.value_payment !== 'number' || isNaN(formData.value_payment)) {
-                return HttpResponse.badRequest({ message: reqMsg.validTypeNumber, field: 'value_payment' });
-            }
 
             // ==============================================================
 
@@ -121,6 +111,23 @@ const serviceMethods = {
 
             // ==============================================================
 
+            // Crear ruta en directorio para repositorio de imagenes
+            const publicUrlBase = `/media/${formData.id_sale}`;
+
+            const externalDirectory = `${DIRECTORY_BACKEND}/${publicUrlBase}`;
+            await fs.ensureDir(externalDirectory); // Asegura que el directorio existe
+
+            const fileName = `comprobante_${formData.numDocument_payment}.jpg`;
+            const filePath = path.join(externalDirectory, fileName); // Ruta del sistema de archivos
+            const fileUrl = `${publicUrlBase}/${fileName}`; // URL pública
+
+            await fs.writeFile(filePath, media_payment); // Guarda el archivo
+
+            console.log('Sys Archivo guardado en:', filePath);
+            console.log('Archivo guardado en:', fileUrl);
+
+            // ==============================================================
+
             // Iniciar transacción
             let transaction = await dbConnection.transaction();
 
@@ -128,7 +135,7 @@ const serviceMethods = {
             const payment = await models.Payment.create({
                 numDocument_payment: formData.numDocument_payment,
                 value_payment: formData.value_payment,
-                media_payment: formData.media_payment,
+                media_payment: fileUrl,
                 numQuota_payment: formData.numQuota_payment,
                 id_status: 4,
             }, { transaction });
@@ -149,35 +156,21 @@ const serviceMethods = {
 
             return HttpResponse.success({ message: reqMsg.success });
         },
-        params: [formData]
+        params: [formData, media_payment]
     }),
-    update: (id_sale_payment: number, formData: Sale_Payment, reqMsg: Record<string, string>) => handleService({
+    update: (id_sale_payment: number, formData: Sale_Payment, media_payment: any, reqMsg: Record<string, string>) => handleService({
         consoleHelper, async serviceFunction(...args) {
-            const [id_sale_payment, formData] = args as [number, any];
+            const [id_sale_payment, formData, media_payment] = args as [number, any, any];
 
             // Reglas de validación
             await validateRequest<Sale_Payment>({
                 model: models.Sale_Payment,
-                formData,
+                formData: { ...formData, media_payment },
                 rules: [
                     rule.requiredFields(['id_sale', 'numDocument_payment', 'value_payment', 'media_payment']),
                     rule.recordExists(id_sale_payment, reqMsg.notFound),
                 ],
             });
-
-            // ==============================================================
-
-            // Validar que id_sale sea un número entero
-            if (typeof formData.id_sale !== 'number' || !Number.isInteger(formData.id_sale)) {
-                return HttpResponse.badRequest({ message: reqMsg.validTypeInteger, field: 'id_sale' });
-            }
-
-            // ==============================================================
-
-            // Validar que value_payment sea un número (decimal o entero)
-            if (typeof formData.value_payment !== 'number' || isNaN(formData.value_payment)) {
-                return HttpResponse.badRequest({ message: reqMsg.validTypeNumber, field: 'value_payment' });
-            }
 
             // ==============================================================
 
@@ -208,7 +201,7 @@ const serviceMethods = {
             });
 
             if (validPayment.sale_payment.length > 0 && validPayment.sale_payment[0].payment.numDocument_payment !== formData.numDocument_payment) return HttpResponse.badRequest({ message: reqMsg.sameNumDocument, field: 'numDocument_payment' });
-            
+
             // ==============================================================
 
             // Validar si el número de pago ya esta registrado
@@ -235,11 +228,28 @@ const serviceMethods = {
 
             // ==============================================================
 
+            // Crear ruta en directorio para repositorio de imagenes
+            const publicUrlBase = `/media/${formData.id_sale}`;
+
+            const externalDirectory = `${DIRECTORY_BACKEND}/${publicUrlBase}`;
+            await fs.ensureDir(externalDirectory); // Asegura que el directorio existe
+
+            const fileName = `comprobante_${formData.numDocument_payment}.jpg`;
+            const filePath = path.join(externalDirectory, fileName); // Ruta del sistema de archivos
+            const fileUrl = `${publicUrlBase}/${fileName}`; // URL pública
+
+            await fs.writeFile(filePath, media_payment); // Guarda el archivo
+
+            console.log('Sys Archivo guardado en:', filePath);
+            console.log('Archivo guardado en:', fileUrl);
+
+            // ==============================================================
+
             // Actualizar el pago
             const payment = await models.Payment.update({
                 numDocument_payment: formData.numDocument_payment,
                 value_payment: formData.value_payment,
-                media_payment: formData.media_payment,
+                media_payment: fileUrl,
             }, {
                 where: { id_payment: validPayment.sale_payment[0].id_payment }
             });
@@ -250,7 +260,7 @@ const serviceMethods = {
 
             return HttpResponse.success({ message: reqMsg.success });
         },
-        params: [id_sale_payment, formData]
+        params: [id_sale_payment, formData, media_payment]
     }),
     delete: (id_sale_payment: number, reqMsg: Record<string, string>) => handleService({
         consoleHelper, async serviceFunction(...args) {

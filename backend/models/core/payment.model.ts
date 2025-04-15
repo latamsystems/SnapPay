@@ -38,7 +38,7 @@ PaymentModel.init({
   },
   media_payment: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
   numQuota_payment: {
     type: DataTypes.INTEGER,

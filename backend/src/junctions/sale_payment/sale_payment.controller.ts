@@ -19,12 +19,9 @@ const controllerMethods = {
             success: 'Registro creado exitosamente.',
             sameNumDocument: 'Ya se ha registrado el número comprobante.',
             notFoundSale: 'No existe el registro de la compra.',
-
-            validTypeInteger: 'El valor debe ser un número entero.',
-            validTypeNumber: 'El valor debe ser númerico.',
             sameNumQuota: 'Ya ha registrado este pago.',
         },
-        params: [req.body],
+        params: [req.body, req.file?.buffer],
     }),
     update: async (req: Request, res: Response) => handleController({
         req, res, serviceFunction: sale_paymentService.crud.update,
@@ -33,12 +30,9 @@ const controllerMethods = {
             notFound: 'Registro no encontrado.',
             sameNumDocument: 'Ya se ha registrado el número comprobante.',
             notFoundSale: 'No existe el registro de la compra.',
-
-            validTypeInteger: 'El valor debe ser un número entero.',
-            validTypeNumber: 'El valor debe ser númerico.',
             sameNumQuota: 'Ya ha registrado este pago.',
         },
-        params: [req.params.id, req.body],
+        params: [req.params.id, req.body, req.file?.buffer],
     }),
     delete: async (req: Request, res: Response) => handleController({
         req, res, serviceFunction: sale_paymentService.crud.delete,

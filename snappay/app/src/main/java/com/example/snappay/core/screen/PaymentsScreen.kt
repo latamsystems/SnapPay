@@ -282,7 +282,7 @@ fun PaymentsScreen(viewModel: PaymentsViewModel = viewModel()) {
                                             showConfirm = false
                                         },
                                         title = { Text("¿Eliminar pago?") },
-                                        text = { Text("¿Estás seguro de que deseas eliminar este pago pendiente?") },
+                                        text = { Text("¿Estás seguro de que deseas eliminar este pago?") },
                                         confirmButton = {
                                             TextButton(onClick = {
                                                 scope.launch {

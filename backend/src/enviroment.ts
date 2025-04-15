@@ -5,6 +5,7 @@ interface EnvPromps {
     PORT: string;
     APP_NAME: string;
     TOKEN_SECRET: string;
+    DIRECTORY_BACKEND: string;
 
     HOST: string;
     DIALECT: "mysql" | "postgres" | "sqlite" | "mariadb" | "mssql";
@@ -33,7 +34,8 @@ export const {
     PORT,
     APP_NAME,
     TOKEN_SECRET,
-
+    DIRECTORY_BACKEND,
+    
     HOST,
     DIALECT,
     DB_NAME,
