@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
-import com.example.snappay.config.screen.MainScaffold
+import com.example.snappay.config.layout.MainScaffold
 import com.example.snappay.src.auth.ClientAuthService
 import com.example.snappay.ui.theme.SnappayTheme
 import com.google.firebase.FirebaseApp

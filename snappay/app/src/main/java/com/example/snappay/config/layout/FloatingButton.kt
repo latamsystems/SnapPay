@@ -1,4 +1,4 @@
-package com.example.snappay.config.screen
+package com.example.snappay.config.layout
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add

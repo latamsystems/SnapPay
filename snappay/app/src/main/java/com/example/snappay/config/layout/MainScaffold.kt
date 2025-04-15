@@ -1,9 +1,12 @@
-package com.example.snappay.config.screen
+package com.example.snappay.config.layout
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -19,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.snappay.core.navigation.*
 import com.example.snappay.src.admin.auth.SessionManager
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,6 +38,16 @@ fun MainScaffold() {
 
     val drawerState = remember(config.showDrawer) {
         DrawerState(initialValue = DrawerValue.Closed)
+    }
+
+    var isRefreshing by remember { mutableStateOf(false) }
+    var refreshTrigger by remember { mutableStateOf(0) }
+
+    LaunchedEffect(refreshTrigger) {
+        if (isRefreshing) {
+            kotlinx.coroutines.delay(300)
+            isRefreshing = false
+        }
     }
 
     // Cierra el drawer automáticamente al navegar
@@ -85,14 +99,23 @@ fun MainScaffold() {
                     if (config.showRefreshFab) {
                         FloatingActionButton(
                             onClick = {
-                                // Navegación temporal para recargar la vista
+                                isRefreshing = true
+                                refreshTrigger++
                                 navController.navigate(currentDestination ?: "") {
                                     popUpTo(currentDestination ?: "") { inclusive = true }
                                 }
                             },
                             containerColor = MaterialTheme.colorScheme.secondaryContainer
                         ) {
-                            Icon(Icons.Default.Refresh, contentDescription = "Refrescar")
+                            if (isRefreshing) {
+                                CircularProgressIndicator(
+                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
+                                    strokeWidth = 3.dp,
+                                    modifier = Modifier.size(24.dp)
+                                )
+                            } else {
+                                Icon(Icons.Default.Refresh, contentDescription = "Refrescar")
+                            }
                         }
                     }
 
@@ -118,6 +141,7 @@ fun MainScaffold() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showSystemUi = true)
 @Composable
 fun MainScaffoldPreview() {

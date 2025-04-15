@@ -9,6 +9,7 @@ data class PaymentModel(
     val numDocument_payment: String,
     val value_payment: Double,
     val media_payment: String?,
+    val numQuota_payment: Int,
     val id_status: Int,
     val validated_in_payment: String?,
     val created_at_payment: String,

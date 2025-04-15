@@ -1,5 +1,7 @@
 package com.example.snappay.core.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
@@ -21,6 +23,7 @@ import com.example.snappay.core.screen.example.LastScreen
 import com.example.snappay.src.admin.auth.SessionManager
 import kotlin.reflect.typeOf
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationWarper(navController: NavHostController) {
 

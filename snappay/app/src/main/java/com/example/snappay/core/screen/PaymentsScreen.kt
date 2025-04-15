@@ -171,9 +171,9 @@ fun PaymentsScreen(viewModel: PaymentsViewModel = viewModel()) {
                                             contentDescription = null,
                                             tint = statusColor.copy(alpha = 0.3f),
                                             modifier = Modifier
-                                                .size(50.dp)
+                                                .size(45.dp)
                                                 .align(Alignment.CenterEnd)
-                                                .alpha(0.2f)
+                                                .alpha(0.3f)
                                                 .zIndex(0f)
                                         )
 
@@ -230,12 +230,12 @@ fun PaymentsScreen(viewModel: PaymentsViewModel = viewModel()) {
 
                                             // Date
                                             Text(
-                                                "Pago de tal tarifa",
+                                                "Pago de cuota #${payment.numQuota_payment}",
                                                 style = MaterialTheme.typography.bodyMedium,
                                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                                             )
 
-                                            Spacer(modifier = Modifier.height(8.dp))
+                                            Spacer(modifier = Modifier.height(10.dp))
 
                                             // Status text
                                             Row(
@@ -260,7 +260,7 @@ fun PaymentsScreen(viewModel: PaymentsViewModel = viewModel()) {
                                                 Text(
                                                     text = when (payment.id_status) {
                                                         3 -> "Pagado"
-                                                        4 -> "Pendiente"
+                                                        4 -> "Revisión"
                                                         6 -> "Rechazado"
                                                         else -> "Desconocido"
                                                     },

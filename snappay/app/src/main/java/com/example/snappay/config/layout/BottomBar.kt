@@ -1,4 +1,4 @@
-package com.example.snappay.config.screen
+package com.example.snappay.config.layout
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

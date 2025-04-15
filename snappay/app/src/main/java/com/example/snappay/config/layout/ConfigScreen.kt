@@ -1,4 +1,4 @@
-package com.example.snappay.config.screen
+package com.example.snappay.config.layout
 
 import com.example.snappay.core.navigation.AppScreen
 import kotlin.reflect.KClass
@@ -34,8 +34,8 @@ fun accessScreen(): Map<KClass<*>, ScreenConfig> {
         AppScreen.Home::class to ScreenConfig(title = "Inicio"),
         AppScreen.Payments::class to ScreenConfig(title = "Pagos", showRefreshFab = true),
         AppScreen.Pay::class to ScreenConfig(title = "Pagar", showFab = false),
-        AppScreen.Dates::class to ScreenConfig(title = "Fechas"),
-        AppScreen.Fine::class to ScreenConfig(title = "Multas"),
+        AppScreen.Dates::class to ScreenConfig(title = "Fechas", showRefreshFab = true),
+        AppScreen.Fine::class to ScreenConfig(title = "Multas", showRefreshFab = true),
         AppScreen.Settings::class to ScreenConfig(title = "Ajustes", showFab = false)
     )
 }

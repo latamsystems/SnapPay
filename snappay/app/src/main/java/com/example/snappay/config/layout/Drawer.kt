@@ -1,4 +1,4 @@
-package com.example.snappay.config.screen
+package com.example.snappay.config.layout
 
 import android.widget.Toast
 import androidx.compose.foundation.Image

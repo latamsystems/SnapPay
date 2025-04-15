@@ -47,6 +47,9 @@ dependencies {
 
     implementation("androidx.compose.material:material-icons-extended")
 
+    // Notificaciones
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+
     // Load Screen
     implementation("com.google.accompanist:accompanist-swiperefresh:0.33.2-alpha")
 
