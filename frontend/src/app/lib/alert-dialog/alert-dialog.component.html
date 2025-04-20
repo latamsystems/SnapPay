@@ -1,0 +1,71 @@
+@for (dialog of dialogs(); track dialog.config.title) {
+  <div class="fixed inset-0 z-1001 flex items-center justify-center bg-black/50">
+    <div @modalTransition
+      class="relative w-100 border border-border p-4 rounded-lg shadow-5xl overflow-hidden"
+      [ngClass]="getDialogClass(dialog.config.type)">
+  
+      <!-- Icono grande en la esquina inferior izquierda -->
+      <div [ngClass]="{ 'animate-spin': dialog.config.type === 'loading'}"
+        class="absolute -bottom-5 opacity-25 dark:opacity-15 -left-5 text-black dark:text-white pointer-events-none">
+        <lucide-icon 
+          [name]="getIcon(dialog.config.type)" 
+          [size]="130"
+          [ngClass]="getIconClass(dialog.config.type)"
+        >
+      </lucide-icon>
+      </div>
+  
+      <!-- Icono pequeño en la esquina superior derecha -->
+      <div [ngClass]="{ 'animate-spin': dialog.config.type === 'loading'}"
+        class="absolute top-5 opacity-25 dark:opacity-15 right-5 text-black dark:text-white pointer-events-none">
+        <lucide-icon 
+          [name]="getIcon(dialog.config.type)" 
+          [size]="30"
+          [ngClass]="getIconClass(dialog.config.type)"
+        >
+      </lucide-icon>
+      </div>
+  
+      <h3 class="text-lg font-semibold text-black dark:text-white pb-2">{{ dialog.config.title }}</h3>
+      <p class="text-black/80 dark:text-dark-muted-foreground" [innerHTML]="dialog.config.description"></p>
+  
+      <div class="flex justify-end gap-2 mt-4">
+        <!-- Botón Reintentar (Solo si el tipo es "error") -->
+        @if (dialog.config.type === 'error' && dialog.config.onRetry) {
+        <JButton 
+          (clicked)="handleAction('retry')" 
+          [disabled]="dialog.isRetryLoading || dialog.isCancelLoading || dialog.isConfirmLoading" 
+          [isLoading]="dialog.isRetryLoading"  
+          [ngClasses]="getButtonSecondaryClass(dialog.config.type)"
+        >
+          Reintentar
+        </JButton>
+        }
+  
+        <!-- Botón Cancelar (No se muestra si es "success") -->
+        @if (dialog.config.type !== 'success' && dialog.config.onCancel) {
+        <JButton 
+          (clicked)="handleAction('cancel')" 
+          [disabled]="dialog.isRetryLoading || dialog.isCancelLoading || dialog.isConfirmLoading" 
+          [isLoading]="dialog.isCancelLoading" 
+          [ngClasses]="getButtonSecondaryClass(dialog.config.type)"
+        >
+          Cancelar
+        </JButton>
+        }
+  
+        <!-- Botón Confirmar (No se muestra si es "loading") -->
+        @if (dialog.config.type !== 'loading' && dialog?.config?.onConfirm) {
+        <JButton 
+          (clicked)="handleAction('confirm')" 
+          [disabled]="dialog.isRetryLoading || dialog.isCancelLoading || dialog.isConfirmLoading" 
+          [isLoading]="dialog.isConfirmLoading" 
+          [ngClasses]="getButtonClass(dialog.config.type)"
+        >
+          Confirmar
+        </JButton>
+        }
+      </div>
+    </div>
+  </div>
+  }

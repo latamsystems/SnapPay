@@ -1,0 +1,7 @@
+@if (hasErrors) {
+<div class="flex flex-col text-red-600 dark:text-red-300 text-sm">
+    @for (message of errors; track $index) {
+    <span [class]="classes">{{ message }}</span>
+    }
+</div>
+}

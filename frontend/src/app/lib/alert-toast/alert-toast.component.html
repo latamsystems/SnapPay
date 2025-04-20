@@ -1,0 +1,75 @@
+<div [ngClass]="getPositionClass()">
+    @for (toast of toasts(); track toast.id) {
+    <div @toastTransition
+        class="relative w-100 border border-border border-l-4 p-4 rounded-lg shadow-lg overflow-hidden flex gap-3"
+        [ngClass]="getToastClass(toast.config.type)">
+
+        <!-- Close button -->
+        <button
+          class="absolute p-1 top-2 right-2 cursor-pointer rounded transition duration-300 hover:bg-background dark:hover:bg-dark-background"
+          [ngClass]="getIconClass(toast.config.type)" 
+          (click)="closeToast(toast.id)"
+            >
+            <lucide-icon [name]="icons.close" [size]="16"></lucide-icon>
+        </button>
+
+        <!-- Icono grande en la esquina inferior izquierda -->
+        <div [ngClass]="{ 'animate-spin': toast.config.type === 'loading'}"
+            class="absolute -bottom-5 opacity-15 dark:opacity-15 -left-5 text-black dark:text-white z-2 pointer-events-none">
+            <lucide-icon 
+                [name]="getIcon(toast.config.type)" 
+                [size]="100"
+                [ngClass]="getIconClass(toast.config.type)"
+            >
+            </lucide-icon>
+        </div>
+
+        <!-- Icono pequeño en la esquina superior derecha -->
+        <div [ngClass]="{ 'animate-spin': toast.config.type === 'loading'}"
+            class="absolute top-5 opacity-15 dark:opacity-15 right-5 text-black dark:text-white z-2 pointer-events-none">
+            <lucide-icon 
+                [name]="getIcon(toast.config.type)" 
+                [size]="30"
+                [ngClass]="getIconClass(toast.config.type)"
+            >
+            </lucide-icon>
+        </div>
+
+        <!-- Content -->
+        <div class="flex-1">
+            <h3 class="text-sm font-semibold text-black dark:text-white pb-2">{{ toast.config.title }}</h3>
+            <p class="text-sm text-black/80 dark:text-dark-muted-foreground" [innerHTML]="toast.config.description"></p>
+
+            <!-- Action buttons -->
+            <div class="flex justify-end gap-2 mt-2">
+                <!-- Botón Cancelar (No se muestra si es "success") -->
+                @if (toast.config.type !== 'success' && toast.onCancelCallback) {
+                <JButton 
+                  (clicked)="handleAction(toast.id, 'cancel')"
+                  [disabled]="toast.isCancelLoading || toast.isActionLoading" 
+                  [isLoading]="toast.isCancelLoading"
+                  classes="text-[10px] min-w-auto"
+                  [ngClasses]="getButtonSecondaryClass(toast.config.type)"
+                >
+                    Cancelar
+                </JButton>
+                }
+
+                <!-- Botón action (No se muestra si es "loading") -->
+                @if (toast.config.type !== 'loading' && toast.onActionCallback) {
+                <JButton 
+                  (clicked)="handleAction(toast.id, 'action')"
+                  [disabled]="toast.isCancelLoading || toast.isActionLoading" 
+                  [isLoading]="toast.isActionLoading"
+                  classes="text-[10px] min-w-auto" 
+                  [ngClasses]="getButtonClass(toast.config.type)"
+                >
+                  {{toast.actionNameButton}}
+                </JButton>
+                }
+            </div>
+        </div>
+
+    </div>
+    }
+</div>

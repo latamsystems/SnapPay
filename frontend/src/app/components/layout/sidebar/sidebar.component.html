@@ -1,0 +1,135 @@
+<section class="relative select-none">
+  <div
+    class="fixed top-0 left-0 h-full max-w-[220px] bg-white dark:bg-foreground border-r border-border dark:border-dark-border z-99 transition-[width] duration-300"
+    [ngClass]="{
+      'w-[60px]': sidebarHidden,
+      'w-[220px]': !sidebarHidden
+    }">
+    <div class="sidebar">
+      <!-- Identidad del sitio -->
+      <a [routerLink]="routes[0]"
+        class="sticky flex w-full items-center h-[min-content] gap-[5px] font-bold p-1 border-b border-border">
+        <div class="grid min-w-[55px]">
+          <img src="img/logos/logo_black.png" class="block dark:hidden w-[50px] h-[50px]" alt="logo">
+          <img src="img/logos/logo_white.png" class="hidden dark:block w-[50px] h-[50px]" alt="logo">
+        </div>
+
+        <div class="justify-start items-center align-center" [ngClass]="{'hidden': sidebarHidden}">
+          <p class="w-[150px] m-0 text-[0.9em] text-black dark:text-white uppercase leading-4"
+            style="letter-spacing: 0.3px">
+            {{ title }}
+          </p>
+        </div>
+      </a>
+
+      <!-- Items -->
+      <div
+        class="h-[87vh] pt-[15px] pb-[40px] overflow-y-auto text-back dark:text-white scroll-element overflow-x-hidden">
+        <nav class="nav">
+          <ul class="relative grid mt-[5px] pl-[10px] list-none transition-[width] duration-300" [ngClass]="{
+            'w-[35px]': sidebarHidden,
+            'w-[206px]': !sidebarHidden,
+          }">
+
+            @for (item of menuList; track $index) {
+
+            @if (item.divider) {
+            <li
+              class="divider mt-[5px] mb-2 text-[0.6em] uppercase font-bold text-gray-500 whitespace-nowrap transition duration-300" [ngClass]="{
+                'flex justify-center': sidebarHidden,
+                'pl-[5px]': !sidebarHidden,
+              }"
+              [pTooltip]="sidebarHidden ? item.divider : undefined">{{item.divider}}</li>
+            }
+
+            @else if (!item.elements) {
+            @if (canShowElement(item)) {
+            <a [routerLink]="item.route"
+              class="flex gap-2 p-2 mb-2 items-center text-black dark:text-white border border-border/30 dark:border-dark-border/30 hover:border-border hover:dark:border-dark-border rounded transition duration-300"
+              routerLinkActive="bg-primary dark:bg-dark-primary text-white"
+              [pTooltip]="sidebarHidden ? item.name : undefined" [routerLinkActiveOptions]="{exact: true}">
+              <div class="icon-sidebar-item">
+                <lucide-icon [name]="item.icon" class="w-5 h-5"></lucide-icon>
+              </div>
+              <div class="text-[13px] min-w-[150px]" [ngClass]="{
+                'hidden': sidebarHidden,
+                'block': !sidebarHidden
+              }">
+                <li>{{item.name}}</li>
+              </div>
+            </a>
+            }
+            }
+
+            @else {
+            @if (canShowElement(item)) {
+            <a (click)="toggleSection(item.name)"
+              class="relative flex gap-2 p-2 mb-2 items-center text-black! dark:text-white! border border-border/30 dark:border-dark-border/30 hover:border-border hover:dark:border-dark-border rounded transition duration-300"
+              [pTooltip]="sidebarHidden ? item.name : undefined"
+              [ngClass]="{'bg-muted dark:bg-dark-muted text-black dark:text-white ': isSectionVisible(item.name)}">
+              <div class="icon-sidebar-item">
+                <lucide-icon [name]="item.icon" class="w-5 h-5"></lucide-icon>
+              </div>
+              <div class="text-[13px]" [ngClass]="{
+                'hidden': sidebarHidden,
+                'block': !sidebarHidden
+              }">
+                <li>{{item.name}}</li>
+              </div>
+              <div class="absolute" [ngClass]="{
+                'bottom-0 right-0': sidebarHidden,
+                'right-2 top-1/2 -translate-y-1/2': !sidebarHidden
+              }">
+                <lucide-icon [name]="icons.chevronDown" [size]="12" class="transition-transform duration-300"
+                  [class]="isSectionVisible(item.name) ? 'rotate-180' : ''"></lucide-icon>
+              </div>
+            </a>
+
+            <div [@slideToggle]="isSectionVisible(item.name) ? 'expanded' : 'collapsed'"
+              class="flex flex-col gap-1 justify-center pl-[5px] border-l border-border/30 dark:border-dark-border/30"
+              [ngClass]="{
+              'mb-2' : isSectionVisible(item.name), 
+              'm-0' : sidebarHidden,
+              'ml-[5px]' : !sidebarHidden,
+              }">
+
+              @for (element of item.elements; track $index) {
+              @if (canShowElement(element)) {
+              <a [routerLink]="element.route"
+                class="flex gap-2 p-2 items-center text-black dark:text-white border border-border/30 dark:border-dark-border/30 hover:border-border hover:dark:border-dark-border rounded transition duration-300"
+                routerLinkActive="bg-primary dark:bg-dark-primary text-white"
+                [pTooltip]="sidebarHidden ? element.name : undefined" [routerLinkActiveOptions]="{exact: true}">
+                <div class="icon-sidebar-item">
+                  <li><lucide-icon [name]="element.icon" [size]="15"></lucide-icon></li>
+                </div>
+                <div class="text-[13px]" [ngClass]="{
+                  'hidden': sidebarHidden,
+                  'block': !sidebarHidden
+                }">
+                  <li>{{element.name}}</li>
+                </div>
+              </a>
+              }
+              }
+            </div>
+            }
+            }
+            }
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- Autors -->
+  <div
+    class="grid fixed bg-white dark:bg-foreground bottom-0 left-0 w-[220px] p-[10px] border-t border-r border-border dark:border-dark-border align-center z-1000"
+    [ngClass]="opacityClass">
+    <span class="block text-[10px] text-center text-black dark:text-white">
+      <i class="opacity-50">Designed by </i>
+      <b><a href="https://www.armandovelasquez.com" class="text-dark-primary dark:text-primary" target="_blank">Josue
+          Velasquez</a></b>
+    </span>
+  </div>
+
+</section>

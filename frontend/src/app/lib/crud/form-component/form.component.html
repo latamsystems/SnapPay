@@ -1,0 +1,81 @@
+<section class="content_form">
+    <!-- Overlay -->
+    @if (openForm) {
+    <div onKeyPress class="fixed top-0 left-0 w-full h-full bg-black/50 z-[998] transition duration-300" (click)="onClose()"></div>
+    }
+
+    <!-- Sidebar personalizado -->
+    @if (openForm) {
+    <div @sidebarTransition
+        class="fixed top-0 right-0 h-full w-[30em] max-w-full border border-border dark:border-dark-border rounded-tl-[15px] rounded-bl-[15px] text-white bg-white dark:bg-dark-background shadow-lg z-[999] flex flex-col">
+        <!-- Header -->
+        <div class="flex p-2 pl-4 pr-4 justify-between items-center bg-primary dark:bg-dark-primary border-b border-border dark:border-dark-border rounded-tl-[15px] font-semibold text-2sm">
+            <div class="flex items-center gap-2">
+                <span>
+                    {{ typeForm !== 'none' ? typeForm === 'create' ? 'AGREGAR' : 'ACTUALIZAR' : 'REGISTROS' }} {{ typeForm !== 'none' ? titleForm : '' }}
+                </span>
+
+                <div class="cursor-pointer" [pTooltip]="tooltipContentChangePassword" [autoHide]="false">
+                    <lucide-icon [name]="icons.info" [size]="15"></lucide-icon>
+                </div>
+            </div>
+
+
+            <ng-template #tooltipContentChangePassword>
+            <div class="text-[12px] leading-[15px]">
+                <span>Las etiquetas con ✱ indican campos requeridos.</span> <br>
+                <span><span class="text-red-600 dark:text-red-300">✱</span> Obligatorio</span> <br>
+                <span><span class="text-blue-600 dark:text-blue-300">✱</span> Condicionado</span> <br>
+                <span><span class="text-purple-600 dark:text-purple-300">✱</span> Automático</span> <br>
+            </div>
+            </ng-template>
+
+            <div class="flex gap-2">
+                @for (cb of checkboxes; track $index) {
+                    @if (cb.isVisible) {
+                        <JCheckbox onKeyPress
+                            type="switch"
+                            [title]="cb.title"
+                            [isChecked]="cb.isChecked"
+                            [isLoading]="cb.isLoading"
+                            (click)="cb.onClick(!cb.isChecked, $index)"
+                        />
+                    }
+                }
+              </div>
+
+            <button type="button" (click)="onClose()" class="p-2 rounded-full border border-border dark:border-dark-border text-white hover:bg-dark-background focus:outline-none cursor-pointer">
+                <lucide-icon [name]="icons.x" size="16"></lucide-icon>
+            </button>
+        </div>
+
+        <!-- Content -->
+        <div class="p-4 flex-1 overflow-x-hidden overflow-y-auto scroll-element">
+            @if (formTemplate) {
+            <ng-container [ngTemplateOutlet]="formTemplate"></ng-container>
+            }
+        </div>
+
+        <!-- Footer -->
+        @if (typeForm !== 'none') {
+        <div class="p-4 border-t border-border dark:border-dark-border rounded-bl-[15px] flex justify-center gap-3">
+            <JButton
+             type="submit" 
+             (clicked)="onSubmit()" 
+             classes="primary" 
+             [icon]="icons.save" 
+             [isLoading]="isLoading"
+             >{{typeForm === 'create' ? 'AGREGAR' : 'ACTUALIZAR'}}</JButton>  
+
+            <JButton 
+            type="button" 
+            (clicked)="onClose()" 
+            classes="secondary" 
+            [icon]="icons.circleX" 
+            text="CANCELAR" 
+            />
+        </div>
+        }
+    </div>
+    }
+</section>

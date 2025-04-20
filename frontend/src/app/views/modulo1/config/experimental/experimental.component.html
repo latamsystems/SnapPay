@@ -1,0 +1,7 @@
+<section class="grid grid-cols-[1fr_1fr]">
+    <div class="grid gap-3 border border-border dark:border-dark-border rounded-lg p-5 bg-white dark:bg-foreground">
+        <h2 class="font-bold">Convertidor de imagen a .bin</h2>
+        <JInput type="file" (change)="onFileSelected($event)" accept="image/*" [(ngModel)]="file" [clearButton]="true" [showImage]="true" />
+        <JButton text="Descargar como .bin" (clicked)="downloadAsBin()" [disabled]="!file" classes="primary" />
+    </div>
+</section>

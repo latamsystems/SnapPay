@@ -1,0 +1,42 @@
+<!-- @if (role_user != 1) { -->
+
+<!-- Contenedor para los demas roles -->
+<section class="contenedor_home" [ngClass]="{contenedor_home_active: !sidebar.sidebarHidden}">
+
+  <div class="bouncing-blobs-container">
+    <div class="bouncing-blobs-glass"></div>
+    <div class="bouncing-blobs">
+      <div class="bouncing-blob bouncing-blob--blue"></div>
+      <div class="bouncing-blob bouncing-blob--blue"></div>
+      <div class="bouncing-blob bouncing-blob--blue"></div>
+      <div class="bouncing-blob bouncing-blob--white"></div>
+      <div class="bouncing-blob bouncing-blob--purple"></div>
+      <div class="bouncing-blob bouncing-blob--purple"></div>
+      <div class="bouncing-blob bouncing-blob--pink"></div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h2>Sistema de control de clientes y dispositivos</h2>
+    <p>Snap Pay</p>
+  </div>
+
+  <span>{{session.role_user}} {{session.firstname_user}}</span>
+  <br>
+  <span>{{sidebar.sidebarHidden}}</span>
+
+  <!-- <app-examples></app-examples> -->
+</section>
+
+<!-- } -->
+
+
+<!-- @if (role_user == 1) {
+<section class="contenedor_home_admin">
+
+- Cobrar pagos
+- Cobrar tareas
+- Agregar porcentages y todo eso
+
+</section>
+} -->

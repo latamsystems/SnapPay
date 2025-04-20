@@ -1,0 +1,119 @@
+<section class="relative grid gap-[20px] pb-3">
+
+  <div class="grid grid-cols-[1fr_1fr] gap-[20px]" [ngClass]="{
+    'max-[1000px]:grid-cols-[1fr]' : !sidebar.sidebarHidden,
+    'max-[850px]:grid-cols-[1fr]' : sidebar.sidebarHidden,
+  }">
+
+    <!-- Contenedor para datos del susuario -->
+    @if (frormProfile) {
+    <div class="contenedor_formulario_perfil">
+      <form
+        class="relative inherit py-[10px] px-[20px] rounded-[10px] border border-border dark:border-dark-border bg-white dark:bg-foreground"
+        [formGroup]="frormProfile">
+
+        <div>
+          <span class="flex items-center gap-[5px]">
+            <b>Actualizar datos personales</b>
+            <div class="cursor-pointer" [pTooltip]="tooltipContentUpdateProfile" [autoHide]="false">
+              <lucide-icon [name]="icons.info" [size]="15"></lucide-icon>
+            </div>
+          </span>
+
+          <ng-template #tooltipContentUpdateProfile>
+            <div class="text-[12px] leading-[15px]">
+              <span>Asegúrate de mantener actualizada tu información relevante.</span> <br>
+            </div>
+          </ng-template>
+
+          <hr class="text-border dark:text-dark-border mt-[5px] mb-[10px]">
+        </div>
+
+        <div class="grid grid-cols-[1fr_1fr] gap-x-5" [ngClass]="{
+          'max-[850px]:grid-cols-[1fr]' : !sidebar.sidebarHidden,
+          'max-[730px]:grid-cols-[1fr]' : sidebar.sidebarHidden,
+        }">
+
+          <JContentForm>
+            <JLabel for="email_user" text="Correo electrónico" [isRequired]="true" />
+            <JInput type="text" id="email_user" formControlName="email_user" placeholder="Ingrese su correo electrónico" />
+            <JErrorMessage [control]="formControlsProfile['email_user_control']" [errorMessages]="{
+              required: 'El correo es requerido.',
+              pattern: 'El correo electronico no es valido.'
+            }" />
+          </JContentForm>
+
+          <div class="flex justify-end items-right col-span-full my-[5px]">
+            <JButton type="button" (clicked)="updateProfile()" [icon]="icons.gem" text="Actualizar" classes="primary" />
+          </div>
+        </div>
+
+      </form>
+    </div>
+    }
+
+
+    <!-- Contenedor para cambiar de contraseña -->
+    @if (frormPassword) {
+    <div>
+      <form [formGroup]="frormPassword"
+        class="relative inherit py-[10px] px-[20px] rounded-[10px] border border-border dark:border-dark-border bg-white dark:bg-foreground">
+        <div>
+          <span class="flex items-center gap-[5px]">
+            <b>Actualizar contraseña</b>
+            <div class="cursor-pointer" [pTooltip]="tooltipContentChangePassword" [autoHide]="false">
+              <lucide-icon [name]="icons.info" [size]="15"></lucide-icon>
+            </div>
+          </span>
+
+          <ng-template #tooltipContentChangePassword>
+            <div class="text-[12px] leading-[15px]">
+              <span>Usa una combinación segura que incluya
+                letras, números y símbolos especiales.</span> <br>
+              <span>Ex: <b>A1b2C3#</b></span>
+            </div>
+          </ng-template>
+
+          <hr class="text-border dark:text-dark-border mt-[5px] mb-[10px]">
+        </div>
+
+        <div class="password_change">
+
+          <JContentForm>
+            <JLabel for="password_user" text="Contraseña actual" [isRequired]="true" />
+            <JInput [type]="isVisiblePassword ? 'text' : 'password'" id="password_user" formControlName="password_user" placeholder="Ingrese su contraseña" />
+            <JErrorMessage [control]="formControlsPasswd['password_user_control']" [errorMessages]="{
+                required: 'La contraseña actual es requerida.'
+              }" />
+          </JContentForm>
+
+          <JContentForm>
+            <JLabel for="new_password" text="Nueva contraseña" [isRequired]="true" />
+            <JInput [type]="isVisiblePassword ? 'text' : 'password'" id="new_password" formControlName="new_password" placeholder="Ingrese una nueva contraseña" />
+            <JErrorMessage [control]="formControlsPasswd['new_password_control']" [errorMessages]="{
+                required: 'La nueva contraseña es requerida.',
+                securePassword: 'La nueva contraseña no es segura.'
+              }" />
+          </JContentForm>
+
+          <label class="flex gap-2 w-full items-center text-[15px] cursor-pointer">
+            <JCheckbox onKeyPress id="checkbox" [iconSize]="10" [isChecked]="isVisiblePassword" (click)="togglePasswordVisibility($event)" classes="w-[15px]! h-[15px]!" />
+            <span>Mostrar contraseña</span>
+          </label>
+
+          <div class="flex justify-between items-center my-[5px]" [ngClass]="{
+            'max-[420px]:justify-end' : sidebar.sidebarHidden,
+            'max-[580px]:justify-end' : !sidebar.sidebarHidden,
+          }">
+            <span class="font-bold text-[15px] opacity-50" [ngClass]="{
+              'max-[420px]:hidden' : sidebar.sidebarHidden,
+              'max-[580px]:hidden' : !sidebar.sidebarHidden,
+            }">{{ name_role }}</span>
+            <JButton type="button" (clicked)="updatePassword()" [icon]="icons.keyRound" text="Actualizar" classes="primary" />
+          </div>
+        </div>
+      </form>
+    </div>
+    }
+  </div>
+</section>

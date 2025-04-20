@@ -1,0 +1,83 @@
+<div class="mx-auto p-4">
+    <JCrudTable 
+        [columns]="columns" 
+        [endpoint]="endpoint" 
+        searchPlaceholder="Buscar usuario..."
+        [checked]="true"
+        [checkedValues]="[[1], [2]]"
+        [checkedTitles]="['Activo', 'Inactivo']"
+        [defaultFilters]="{ 'id_status': 1 }" 
+        [filtersButton]="filtersButton"
+        [filtersSelect]="filtersSelect"
+        [optionsTable]="optionsTable"
+        (dataLoaded)="onTableDataLoaded()"
+    />
+</div>
+
+<JCrudForm 
+    [openForm]="openForm" 
+    (closeForm)="onCloseForm()" 
+    [formTemplate]="templateForm" 
+    (submitForm)="onSubmitForm()"
+    [typeForm]="typeForm" 
+    [isLoading]="isLoading"
+/>
+
+<ng-template #templateForm>
+    <form [formGroup]="formGroup" class="flex flex-col gap-2">
+        <input class="input" id="id_user" type="hidden" formControlName="id_user">
+        
+        <JContentForm>
+            <JLabel for="firstname_user" text="Nombres" [isRequired]="true" />
+            <JInput type="text" id="firstname_user" formControlName="firstname_user" placeholder="Ingrese el nombre" />
+            <JErrorMessage [control]="formControls['firstname_user_control']" [errorMessages]="{
+                required: 'El nombre es requerido.',
+                pattern: 'El nombre debe contener solo letras y requiere de una o dos palabras separadas por un espacio.'
+            }" />
+        </JContentForm>
+  
+        <JContentForm>
+            <JLabel for="lastname_user" text="Apellidos" [isRequired]="true" />
+            <JInput type="text" id="lastname_user" formControlName="lastname_user" placeholder="Ingrese el apellido" />
+            <JErrorMessage [control]="formControls['lastname_user_control']" [errorMessages]="{
+                required: 'El apellido es requerido.',
+                pattern: 'El apellido debe contener solo letras y requiere de una o dos palabras separadas por un espacio.'
+            }" />
+        </JContentForm>
+
+        <JContentForm>
+            <JLabel for="identification_user" text="Identificación" [isRequired]="true" />
+            <JInput type="text" id="identification_user" formControlName="identification_user" placeholder="Ingrese el número de identificación" />
+            <JErrorMessage [control]="formControls['identification_user_control']" [errorMessages]="{
+                required: 'La identificación es requerida.'
+            }" />
+        </JContentForm>
+  
+        <JContentForm>
+            <JLabel for="email_user" text="Correo eléctronico" [isRequired]="true" />
+            <JInput type="email" id="email_user" formControlName="email_user" placeholder="Ingrese el correo electrónico" />
+            <JErrorMessage [control]="formControls['email_user_control']" [errorMessages]="{
+                required: 'El correo es requerido.',
+                pattern: 'El correo electronico no es valido.'
+            }" />
+        </JContentForm>
+  
+        <JContentForm>
+            <JLabel for="id_role" text="Selección de rol" [isRequired]="true" />
+            <JSelect
+                type="searchable"
+                formControlName="id_role"
+                endpoint="role"
+                optionLabel="name_role"
+                optionValue="id_role"
+                [loadOnInit]="typeForm === 'create' ? false : true"
+                [isSearch]="false"
+                placeholder="Seleccione un rol"
+                [showClear]="true"
+            />
+            <JErrorMessage [control]="formControls['id_role_control']" [errorMessages]="{
+                required: 'El rol es requerido.'
+            }" />
+        </JContentForm>
+    </form>
+</ng-template>

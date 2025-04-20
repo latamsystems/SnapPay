@@ -1,6 +1,7 @@
 import { Request } from 'express';
 import { AuthService } from "@/src/auth/auth.service";
 import { Controller } from '@/lib/crud/controller/decorator.controller';
+import { AuthenticatedRequest } from '@/middlewares/authorization.middleware';
 
 // =============================================================================
 
@@ -41,6 +42,25 @@ export class AuthController {
   // =============================================================================
 
   /**
+   * Autenticación de administrador
+   * @param req
+   */
+  @Controller({
+    service: AuthService.authenticateAdminUser,
+    messages: {
+      success: 'Se ha conectado el usuario:',
+      incorrectCredentials: 'Usuario o contraseña incorrectos.',
+      inactiveAccount: 'El usuario esta inactivo.',
+      unauthorized: 'El usuario no tiene los permisos suficientes.',
+    },
+    extractParams: (req: AuthenticatedRequest) => [req.body]
+  })
+  static authenticateAdminUser() { void 0 }
+
+  // =============================================================================
+
+
+  /**
    * Obtener datos de usuario
    * @param req
    */
@@ -50,7 +70,7 @@ export class AuthController {
       success: 'Detalles del usuario obtenidos correctamente.',
       forbidden: 'Usuario no autenticado.'
     },
-    extractParams: (req: Request) => [req]
+    extractParams: (req: AuthenticatedRequest) => [req.user]
   })
   static getUserDetails() { void 0 }
 

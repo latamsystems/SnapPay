@@ -1,0 +1,37 @@
+
+.input {
+    &:-webkit-autofill {
+        -webkit-text-fill-color: black !important;
+        -webkit-box-shadow: 0 0 0px 1000px color-mix(in srgb, var(--color-primary) 15%, white) inset !important;
+        caret-color: var(--color-primary) !important;
+    }
+    
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus,
+        &:-webkit-autofill:active {
+            -webkit-text-fill-color: black !important;
+            -webkit-box-shadow: 0 0 0px 1000px color-mix(in srgb, var(--color-primary) 15%, white) inset !important;
+            caret-color: var(--color-primary) !important;
+    }
+}
+
+.dark {
+    .input {
+    
+        &:-webkit-autofill {
+            -webkit-text-fill-color: white !important;
+            -webkit-box-shadow: 0 0 0px 1000px color-mix(in srgb, var(--color-background) 15%, black) inset !important;
+            caret-color: var(--color-dark-primary) !important;
+        }
+
+        .input:-webkit-autofill:hover,
+        .input:-webkit-autofill:focus,
+        .input:-webkit-autofill:active {
+            -webkit-text-fill-color: white !important;
+            -webkit-box-shadow: 0 0 0px 1000px color-mix(in srgb, var(--color-background) 15%, black) inset !important;
+            caret-color: var(--color-primary) !important;
+        }
+    }
+}
+
+  

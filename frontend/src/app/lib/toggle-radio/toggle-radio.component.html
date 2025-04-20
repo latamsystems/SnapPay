@@ -1,0 +1,46 @@
+@if (internalOptions.length > 0) {
+<div class="flex rounded-md overflow-hidden border border-border dark:border-dark-border text-sm min-h-[40px] select-none" [ngClass]="{ 'opacity-50': disabled || isComponentDisabled }" [class]="classes">
+    <ng-container>
+        @for (opt of internalOptions; track $index) {
+            <button
+              type="button"
+              [disabled]="disabled || isComponentDisabled"
+              (click)="select(opt.value)"
+              [ngClass]="{
+                'bg-primary dark:bg-dark-primary text-white': selectedValue === opt.value,
+                'bg-background dark:bg-dark-background hover:bg-muted/80 hover:dark:bg-dark-muted/30 text-gray-700 dark:text-white': selectedValue !== opt.value,
+                'cursor-not-allowed pointer-events-none': disabled || isComponentDisabled
+              }"
+              class="w-full py-2 px-4 font-medium border-r border-border last:border-none focus:outline-none transition-colors duration-200 ease-in-out cursor-pointer"
+              [class]="classesElement"
+              >
+              {{ opt.label }}
+            </button>
+          }
+          
+    </ng-container>
+</div>
+} @else if (isLoading) {
+<div class="flex gap-2 items-center justify-center rounded-md overflow-hidden border border-border dark:border-dark-border h-[40px]">
+    <lucide-icon [name]="icons.loading" [size]="15" class="text-gray-400 animate-spin" />
+    <span>Cargando...</span>
+</div>  
+}@else {
+<div class="flex items-center justify-center rounded-md overflow-hidden border border-border dark:border-dark-border h-[40px]">
+    No hay opciones
+</div>  
+}
+  
+<!-- Clear button -->
+@if (showClear && selectedValue !== null) {
+    <div class="mt-2">
+      <button 
+        type="button" 
+        (click)="clear()" 
+        [disabled]="disabled || isComponentDisabled"
+        class="text-xs text-red-500 underline disabled:opacity-50 disabled:cursor-not-allowed">
+        Limpiar selección
+      </button>
+    </div>
+  }
+  

@@ -1,0 +1,85 @@
+<!-- Modo claro / oscuro -->
+<div class="fixed top-0 right-0 p-4 z-1">
+  <app-mode-toggle></app-mode-toggle>
+</div>
+
+<section
+  class="absolute bg-primary dark:bg-dark-primary left-1/2 transform -translate-x-1/2 w-full h-screen min-h-[520px] flex flex-col justify-center items-center text-gray-500 overflow-hidden text-center select-none">
+  <img src="img/background/fondo2.svg" alt="Fondo" class="fixed top-0 left-0 w-full h-full object-cover z-0" />
+
+  <div
+    class="relative w-[400px] min-h-[400px] rounded-[12px] bg-background dark:bg-dark-background border border-border dark:border-dark-border shadow-sm max-[480px]:w-[300px] max-[480px]:h-[450px] max-[335px]:w-[250px] max-[335px]:max-h-[600px]">
+    <div
+      class="absolute grid w-full h-full top-0 left-0 p-[50px] justify-center items-center align-center rounded-[12px] overflow-hidden">
+      @if (loginForm) {
+      <!-- Utiliza el FormGroup para encapsular los controles del formulario -->
+      <form [formGroup]="loginForm" id="login_form"
+        class="absolute flex flex-col w-[80%] left-1/2 transform -translate-x-1/2 justify-center align-center items-center">
+
+        <div class="flex flex-col items-center pb-3">
+          <a routerLink="/">
+              <img src="img/logos/logo_horizontal_black.png"
+              class="block dark:hidden w-[175px] select-none cursor-pointer drop-shadow-sm max-[580px]:w-[125px]"
+              alt="Logo">
+              
+              <img src="img/logos/logo_horizontal_white.png"
+              class="hidden dark:block w-[175px] select-none cursor-pointer drop-shadow-sm max-[580px]:w-[125px]"
+              alt="Logo">
+          </a>
+
+          <h3
+            class="m-0 text-gray-800 dark:text-gray-100 text-[25px] font-[700] drop-shadow-sm max-[480px]:text-[23px]">
+            {{title}}
+          </h3>
+        </div>
+
+        <div class="flex flex-col items-center w-full gap-2">
+          <!-- Campo de correo electrónico -->
+          <JContentForm class="w-full">
+            <JInput type="text" id="email_user" formControlName="email_user" placeholder="Ingrese su correo" />
+            <JErrorMessage classes="text-[10px]" [control]="formControls['email_user_control']" [errorMessages]="{
+            required: 'El correo es requerido.',
+            pattern: 'El correo electronico no es valido.'
+          }" />
+          </JContentForm>
+
+          <!-- Campo de contraseña -->
+          <JContentForm class="w-full">
+            <JInput [type]="isVisiblePassword ? 'text' : 'password'" id="password_user" formControlName="password_user"
+              placeholder="Ingrese su contraseña" />
+            <JErrorMessage classes="text-[10px]" [control]="formControls['password_user_control']" [errorMessages]="{
+            required: 'La contraseña es requerida.'
+          }" />
+          </JContentForm>
+
+          <div class="flex flex-col gap-2 items-center w-full mb-2">
+
+            <!-- Campo de mostrar contraseña -->
+            <label class="flex gap-2 w-full items-center text-[15px] cursor-pointer">
+              <JCheckbox onKeyPress 
+                id="checkbox" 
+                [iconSize]="10" 
+                [isChecked]="isVisiblePassword"
+                (click)="togglePasswordVisibility($event)" 
+                classes="w-[15px]! h-[15px]!" 
+              />
+              <span>Mostrar contraseña</span>
+            </label>
+
+            <!-- Enlace de recuperacion de contraseña -->
+            <a [routerLink]="routes[5]"
+              class="text-dark-primary hover:text-dark-primary/80 dark:text-primary dark:hover:text-primary/90 text-[10px] ">¿Olvidó
+              su
+              contraseña?</a>
+          </div>
+
+          <!-- Botón de enviar -->
+          <JButton type="submit" [iconSize]="25" text="Ingresar" [isLoading]="loading" [disabled]="loading" (clicked)="login()"
+            classes="primary w-[200px] rounded-[50px]" />
+        </div>
+
+      </form>
+      }
+    </div>
+  </div>
+</section>

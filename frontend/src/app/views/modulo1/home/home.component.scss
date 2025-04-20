@@ -1,0 +1,236 @@
+// @use "../../../../../assets/scss/vars/colors" as colors;
+
+// // Quitar margenes por defecto de la vista general
+// ::ng-deep .content-views {
+//   display: flex; // Asegura que use flexbox
+//   height: 81vh; // Asegúrate de que ocupe toda la altura de la ventana
+//   width: 100vw; // Asegúrate de que ocupe toda la anchura de la ventana
+
+//   .views {
+//     padding: 0 !important;
+//     flex-grow: 1; // Asegura que crezca para ocupar todo el espacio disponible
+//     height: 100%; // Asegura que ocupe todo el espacio vertical
+//     width: 100%; // Asegura que ocupe todo el espacio horizontal
+//   }
+// }
+
+// // Contenedor para los uusarios
+// .contenedor_home {
+//   position: relative;
+//   display: grid;
+//   flex-grow: 1;
+//   width: 100%;
+//   height: 100%;
+
+//   .bouncing-blobs-container {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//   }
+
+//   .bouncing-blob {
+//     position: absolute;
+//     width: 100%;
+//     height: 100%;
+//     aspect-ratio: 1;
+//     border-radius: 50%;
+//     will-change: transform;
+//     z-index: 1;
+//     top: 0;
+//     left: 0;
+//     transform-origin: left top;
+
+//     &--blue {
+//       background: colors.$primary;
+//       width: 15vw;
+//     }
+
+//     &--white {
+//       background: colors.$white;
+//       z-index: 2;
+//       width: 15vw;
+//     }
+
+//     &--purple {
+//       background: lighten(colors.$primary, 5);
+//       width: 15vw;
+//     }
+
+//     &--pink {
+//       background: lighten(colors.$primary, 10);
+//       width: 15vw;
+//     }
+//   }
+
+//   .bouncing-blobs {
+//     position: absolute;
+//     z-index: 1;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//   }
+
+//   .bouncing-blobs-container {
+//     position: relative;
+//     width: 100%;
+//     height: 100%;
+//     overflow: hidden;
+//     border-radius: 10px;
+
+//     @media (max-width: 470px) {
+//       min-width: 400px;
+//       width: 400px;
+//     }
+//   }
+
+//   .bouncing-blobs-glass {
+//     position: absolute;
+//     z-index: 2;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//     backdrop-filter: blur(140px);
+//     -webkit-backdrop-filter: blur(140px);
+//     pointer-events: none;
+//   }
+
+//   @media (max-width: 1200px) {
+//     .bouncing-blobs-glass {
+//       backdrop-filter: blur(120px);
+//       -webkit-backdrop-filter: blur(120px);
+//     }
+//   }
+
+//   @media (max-width: 500px) {
+//     .bouncing-blob {
+//       width: 60vw;
+
+//       &--white {
+//         width: 30vw;
+//       }
+//     }
+
+//     .bouncing-blobs-glass {
+//       backdrop-filter: blur(90px);
+//       -webkit-backdrop-filter: blur(90px);
+//     }
+//   }
+
+//   .hero {
+//     position: absolute;
+//     display: flex;
+//     flex-direction: column;
+//     width: 100%;
+//     height: 100%;
+//     justify-content: center;
+//     align-items: center;
+//     z-index: 2;
+
+//     @media (max-width: 630px) {
+//       min-width: 400px;
+//       width: 400px;
+//     }
+
+//     & h2 {
+//       font-size: 50px;
+//       max-width: 800px;
+//       line-height: 1;
+//       text-align: center;
+//       font-weight: bold;
+//       margin-bottom: 20px;
+//       color: colors.$black-sha;
+
+//       @media (max-width: 1000px) {
+//         font-size: 4em;
+//       }
+
+//       @media (max-width: 830px) {
+//         font-size: 3em;
+//       }
+
+//       @media (max-width: 650px) {
+//         font-size: 2em;
+//       }
+
+//     }
+
+//     & p {
+//       font-size: 24px;
+//       max-width: 500px;
+//       text-align: center;
+//       color: colors.$black-sha;
+
+//       @media (max-width: 650px) {
+//         font-size: 1.5em;
+//       }
+//     }
+//   }
+// }
+
+// // Sidebar activo
+// .contenedor_home_active {
+//   @media (max-width: 630px) {
+//     .bouncing-blobs-container {
+//       min-width: 400px;
+//       width: 400px;
+//     }
+
+//     // Contenido
+//     .hero {
+//       min-width: 400px;
+//       width: 400px;
+//     }
+//   }
+
+//   @media (max-width: 1150px) {
+//     .hero {
+
+//       & h2 {
+//         font-size: 4em;
+//       }
+//     }
+//   }
+
+//   @media (max-width: 1024px) {
+//     .hero {
+
+//       & h2 {
+//         font-size: 3em;
+//       }
+//     }
+//   }
+
+//   @media (max-width: 850px) {
+//     .hero {
+
+//       & h2 {
+//         font-size: 2em;
+//       }
+
+//       & p {
+//         font-size: 1.5em;
+//       }
+//     }
+//   }
+// }
+
+
+// .contenedor_home_admin {
+//   padding: 10px 20px;
+
+//   .contenido {
+//     display: flex;
+//     gap: 15px;
+//     margin-top: 30px;
+
+//     .icon-charge {
+//       img {
+//         width: 30px;
+//       }
+//     }
+//   }
+// }

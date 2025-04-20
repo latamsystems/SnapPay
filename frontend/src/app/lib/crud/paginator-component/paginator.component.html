@@ -1,0 +1,61 @@
+<!-- Pagination -->
+<div class="flex flex-col sm:flex-row justify-between items-center mt-4 gap-5">
+    <div class="text-sm text-gray-700 dark:text-gray-300">
+        Mostrando {{ totalItems ? startIndex + 1 : 0 }} a {{ Math.min(endIndex + 1, totalItems) }} de {{ totalItems }}
+        registros
+    </div>
+
+    <div class="flex space-x-1 justify-center items-center">
+        <!-- First page -->
+        <JButton onKeyPress 
+        [icon]="icons.firstPage"
+        [iconSize]="16"
+        (click)="goToFirstPage()" 
+        [disabled]="currentPage === 1 || isLoading"
+        [isLoading]="isButtonLoading('first')"
+        classes="secondary h-[35px]"
+        [class.disabled]="currentPage === 1 || isLoading" />
+
+        <!-- Previous page -->
+        <JButton onKeyPress 
+        [icon]="icons.prevPage"
+        [iconSize]="16"
+        (click)="goToPreviousPage()" 
+        [disabled]="currentPage === 1 || isLoading"
+        classes="secondary h-[35px]"
+        [isLoading]="isButtonLoading('prev')"
+        [class.disabled]="currentPage === 1 || isLoading" />
+
+        <!-- Page numbers -->
+        @for (page of pages; track page) {
+        <JButton onKeyPress 
+        [text]="page"
+        [iconSize]="10"
+        (click)="onPageChange(page)" 
+        classes="secondary h-[30px]" 
+        [disabled]="currentPage === page || isLoading"
+        [isLoading]="isButtonLoading(page)"
+        [ngClasses]="{ 'primary' : currentPage === page }" />
+        }
+
+        <!-- Next page -->
+        <JButton onKeyPress 
+        [icon]="icons.nextPage"
+        [iconSize]="16"
+        (click)="goToNextPage()" 
+        [disabled]="currentPage === totalPages || isLoading" 
+        classes="secondary h-[35px]"
+        [isLoading]="isButtonLoading('next')"
+        [class.disabled]="currentPage === totalPages || isLoading" />
+
+        <!-- Last page -->
+        <JButton onKeyPress 
+        [icon]="icons.lastPage"
+        [iconSize]="16"
+        (click)="goToLastPage()" 
+        [disabled]="currentPage === totalPages || isLoading" 
+        classes="secondary h-[35px]"
+        [isLoading]="isButtonLoading('last')"
+        [class.disabled]="currentPage === totalPages || isLoading" />
+    </div>
+</div>

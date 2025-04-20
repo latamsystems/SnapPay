@@ -1,0 +1,105 @@
+<div class="flex gap-2 flex-wrap justify-center">
+
+    <!-- Select con opciones -->
+    <div class="w-40">
+        <JSelect 
+        placeholder="JOption" 
+        [(ngModel)]="selectedOption"
+        (selectionChange)="onOptionSelected($event)"
+        title="Elementos en opciones" 
+        [showClear]="true">
+            <JOption value="1">Option 1</JOption>
+            <JOption value="2">Option 2</JOption>
+        </JSelect>
+    </div>
+
+    <!-- Select con objetos -->
+    <div class="w-40">
+        <JSelect 
+        placeholder="List keys" 
+        [(ngModel)]="selectedBankId"
+        (selectionChange)="onBankSelected($event)"
+        title="Elementos en array con keys" 
+        [options]="banks" 
+        optionLabel="name_bank" 
+        optionValue="id_bank"
+        [showClear]="true" 
+        />
+    </div>
+
+    <!-- Select con arrays -->
+    <div class="w-40">
+        <JSelect 
+        placeholder="List" 
+        [(ngModel)]="selectedItemId"
+        (selectionChange)="onItemSelected($event)"
+        title="Elementos en array" 
+        [options]="items" 
+        [showClear]="true" 
+        />
+    </div>
+
+    <!-- Select multiple seleccion -->
+    <div>
+        <JSelect 
+        type="multi-table" 
+        title="Elementos multi selección (Solo tabla)" 
+        [columns]="columns" 
+        />
+    </div>
+
+    <!-- Select multiple con texto -->
+    <div>
+        <JSelect 
+        type="multi-table" 
+        title="Elementos multi selección (Solo tabla)" 
+        [columns]="columns" 
+        btnText="Con texto" 
+        />
+    </div>
+
+    <!-- Select con api indirecta sin buscador -->
+    <div class="w-40">
+        <JSelect 
+        placeholder="List Api" 
+        [(ngModel)]="selectedStatusId"
+        (selectionChange)="onStatusSelected($event)"
+        title="Elementos en api sin buscador" 
+        [options]="status" 
+        optionLabel="name_status" 
+        optionValue="id_status"
+        [showClear]="true" 
+        />
+    </div>
+
+    <!-- Select con api con buscador inicializado al abrir -->
+    <div class="w-40">
+        <JSelect
+        [type]="'searchable'"
+        [(ngModel)]="selectedUserId"
+        (selectionChange)="onUserSelected($event)"
+        endpoint="user"
+        optionLabel="email_user"
+        optionValue="id_user"
+        [searchFields]="['firstname_user', 'lastname_user']"
+        [loadOnInit]="false"
+        [placeholder]="'Usuarios...'"
+        [showClear]="true" 
+        />
+    </div>
+
+    <!-- Select con api con buscador inicializado al cargar -->
+    <div class="w-40">
+        <JSelect
+        [type]="'searchable'"
+        [(ngModel)]="selectedRoleId"
+        (selectionChange)="onRoleSelected($event)"
+        endpoint="role"
+        optionLabel="name_role"
+        optionValue="id_role"
+        [loadOnInit]="true"
+        [placeholder]="'Roles...'"
+        [showClear]="true" 
+        />
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<!-- Modo claro / oscuro -->
+<div class="fixed top-0 right-0 p-4 z-1">
+  <app-mode-toggle></app-mode-toggle>
+</div>
+
+<section
+  class="absolute bg-background dark:bg-dark-background left-1/2 transform -translate-x-1/2 w-full h-screen min-h-[520px] flex flex-col justify-center items-center text-gray-500 overflow-hidden text-center select-none">
+  <span
+    class="m-0 text-gray-400 align-center font-bold leading-none text-[9.5em] max-[580px]:text-[7em] max-[450px]:text-[6.5em] max-[335px]:text-[5.5em]">
+    404
+  </span>
+
+  <span
+    class="m-0 align-center font-semibold text-gray-700 pb-5 text-[3.1em] max-[580px]:text-[2.3em] max-[450px]:text-[1.9em] max-[335px]:text-[1.3em]">
+    Página no encontrada
+  </span>
+
+  <p class="m-0 align-center text-[1.2em] pb-[40px] max-[450px]:text-[-0.3em] max-[335px]:text-[0.7em]">
+    Por favor verificar o comunicarse con el
+    <a class="text-dark-primary dark:text-primary underline " href="https://armandovelasquez.com" target="_blank">
+      administrador</a>.
+  </p>
+
+  <div class="grid justify-center">
+    <JButton (clicked)="goHome()" classes="primary w-[180px] h-[50px] tracking-wide rounded-full text-[1em]">
+      Ir a Inicio
+    </JButton>
+  </div>
+</section>

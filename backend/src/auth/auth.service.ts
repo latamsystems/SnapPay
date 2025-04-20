@@ -99,6 +99,55 @@ export class AuthService {
   // =============================================================================
 
   /**
+   * Autenticación
+   * @param formData 
+   * @param reqMsg 
+   * @returns 
+   */
+  @Service
+  static async authenticateAdminUser(formData: User, reqMsg: Record<string, string>) {
+
+    // Reglas de validación
+    await validateRequest({
+      model: models.User,
+      formData,
+      rules: [
+        rule.validateFieldTypes(),
+        rule.requiredFields(['email_user', 'password_user']),
+        rule.validEmail('email_user'),
+      ],
+    });
+
+    const { email_user, password_user } = formData;
+
+    // Validar existencia
+    const user = await models.User.findOne({ where: { email_user } });
+    if (!user || !(await bcrypt.compare(password_user, user.password_user))) return HttpResponse.notFound({ message: reqMsg.incorrectCredentials, field: "email_user, password_user" });
+
+    // Validar estado
+    if (user.id_status === 2) return HttpResponse.forbidden({ message: reqMsg.inactiveAccount });
+
+    // Validar rol
+    if (user.id_role !== 1) return HttpResponse.forbidden({ message: reqMsg.unauthorized });
+
+    // Obtener solo la primera palabra del nombre y apellido
+    const firstname = user.firstname_user.split(' ')[0];
+    const lastname = user.lastname_user.split(' ')[0];
+
+    // Generar el token JWT
+    const token = jwt.sign({
+      id_user: user.id_user,
+      firstname_user: firstname,
+      lastname_user: lastname,
+      id_role: user.id_role,
+    }, TOKEN_SECRET, { expiresIn: DEFAULT_EXPIRATION_SECONDS });
+
+    return HttpResponse.success({ message: `${reqMsg.success} ${user.email_user}`, data: { token } });
+  }
+
+  // =============================================================================
+
+  /**
    * Obtener detalles del usuario
    * @param data 
    * @param reqMsg 
@@ -110,7 +159,7 @@ export class AuthService {
     if (!data) return HttpResponse.forbidden({ message: reqMsg.forbidden });
 
     // Los datos del usuario decodificados están disponibles
-    const { id_user, firstname_user, lastname_user, id_role } = data.user;
+    const { id_user, firstname_user, lastname_user, id_role } = data;
 
     // El campo 'exp' contiene la fecha de expiración en formato de timestamp de Unix (segundos desde el epoch)
     const exp = data.exp;

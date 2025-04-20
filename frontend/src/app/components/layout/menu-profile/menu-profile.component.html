@@ -1,0 +1,22 @@
+<div
+  class="fixed w-[175px] top-[75px] right-[10px] p-[10px] text-black dark:text-white bg-white dark:bg-foreground border border-border dark:border-dark-border rounded-[10px] z-1000 select-none">
+  <div class="grid">
+
+    @for (item of menuList; track $index) {
+    @if (canShowElement(item)) {
+    <a [routerLink]="item.route"
+      class="flex gap-2 p-1 mb-1 px-2 items-center text-black dark:text-white border border-border/30 dark:border-dark-border/30 hover:border-border hover:dark:border-dark-border rounded transition duration-300"
+      routerLinkActive="bg-primary dark:bg-dark-primary text-white" [routerLinkActiveOptions]="{exact: true}">
+      <lucide-icon [name]="item.icon" [size]="15"></lucide-icon>
+      <span class="text-[13px]">{{item.name}}</span>
+    </a>
+    }
+    }
+
+    <a class="flex gap-2 p-1 px-2 items-center text-black dark:text-white border border-border/30 dark:border-dark-border/30 hover:border-border hover:dark:border-dark-border rounded transition duration-300 cursor-pointer hover:text-red-500"
+      (click)="logout()">
+      <lucide-icon [name]="icons.logout" [size]="15"></lucide-icon>
+      <span class="text-[13px]">Cerrar Sesión</span>
+    </a>
+  </div>
+</div>

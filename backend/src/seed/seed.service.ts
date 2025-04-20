@@ -13,6 +13,7 @@ import { Model } from '@/models/interface/model.interface';
 import { Device } from '@/models/interface/device.interface';
 import { Client } from '@/models/interface/client.interface';
 import { TypeFees } from '@/models/interface/typeFees.interface';
+import { Control } from '@/models/interface/control.interface';
 
 export class SeedService {
 
@@ -35,6 +36,16 @@ export class SeedService {
         ];
 
         await seedValidator(models.Status, status, "id_status");
+
+        // Crear controles de app (verificar si existen)
+        const controls: Control[] = [
+            { id_control: 1, name_control: "MODO MANTENIMIENTO", id_status: 1 },
+            { id_control: 2, name_control: "WHATSAPP", id_status: 1 },
+            { id_control: 3, name_control: "CHATBOT", id_status: 1 },
+            { id_control: 4, name_control: "CHAT GENERAL", id_status: 1 },
+        ];
+
+        await seedValidator(models.Control, controls, "id_control");
 
         // Crear roles (verificar si existen)
         const roles: Role[] = [
@@ -112,7 +123,7 @@ export class SeedService {
         // Crear tipos de cuotas
         const typeFees: TypeFees[] = [
             { id_typeFees: 1, name_typeFees: "SEMANAL" },
-            { id_typeFees: 2, name_typeFees: "QUINCENAL"},
+            { id_typeFees: 2, name_typeFees: "QUINCENAL" },
             { id_typeFees: 3, name_typeFees: "MENSUAL" },
         ]
 
@@ -120,10 +131,10 @@ export class SeedService {
 
         // Crear clientes
         const clients: Client[] = [
-            { id_client: 1, firstname_client: 'Armando Josue', lastname_client: 'Velasquez Delgado', identification_client: '2350793218', email_client: 'josue27.velasquez9@gmail.com', phone_client: '0980167849', id_user: 1, id_status: 1},
-            { id_client: 2, firstname_client: 'Alicia Melinda', lastname_client: 'Velasquez Delgado', identification_client: '2350793226', email_client: 'josuearmando814@gmail.com', phone_client: '0980167849', id_user: 1, id_status: 1},
+            { id_client: 1, firstname_client: 'Armando Josue', lastname_client: 'Velasquez Delgado', identification_client: '2350793218', email_client: 'josue27.velasquez9@gmail.com', phone_client: '0980167849', id_user: 1, id_status: 1 },
+            { id_client: 2, firstname_client: 'Alicia Melinda', lastname_client: 'Velasquez Delgado', identification_client: '2350793226', email_client: 'josuearmando814@gmail.com', phone_client: '0980167849', id_user: 1, id_status: 1 },
         ]
-        
+
         await seedValidator(models.Client, clients, "id_client");
 
         return HttpResponse.success({ message: reqMsg.success });

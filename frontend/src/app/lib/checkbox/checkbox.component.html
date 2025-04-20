@@ -1,0 +1,46 @@
+<div class="flex flex-col items-center justify-center gap-2">
+    @if (title) {
+        <span class="text-[8px] opacity-80">{{title}}</span>
+    }
+
+    @if (type === 'checkbox') {
+    <label class="relative inline-flex items-center justify-center">
+        <input 
+            type="checkbox" 
+            class="absolute opacity-0 cursor-pointer peer" 
+            [checked]="getValue(item, column)"
+            (change)="onCheckboxChange(item, column)" 
+            [disabled]="disabled || column?.isDisaled"
+        >
+        <span
+            class="inline-flex items-center justify-center w-[25px] h-[25px] bg-white border border-primary dark:border-dark-border rounded transition-all duration-200 ease-in-out relative peer cursor-pointer peer-checked:bg-primary peer-checked:border-primary dark:peer-checked:bg-dark-primary dark:peer-checked:border-dark-primary"
+            [class]="classes"
+            [ngClass]="{'opacity-50' : column?.isDisaled}"
+        >
+            <lucide-icon [name]="icon" [size]="iconSize" class="text-white"></lucide-icon>
+        </span>
+    </label>
+    }
+
+    @if (type === 'switch') {
+    @if (!isLoading) {
+        <div onKeyPress 
+            class="relative inline-block w-[40px] h-[20px] cursor-pointer" 
+            (click)="toggleSwitch(isChecked)"
+        >
+            <!-- Slider background -->
+            <div class="absolute inset-0 rounded-full transition-all duration-300"
+                 [ngClass]="isChecked ? 'bg-blue-500' : 'bg-gray-200 dark:bg-gray-300'">
+            </div>
+
+            <!-- Circle -->
+            <div 
+                class="absolute top-[2px] left-[2px] bg-white rounded-full w-[16px] h-[16px] shadow-md transition-all duration-300"
+                [class]="classes" 
+                [ngStyle]="{'transform': isChecked ? 'translateX(20px)' : 'translateX(0)'}">
+            </div>
+        </div>
+    } @else {
+        <lucide-icon [name]="icons.loading" size="20" class="text-white animate-spin"></lucide-icon>}
+    }
+</div>

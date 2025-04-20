@@ -1,0 +1,26 @@
+@if (openModal) {
+<div class="fixed inset-0 z-1000 flex bg-black/50" [ngClass]="getPositionClass()">
+
+    <div @modalTransition
+     class="relative bg-white dark:bg-dark-popover rounded-lg shadow-lg border border-border dark:border-dark-border overflow-x-hidden"
+     [ngStyle]="getOffsetStyles()">
+     
+        <!-- Header -->
+        <div class="flex p-2 pl-4 pr-4 justify-between items-center bg-primary dark:bg-dark-primary border-b border-border dark:border-dark-border rounded-tl font-semibold text-2sm">
+
+            <h3 class="text-[1.1em] font-semibold text-white leading-none">{{ title }}</h3>
+
+            <button type="button" (click)="onClose()" class="p-2 rounded-full border border-border dark:border-dark-border text-white hover:bg-dark-background focus:outline-none cursor-pointer">
+                <lucide-icon [name]="icons.x" size="16"></lucide-icon>
+            </button>
+        </div>
+
+        <!-- Content -->
+        <div class="m-4 overflow-x-hidden scroll-element" [ngStyle]="{ width: getModalWidth(), height: getModalHeight() }">
+            @if (dialogTemplate) {
+            <ng-container [ngTemplateOutlet]="dialogTemplate"></ng-container>
+            }
+        </div>
+    </div>
+</div>
+}

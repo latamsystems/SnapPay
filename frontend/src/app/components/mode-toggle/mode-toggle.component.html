@@ -1,0 +1,8 @@
+<button (click)="toggleDarkMode()"
+    class="p-2 bg-gray-300 dark:bg-gray-700 text-black dark:text-white rounded-full cursor-pointer">
+    @if (theme === 'dark') {
+    <lucide-icon [name]="icons.Moon"></lucide-icon>
+    } @else {
+    <lucide-icon [name]="icons.Sun"></lucide-icon>
+    }
+</button>

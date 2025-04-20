@@ -1,0 +1,57 @@
+<div class="flex gap-2 flex-wrap justify-center">
+    <!-- Success (with default auto-close) -->
+    <JButton
+        classes="success"
+        (clicked)="openAlertSuccess()"
+    >
+        Success (Auto)
+    </JButton>
+
+    <!-- Success without auto-close -->
+    <JButton
+        classes="success"
+        (clicked)="openAlertSuccessNoAutoClose()"
+    >
+        Success (No Auto)
+    </JButton>
+
+    <!-- Info with custom auto-close -->
+    <JButton
+        classes="info"
+        (clicked)="openAlertInfo()"
+    >
+        Info (10s)
+    </JButton>
+
+    <!-- Warning (no auto-close by default) -->
+    <JButton
+        classes="warning"
+        (clicked)="openAlertWarning()"
+    >
+        Warning
+    </JButton>
+
+    <!-- Question with auto-close -->
+    <JButton
+        classes="question"
+        (clicked)="openAlertQuestion()"
+    >
+        Question (8s)
+    </JButton>
+
+    <!-- Error (no auto-close by default) -->
+    <JButton
+        classes="error"
+        (clicked)="openAlertError()"
+    >
+        Error
+    </JButton>
+
+    <!-- Loading with auto-close -->
+    <JButton
+        classes="loading"
+        (clicked)="openAlertLoading()"
+    >
+        Loading (3s)
+    </JButton>
+</div>

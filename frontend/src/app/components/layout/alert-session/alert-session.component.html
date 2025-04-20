@@ -1,0 +1,32 @@
+@if (timeRemaining !== null && timeRemaining <= 300) {
+<div
+  class="fixed grid grid-cols-[1fr_3fr_1fr] items-center justify-center w-[400px] h-[78px] top-[88px] opacity-70 hover:opacity-100 rounded-[10px] border-l-[5px] z-2000 border-yellow-500 bg-yellow-50 dark:bg-[#1f1c1a] text-black dark:text-white border shadow-md transition-[left] duration-300"
+  [ngClass]="{
+  'left-[70px]': sidebarHidden,
+  'left-[240px]': !sidebarHidden,
+  }">
+  <!-- Icono -->
+  <div class="flex pl-[5px] justify-center items-center text-yellow-500">
+    <lucide-icon [name]="icons.clock" [size]="50"></lucide-icon>
+  </div>
+
+  <!-- Texto -->
+  <div class="grid gap-[5px] pl-[5px]">
+    <div class="font-bold text-[20px]">
+      <span>{{ formatTime(timeRemaining) }}</span>
+
+    </div>
+
+    <div class="text-[14px]">
+      <span>La sesión terminará pronto.</span>
+    </div>
+  </div>
+
+  <!-- Contenedor botón -->
+  <div onKeyPress
+    class="grid justify-center items-center align-center h-full text-[12px] font-bold border-l rounded-tr-[10px] rounded-br-[10px] border-yellow-500 transition duration-300 cursor-pointer hover:bg-yellow-600/30"
+    (click)="renewToken()">
+    <span>Extender</span>
+  </div>
+</div>
+}

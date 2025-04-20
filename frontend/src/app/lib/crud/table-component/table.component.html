@@ -1,0 +1,218 @@
+<div class="w-full mb-3">
+
+  @if (isSearch) {
+  <JFilter 
+    [columns]="columns" 
+    [(searchQuery)]="searchQuery" 
+    (search)="onSearch()" 
+    [searchPlaceholder]="searchPlaceholder"
+    [(itemsPerPage)]="itemsPerPage"
+    [itemsPerPageOptions]="itemsPerPageOptions" 
+    (onItemsPerPageChangeEvent)="onItemsPerPageChange()"
+    [isLoadingSearch]="isLoading('search')" 
+    [isLoadingPerPage]="isLoading('itemsPerPage')" 
+    [isLoadingAditionalButtons]="loadingStates.aditionalButtons"
+    (clearFilters)="onClearFilters($event)"
+    [filtersButton]="filtersButton"
+    [filtersSelect]="filtersSelect"
+  />
+  }
+
+  <!-- Table -->
+  <div class="relative border border-border dark:border-dark-border rounded">
+    <div class="overflow-x-auto rounded scroll-element pr-0!">
+      <table class="min-w-full bg-background dark:bg-dark-background rounded">
+        <thead class="bg-primary dark:bg-dark-primary text-white dark:text-white select-none">
+          <tr>
+
+            <!-- Expandable column -->
+            @if (hasExpandable()) {
+              <th class="px-4 py-2 text-center text-xs font-medium text-white uppercase tracking-wider border-b border-border dark:border-dark-border font-bold"></th>
+            }
+
+            <!-- Counter column -->
+            <th
+              class="px-4 py-2 text-center text-xs font-medium text-white uppercase tracking-wider border-b border-border dark:border-dark-border font-bold">
+              N°
+            </th>
+
+            <!-- Data columns -->
+            @for (column of columns; track column.key) {
+            @if (column.visible) {
+            <th
+              class="px-2 py-2 text-xs font-medium text-white uppercase tracking-wider border-b border-border dark:border-dark-border font-bold"
+              (click)="onSort(column)" (keydown)="onSortKeyPress($event, column)" tabindex="0"
+              [class.pointer-events-none]="isLoading('sort') && column.key !== sortingColumn">
+            
+              <div class="flex gap-1 items-center rounded p-3 justify-center"
+                [ngClass]="{'hover:bg-dark-primary dark:hover:bg-primary transition duration-300 ease-in-out border border-border/10 dark:border-dark-border' : column.sortable, 'text-center' : column.label === 'ID'}"
+                [class.cursor-pointer]="column.sortable">
+                {{ column.label }}
+            
+                @if (column.sortable) {
+                <div class="ml-1">
+                  <!-- Mostrar icono de carga si esta columna está siendo ordenada -->
+                  @if (isLoading('sort') && column.key === sortingColumn) {
+                    <lucide-icon [name]="icons.loading" size="16" class="text-white animate-spin"></lucide-icon>
+                  } @else if (getSortKey(sortColumn) !== column.key || sortDirection === 'none') {
+                    <lucide-icon [name]="icons.sortDefault" size="16" class="text-white"></lucide-icon>
+                  } @else if (sortDirection === 'asc') {
+                    <lucide-icon [name]="icons.sortAsc" size="16" class="text-white"></lucide-icon>
+                  } @else {
+                    <lucide-icon [name]="icons.sortDesc" size="16" class="text-white"></lucide-icon>
+                  }
+                </div>
+                }
+              </div>
+            </th>
+            }
+            }
+
+            <!-- Actions column - Sticky header -->
+            <th
+              class="!sticky !right-0 bg-primary dark:bg-dark-primary min-w-[50px] px-4 py-2 text-center text-xs font-medium text-white uppercase tracking-wider border-b border-border dark:border-dark-border font-bold shadow-[-4px_0_5px_rgba(0,0,0,0.1)]">
+
+              @if (checked) {
+              <JCheckbox onKeyPress
+                type="switch"
+                [title]="titleChecked"
+                [isChecked]="isChecked"
+                (click)="checkActiveInactive(isChecked)"
+                [isLoading]="isLoading('checked')"
+              />
+              } @else {
+                <span class="text-[10px] opacity-80 border border-border dark:border-dark-border p-2 pl-3 pr-3 rounded-full">Opciones</span>
+              }
+              <!-- Pseudoelemento para el borde central -->
+              <div class="absolute top-[15px] bottom-[15px] left-0 w-[1px] bg-border dark:bg-dark-border"></div>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @if (isLoading('initialLoad') && displayData.length === 0) {
+
+          <!-- Loading state -->
+          <tr>
+            <td [attr.colspan]="getVisibleColumnsCount() + 3"
+              class="px-4 py-8 text-center text-sm text-black dark:text-white">
+              <div class="flex flex-col gap-3 items-center justify-center py-4">
+                <lucide-icon [name]="icons.loading" size="30" class="text-primary animate-spin"></lucide-icon>
+                <p>Cargando datos...</p>
+              </div>
+            </td>
+          </tr>
+
+          } @else if (displayData.length > 0) {
+
+            <!-- Data rows -->
+            @for (item of displayData; track $index) {
+              <tr onKeyPress class="hover:bg-primary/10 dark:hover:bg-dark-primary/10" (click)="toggleRow(item)"  [ngClass]="{ 'cursor-pointer': hasExpandable() }">
+
+                <!-- Expandable column -->
+                @if (hasExpandable()) {
+                  <td class="px-4 py-2 h-[50px] text-center text-xs border-b border-border dark:border-dark-border text-black dark:text-white">
+                    <lucide-icon [name]="icons.chevronRight" size="16" class="transition-transform duration-300"
+                    [class]="expandedRows.has(item) ? 'rotate-90' : ''" />
+                  </td>
+                }
+
+                <!-- Counter column -->
+                <td class="px-4 py-2 h-[50px] text-center text-xs border-b border-border dark:border-dark-border text-black dark:text-white">
+                  {{ getRowNumber($index) }}
+                </td>
+
+                <!-- Data columns -->
+                @for (column of columns; track column.key) {
+                  @if (column.visible) {
+                    <td
+                      class="px-4 py-2 h-[50px] text-xs border-b border-border dark:border-dark-border text-black dark:text-white"
+                      [ngClass]="{'text-center': column.label === 'ID'}"
+                      [ngStyle]="column.styles">
+                      
+                      <span [ngClass]="{'p-2 pl-4 pr-4 border border-border dark:border-dark-border rounded-full': column.isDecorator}">
+                        @if (isBoolean(getValue(item, column))) {
+                          <JCheckbox
+                            [item]="item"
+                            [column]="column"
+                            [getValue]="getValue.bind(this)"
+                            [onCheckboxChange]="onCheckboxChange.bind(this)"
+                            [iconSize]="20"
+                            [disabled]="column?.isDisaled"
+                          />
+                        } @else {
+                          {{ getValue(item, column) }}
+                        }
+
+                      </span>
+                    </td>
+                  }
+                }
+
+                <!-- Actions column - Sticky cell -->
+                <td
+                  class="!sticky !right-0 bg-background dark:bg-dark-background text-center whitespace-nowrap text-sm border-b border-border dark:border-dark-border shadow-[-4px_0_5px_rgba(0,0,0,0.1)] relative">
+                  <div class="flex justify-center items-center space-x-2 min-w-[50px] px-4 py-2 h-[50px]">
+                    @for (option of optionsTable; track $index) {
+                      @if (getIsVisible(option, item)) {
+                      <JButton onKeyPress 
+                        [icon]="getIcon(option.icon, item)"
+                        [iconSize]="20" 
+                        (clicked)="$event.stopPropagation(); onButtonClick(option, item)"
+                        [tooltip]="getTooltip(option.tooltip ?? '', item)"
+                        [tooltipPosition]="option.tooltipPosition ?? 'top'"
+                        [disabled]="getDisabled(option, item)"
+                        [isLoading]="isAditionalButtonLoading(option.type ?? '', item?.id_student_course)"
+                        [classes]="option.classes ?? ''"
+                        [ngClasses]="mergeNgClasses(option.ngClass, item)" 
+                      />
+                      }
+                    }
+                  </div>
+
+                  <!-- Pseudoelemento para el borde central -->
+                  <div class="absolute top-[15px] bottom-[15px] left-0 w-[1px] bg-border dark:bg-dark-border"></div>
+                </td>
+              </tr>
+
+              @if (hasExpandable()) {
+                <tr>
+                  <td [attr.colspan]="getVisibleColumnsCount() + 3">
+                    <div [@slideToggle]="getExpansionState(item)" [ngClass]="{'border-b border-border dark:border-dark-border': expandedRows.has(item)}"
+                      class="overflow-hidden transition-all duration-300 ease-in-out"
+                    >
+                      <div class="w-full border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-3">
+                        <div [innerHTML]="getExpandedContent(item)"></div>
+                      </div>  
+                    </div>
+                  </td>
+                </tr>
+              }
+            }
+            } @else if (!isLoading('pagination')) {
+            <!-- Empty state -->
+            <tr>
+              <td [attr.colspan]="getVisibleColumnsCount() + 3"
+                class="px-4 py-8 text-center text-sm text-black dark:text-white">
+                No hay datos disponibles
+              </td>
+            </tr>
+            }
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  @if (isPaginator) {
+  <JPaginator 
+    [currentPage]="currentPage" 
+    [itemsPerPageOptions]="itemsPerPageOptions" 
+    [itemsPerPage]="itemsPerPage"
+    [totalItems]="totalItems" 
+    [pages]="pages" 
+    (pageChange)="handlePageChange($event)" 
+    [isLoading]="isLoading('pagination')"
+  />
+  }
+</div>

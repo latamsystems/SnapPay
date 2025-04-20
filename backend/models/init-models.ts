@@ -11,6 +11,7 @@ import Payment from '@/models/core/payment.model';
 import Sale from '@/models/core/sale.model';
 import User from '@/models/core/user.model';
 import Brand from '@/models/entities/brand.model';
+import Control from '@/models/entities/control.model';
 import Role from '@/models/entities/role.model';
 import Status from '@/models/entities/status.model';
 import TypeFees from '@/models/entities/typeFees.model';
@@ -26,6 +27,7 @@ const models = {
   Sale,
   User,
   Brand,
+  Control,
   Role,
   Status,
   TypeFees,

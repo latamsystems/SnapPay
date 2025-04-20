@@ -1,0 +1,29 @@
+<!-- NAVBAR -->
+<app-navbar [routes]="routesArray" [sidebarHidden]="sidebarHidden" (toggleSidebar)="toggleSidebar()"></app-navbar>
+
+<!-- SIDEBAR -->
+<app-sidebar [title]="title" [routes]="routesArray" [sidebarHidden]="sidebarHidden"></app-sidebar>
+
+<!-- CONTENEDOR -->
+<section class="pt-[80px] min-h-screen text-black dark:text-white transition-[margin-left] duration-300" [ngClass]="{
+    'ml-[230px]': !sidebarHidden,
+    'ml-[70px] mmax-[450px]:min-w-[400px]': sidebarHidden,
+  }"
+  >
+    <!-- Title component -->
+    <div class="text-black dark:text-white font-bold text-xl ml-[20px]">
+        <h1>{{ title_component }}</h1>
+        <div class="h-[3px] mb-[15px] rounded-[50px] bg-primary dark:bg-dark-primary" style="width: calc(5px * var(--title-length, 0));"></div>
+    </div>
+    <!-- Componentes -->
+    <div class="m-0 relative py-[5px] px-[20px] max-[630px]:absolute"
+        [ngClass]="{'max-[630px]:relative max-[470px]:absolute': sidebarHidden}">
+        <router-outlet></router-outlet>
+    </div>
+</section>
+
+<!-- Alerta de cierre de session -->
+<app-alert-session [sidebarHidden]="sidebarHidden"></app-alert-session>
+
+<!-- Toast de Alerta -->
+<JAlertToast [position]="'top-right'"></JAlertToast>

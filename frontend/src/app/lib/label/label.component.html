@@ -1,0 +1,16 @@
+<label 
+    [for]="for"
+    [ngClass]="ngClass"
+    [class]="classes"
+    class="flex gap-1 items-center text-black dark:text-white"
+>
+{{text}} 
+@if (isRequired || isConditioned || isAutomated) {
+    <span class="text-[8px]" [ngClass]="{
+        'text-red-600 dark:text-red-300': isRequired, 
+        'text-blue-600 dark:text-blue-300': isConditioned,
+        'text-purple-600 dark:text-purple-300': isAutomated,
+    }">✱</span>
+}
+</label>
+

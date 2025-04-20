@@ -1,0 +1,46 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "paths": {
+      "@spartan-ng/ui-alertdialog-helm": [
+        ".\\libs/ui/ui-alertdialog-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-button-helm": [
+        ".\\libs/ui/ui-button-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-select-helm": [
+        ".\\libs/ui/ui-select-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-icon-helm": [
+        ".\\libs/ui/ui-icon-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-formfield-helm": [
+        ".\\libs/ui/ui-formfield-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-sheet-helm": [
+        ".\\libs/ui/ui-sheet-helm/src/index.ts"
+      ]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

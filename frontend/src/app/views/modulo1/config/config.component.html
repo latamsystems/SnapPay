@@ -1,0 +1,22 @@
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full transition-all duration-300 select-none">
+
+  @for (element of elements; track $index) {
+    @if (!element.permitRoles || element.permitRoles.includes(session.role_user)) {
+      <a [routerLink]="element.route"
+        class="flex gap-4 items-center p-4 rounded-xl border border-gray-200 dark:border-dark-border bg-white dark:bg-foreground shadow-sm hover:shadow-lg hover:border-primary/50 hover:dark:border-primary transition duration-300">
+
+        <!-- Icono -->
+        <div class="shrink-0 flex items-center justify-center w-16 h-16 rounded-full  bg-dark-primary/10 text-dark-primary dark:bg-primary/10 dark:text-primary">
+          <lucide-icon [name]="element.icon" [size]="32"></lucide-icon>
+        </div>
+
+        <!-- Texto -->
+        <div class="flex flex-col justify-center text-sm">
+          <span class="font-semibold text-gray-800 dark:text-white text-[18px]">{{element.title}}</span>
+          <p class="text-gray-500 dark:text-gray-400 text-xs leading-tight mt-1">{{element.description}}</p>
+        </div>
+
+      </a>
+    }
+  }
+</section>

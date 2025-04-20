@@ -1,0 +1,133 @@
+@if (type === 'file') {
+  <div class="relative w-full">
+    <input
+      #fileInput
+      type="file"
+      [accept]="accept"
+      [multiple]="multiple"
+      (change)="onFileSelected($event)"
+      [disabled]="disabled"
+      [required]="required"
+      [name]="name ?? ''"
+      [id]="id"
+      [ngClass]="combinedNgClass"
+      [class]="classes"
+      class="input w-full h-[40px] pr-10 bg-background dark:bg-dark-background border border-border dark:border-dark-border text-black dark:text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary transition duration-200 cursor-pointer"
+      (blur)="onTouched()" />
+
+    @if (value && clearButton) {
+      <button type="button"
+        class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-500 pr-1 mr-1 text-gray-400 hover:text-gray-600 focus:outline-none cursor-pointer"
+        (click)="clearFile()">
+        <lucide-icon [name]="icons.x" class="w-4 h-4" />
+      </button>
+    }
+  </div>
+
+  @if (previewUrl && showImage) {
+    <div class="mt-2 w-full">
+      <img [src]="previewUrl" alt="Vista previa"
+        class="w-full max-w-full h-auto rounded border border-border dark:border-dark-border shadow-sm" />
+    </div>
+  }
+}
+
+@else if (type === 'textarea') {
+  <div class="relative w-full">
+    <textarea
+      [value]="value"
+      (input)="onInput($event)"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [required]="required"
+      [name]="name ?? ''"
+      [id]="id"
+      (blur)="onTouched()"
+      [ngClass]="combinedNgClass"
+      [class]="classes"
+      class="input w-full h-[70px] min-h-[70px] pr-10 bg-background dark:bg-dark-background border border-border dark:border-dark-border text-black dark:text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary transition duration-200"
+    ></textarea>
+
+    @if (value && clearButton) {
+      <button type="button" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-500" (click)="clearInput()">
+        <lucide-icon [name]="icons.x" class="w-4 h-4" />
+      </button>
+    }
+  </div>
+}
+
+@else if (type === 'range') {
+  <div class="w-full">
+
+    @if (placeholder) {
+      <label [for]="id" class="block text-[15px] font-bold text-black dark:text-white text-center mb-3 opacity-80">{{ placeholder }}</label>
+    }
+
+    <div class="relative flex gap-2 w-full items-center justify-center align-center items-center justify-center align-center">
+      @if (min) {
+        <span class="text-[15px] font-bold text-gray-500 mt-1 text-center">{{min}}</span>
+      }
+      <input
+        type="range"
+        [min]="min"
+        [max]="max"
+        [step]="step"
+        [disabled]="disabled"
+        [required]="required"
+        [name]="name ?? ''"
+        [id]="id"
+        [(ngModel)]="value"
+        (blur)="onTouched()"
+        [ngClass]="combinedNgClass"
+        [class]="classes"
+        class="w-full h-5 bg-background dark:bg-dark-background border border-border dark:border-dark-border rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary transition duration-200
+        [&::-webkit-slider-thumb]:appearance-none
+        [&::-webkit-slider-thumb]:h-8
+        [&::-webkit-slider-thumb]:w-8
+        [&::-webkit-slider-thumb]:rounded-full
+        [&::-webkit-slider-thumb]:bg-dark-primary
+        [&::-webkit-slider-thumb]:dark:bg-primary
+        [&::-webkit-slider-thumb]:cursor-pointer
+        [&::-moz-range-thumb]:h-4
+        [&::-moz-range-thumb]:w-4
+        [&::-moz-range-thumb]:rounded-full
+        [&::-moz-range-thumb]:bg-primary
+        [&::-moz-range-thumb]:hover:bg-primary/80
+        [&::-moz-range-thumb]:cursor-pointer
+        " />
+
+        @if (max) {
+        <span class="text-[15px] font-bold text-gray-500 mt-1 text-center">{{max}}</span>
+        }
+    </div>
+
+    <div class="text-xl font-bold text-gray-500 mt-1 text-center">{{ value }}</div>
+  </div>
+}
+
+
+@else {
+  <div class="relative w-full">
+    <input
+      [type]="type"
+      [value]="value"
+      (input)="onInput($event)"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [required]="required"
+      [name]="name ?? ''"
+      [id]="id"
+      (blur)="onTouched()"
+      [ngClass]="combinedNgClass"
+      [class]="classes"
+      class="input w-full h-[40px] bg-background dark:bg-dark-background border border-border dark:border-dark-border text-black dark:text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary transition duration-200" />
+
+    @if (value && clearButton) {
+      <button type="button"
+        class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-500"
+        (click)="clearInput()">
+        <lucide-icon [name]="icons.x" class="w-4 h-4" />
+      </button>
+    }
+  </div>
+}

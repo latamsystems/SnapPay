@@ -1,0 +1,95 @@
+@keyframes moveInCircle {
+    0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+    100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+  }
+  
+  @keyframes moveHorizontal {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(200px); }
+  }
+  
+  @keyframes moveVertical {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-200px); }
+  }
+  
+  @keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @keyframes spin-slow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .global_contenedor {
+  
+    .gradient-bg {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      background: linear-gradient(40deg, #5d0a41, #1a1719);
+      top: 0;
+      left: 0;
+  
+      .gradients-container {
+        filter: url(#goo) blur(40px);
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+  
+      .g1, .g2, .g3, .g4, .g5 {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        border-radius: 9999px;
+        mix-blend-mode: soft-light;
+        background: radial-gradient(circle, rgb(30, 27, 29) 0%, rgba(29,78,216,0) 70%);
+      }
+  
+      .g1 {
+        top: 20%;
+        left: 15%;
+        animation: moveVertical 35s ease-in-out infinite;
+      }
+  
+      .g2 {
+        top: 60%;
+        left: 30%;
+        animation: moveInCircle 40s linear infinite;
+      }
+  
+      .g3 {
+        top: 30%;
+        left: 70%;
+        animation: moveInCircle 30s reverse infinite;
+      }
+  
+      .g4 {
+        top: 50%;
+        left: 50%;
+        animation: moveHorizontal 45s ease-in-out infinite;
+      }
+  
+      .g5 {
+        top: 10%;
+        left: 80%;
+        animation: moveInCircle 50s ease infinite;
+      }
+  
+      .interactive {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: -50%;
+        left: -50%;
+        background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+        opacity: 0.5;
+      }
+    }
+
+  }

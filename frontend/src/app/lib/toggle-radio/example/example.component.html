@@ -1,0 +1,30 @@
+<div class="grid grid-cols-3 gap-2 flex-wrap justify-center">
+
+    <!-- Select con opciones -->
+    <div class="flex flex-col gap-2 space-y-4">
+        <JToggleRadio
+            [(ngModel)]="selectedRoleId"
+            [options]="roles"
+            optionLabel="name"
+            optionValue="id"
+            placeholder="Seleccione un rol"
+            [showClear]="true"
+            (selectionChange)="onSelected($event)"
+        />
+
+        <p class="text-sm">Valor seleccionado: {{ selectedRoleId }}</p>
+    </div>
+
+    <!-- Select con opciones -->
+    <div class="flex flex-col gap-2 space-y-4 col-span-2">
+        <JToggleRadio
+            endpoint="role"
+            optionLabel="name_role"
+            optionValue="id_role"
+            [loadOnInit]="true"
+            [(ngModel)]="selectedRoleApi"
+        />
+
+        <p class="text-sm">Valor seleccionado: {{ selectedRoleApi }}</p>
+    </div>
+</div>

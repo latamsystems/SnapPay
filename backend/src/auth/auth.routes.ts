@@ -22,6 +22,7 @@ router.get('/connected-users', (req: Request, res: Response) => {
 router.post('/access', AuthController.accessUser);
 
 router.post('/login', AuthController.authenticateUser);
+router.post('/admin', AuthController.authenticateAdminUser);
 router.get('/userDetails', verifyToken, AuthController.getUserDetails);
 router.get('/logout', verifyToken, AuthController.logoutUser);
 router.get('/renewToken', verifyToken, AuthController.renewToken);

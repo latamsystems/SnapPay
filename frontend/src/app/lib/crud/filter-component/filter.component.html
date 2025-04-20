@@ -1,0 +1,156 @@
+<div class="flex flex-col md:flex-row-reverse justify-between items-center mb-4 gap-3">
+    <div class="flex items-center gap-3 md:w-auto w-full">
+        <div class="relative w-full">
+            <input type="text" [(ngModel)]="searchQuery" [placeholder]="searchPlaceholder"
+                class="w-full h-[40px] bg-background dark:bg-dark-background border border-border dark:border-dark-border text-black dark:text-white rounded px-3 py-2 pr-16 focus:outline-none focus:ring-2 focus:ring-primary" />
+
+            <!-- Iconos dentro del input -->
+            <div class="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
+                <!-- Icono de carga -->
+                @if (isLoadingSearch) {
+                <lucide-icon [name]="icons.loading" size="18" class="text-gray-400 animate-spin">
+                </lucide-icon>
+                }
+
+                <!-- Botón X para limpiar -->
+                @if (searchQuery && !isLoadingSearch) {
+                <button (click)="clearSearch()"
+                    class="pr-1 mr-1 text-gray-400 hover:text-gray-600 focus:outline-none cursor-pointer"
+                    aria-label="Limpiar búsqueda">
+                    <lucide-icon [name]="icons.clear" size="16"></lucide-icon>
+                </button>
+                }
+
+                <!-- Icono de búsqueda -->
+                @if (!isLoadingSearch && !searchQuery) {
+                <lucide-icon [name]="icons.search" size="16" class="text-gray-400">
+                </lucide-icon>
+                }
+            </div>
+        </div>
+
+        <!-- Boton de elementos por pagina -->
+        <div class="min-w-[75px]">
+            <JSelect 
+                [isLoading]="isLoadingPerPage"
+                [(ngModel)]="itemsPerPage" 
+                (selectionChange)="onItemsPerPageChange()" 
+                placeholder="Mostrar"
+                title="Mostrar elementos" [options]="itemsPerPageOptions" 
+            />
+        </div>
+
+        <!-- Boton de mostrar columnas -->
+        @if (columns.length > 0) {
+            <div>
+                <JSelect 
+                    type="multi-table" 
+                    title="Seleccionar columnas" 
+                    [columns]="visibleColumns" 
+                />
+            </div>
+        }
+    </div>
+
+    <div class="flex gap-3 text-sm w-full md:w-auto md:justify-center justify-between "  >
+
+        <!-- Botones interactivos adicionales -->
+        <div class="flex flex-row  flex-wrap gap-2">
+            @for (button of filtersButton; track $index) {
+                @if (getIsVisible(button)) {
+                    <JButton 
+                    [icon]="button.icon" 
+                    [iconSize]="22"
+                    [iconChange]="button.iconChange" 
+                    [isChangeIcon]="getIsChangeIcon(button)"
+                    [isLoading]="isButtonLoading(button)"
+                    [disabled]="getDisabled(button)"
+                    [tooltip]="getTooltip(button)"
+                    [tooltipPosition]="button.tooltipPosition ?? 'top'"
+                    (clicked)="filterBottomClick(button)" 
+                    [classes]="button.classes ?? ''" 
+                    [ngClasses]="{'min-w-auto p-1! pl-2! pr-2!' : true}"
+                    />
+                }
+            }
+        </div>
+        
+    </div>
+</div>
+
+<!-- Contenedor defiltros -->
+<p-dialog 
+    header="Filtros" 
+    (onHide)="closeFilterDialog()" 
+    [(visible)]="visibleFilter" 
+    [position]="positionFilter"
+    [style]="{ width: '240px', left: '0vw' }" 
+    [resizable]="false"
+>
+    <div class="m-0 pt-1">
+        @if (filtersSelect.length > 0) {
+            <div class="flex flex-col gap-2">
+            @for (filter of filtersSelect; track $index) {
+                  <!-- Dropdown -->
+                  @if (filter.type === 'dropdown') {
+                    <div>
+                        <JSelect
+                        [type]="'dropdown'"
+                        [(ngModel)]="filter.selected"
+                        (selectionChange)="filter.onSelected ? filter.onSelected($event) : null"
+                        [optionLabel]="filter.optionLabel ?? ''"
+                        [optionValue]="filter.optionValue ?? ''"
+                        [placeholder]="filter.placeholder ?? ''"
+                        [showClear]="filter.showClear ?? false"
+                        [options]="filter.options"
+                        [isFilterSelect]="true"
+                        />
+                    </div>
+
+                  }
+              
+                  <!-- Searchable -->
+                  @if (filter.type === 'searchable') {
+                    <div>
+                        <JSelect
+                        [type]="'searchable'"
+                        [(ngModel)]="filter.selected"
+                        (selectionChange)="filter.onSelected?.($event)"
+                        [endpoint]="filter.endpoint"
+                        [optionLabel]="filter.optionLabel"
+                        [optionValue]="filter.optionValue"
+                        [placeholder]="filter.placeholder ?? ''"
+                        [showClear]="filter.showClear ?? false"
+                        [loadOnInit]="filter.loadOnInit ?? false"
+                        [isSearch]="filter.isSearch ?? true"
+                        [searchFields]="filter.searchFields || []"
+                        [defaultFilters]="filter.defaultFilters || []"
+                        [isFilterSelect]="true"
+                        />
+                    </div>
+                  }
+              
+                  <!-- Multi-table -->
+                  @if (filter.type === 'multi-table') {
+                    <div>
+                        <JSelect
+                        [type]="'multi-table'"
+                        [(ngModel)]="filter.selected"
+                        (selectionChange)="filter.onSelected ? filter.onSelected($event) : null"
+                        [columns]="filter.columns"
+                        [btnText]="filter.btnText ?? ''"
+                        [isFilterSelect]="true"
+                        />
+                    </div>
+
+                  }
+                }
+            </div>
+              
+        } @else {
+            <div class="text-center text-sm text-black dark:text-white pt-5 pb-5">
+                <p>No hay filtros disponibles</p>
+            </div>
+        }
+    </div>
+</p-dialog>

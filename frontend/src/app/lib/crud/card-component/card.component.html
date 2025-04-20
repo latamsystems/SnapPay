@@ -1,0 +1,59 @@
+<div class="w-full">
+  @if (isSearch) {
+    <JFilter
+      [(searchQuery)]="searchQuery" 
+      (search)="onSearch()" 
+      [searchPlaceholder]="searchPlaceholder"
+      [(itemsPerPage)]="itemsPerPage"
+      [itemsPerPageOptions]="itemsPerPageOptions" 
+      (onItemsPerPageChangeEvent)="onItemsPerPageChange()"
+      [isLoadingSearch]="isLoading('search')" 
+      [isLoadingPerPage]="isLoading('itemsPerPage')" 
+      [isLoadingAditionalButtons]="loadingStates.aditionalButtons"
+      (clearFilters)="onClearFilters($event)"
+      [filtersButton]="filtersButton"
+      [filtersSelect]="filtersSelect"
+    />
+  }
+
+  @if (isLoading('initialLoad') && displayData.length === 0) {
+    <div class="w-full flex justify-center items-center h-100 bg-white dark:bg-foreground rounded-[20px] border border-border dark:border-dark-border">
+      <div class="flex flex-col gap-3 items-center justify-center py-4">
+        <lucide-icon [name]="icons.loading" size="30" class="text-primary animate-spin"></lucide-icon>
+        <p>Cargando datos...</p>
+      </div>
+    </div>
+  } @else if (displayData.length > 0) {
+
+    @if (itemTemplate) {
+    <div class="flex flex-wrap gap-4 my-4">
+      @for (item of displayData; track item?.id) {
+        <div class="w-full sm:w-[48%] md:w-[31%] xl:w-[23.5%] min-w-[250px] max-w-full flex flex-col gap-3 rounded-xl border border-border dark:border-dark-border bg-white dark:bg-foreground shadow-sm hover:shadow-lg hover:border-primary/50 hover:dark:border-primary transition-all duration-300">
+          <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item, getValue: getValue.bind(this), columns: columns, item: item }" />
+        </div>
+      }
+    </div>
+    } @else {
+      <div class="w-full flex justify-center items-center h-100 bg-white dark:bg-foreground rounded-[20px]">
+        <p>No se ha definido ninguna plantilla personalizada (<code>itemTemplate</code>).</p>
+      </div>
+    }
+
+  } @else if (!isLoading('pagination')) {
+    <div class="w-full flex justify-center items-center h-100 bg-white dark:bg-foreground rounded-[20px] border border-border dark:border-dark-border">
+      No hay datos disponibles
+    </div>
+  }
+
+  @if (isPaginator) {
+    <JPaginator
+      [currentPage]="currentPage" 
+      [itemsPerPageOptions]="itemsPerPageOptions" 
+      [itemsPerPage]="itemsPerPage"
+      [totalItems]="totalItems" 
+      [pages]="pages" 
+      (pageChange)="handlePageChange($event)" 
+      [isLoading]="isLoading('pagination')"
+    />
+  }
+</div>

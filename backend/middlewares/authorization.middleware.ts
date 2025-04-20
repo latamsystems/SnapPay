@@ -11,7 +11,7 @@ import { isTokenRevoked } from '@/src/auth/auth.service';
 const consoleHelper = new Console('Token Verify');
 
 // Definir una interfaz para extender `Request` de Express
-interface AuthenticatedRequest extends Request {
+export interface AuthenticatedRequest extends Request {
   user?: JwtPayload & { id_role?: number };
 }
 

@@ -1,0 +1,136 @@
+<section class="content_controller_systems">
+
+  <!-- CONFIGURACIONES -->
+  <section class="flex flex-col pb-5">
+    <span><b>Configuración</b></span>
+    <hr class="text-border dark:text-dark-border mt-[5px] mb-[10px]">
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 w-full transition-all duration-300 select-none" [ngClass]="{controller_systems_sidebar_active : !sidebar.sidebarHidden}">
+
+      <!-- Modo mantenimiento -->
+      <div class="flex gap-4 items-center p-4 rounded-xl border border-gray-200 dark:border-dark-border bg-white dark:bg-foreground shadow-sm hover:shadow-lg hover:border-primary/50 hover:dark:border-primary transition duration-300">
+
+        <div class="shrink-0 flex items-center justify-center w-16 h-16 rounded-full  bg-dark-primary/10 text-dark-primary dark:bg-primary/10 dark:text-primary">
+          <lucide-icon [name]="icons.earthLock" [size]="32"></lucide-icon>
+        </div>
+
+        <div class="block2">
+          <span class="font-semibold text-gray-800 dark:text-white text-[15px]">Modo mantenimiento</span>
+
+          
+          <!-- Cambio de estado al para el mantenimiento -->
+          <div class="flex items-center gap-2 mt-2">
+            <JCheckbox onKeyPress 
+              type="switch" 
+              [isChecked]="isCheckedMaintenance" 
+              (click)="checkUpdate(1, isCheckedMaintenance)" 
+            />
+            @if (isCheckedMaintenance) {
+            <span class="text-green-600 dark:text-green-300">Activado</span>
+            } @else {
+            <span class="text-red-600 dark:text-red-300">Desactivado</span>
+            }
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Mas elementos -->
+    </div>
+  </section>
+
+  <!-- BOTONES FLOTANTES -->
+  <section class="float_buttons">
+    <span><b>Botones flotantes</b></span>
+    <hr class="text-border dark:text-dark-border mt-[5px] mb-[10px]">
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 w-full transition-all duration-300 select-none" [ngClass]="{controller_systems_sidebar_active : !sidebar.sidebarHidden}">
+
+      <!-- Chat de whatsapp -->
+      <div class="flex gap-4 items-center p-4 rounded-xl border border-gray-200 dark:border-dark-border bg-white dark:bg-foreground shadow-sm hover:shadow-lg hover:border-primary/50 hover:dark:border-primary transition duration-300">
+
+        <div class="shrink-0 flex items-center justify-center w-16 h-16 rounded-full  bg-dark-primary/10 text-dark-primary dark:bg-primary/10 dark:text-primary">
+          <lucide-icon [name]="icons.messageCircleDashed" [size]="32"></lucide-icon>
+        </div>
+
+        <div class="block2">
+          <span class="font-semibold text-gray-800 dark:text-white text-[15px]">Chat WhatsApp</span>
+
+          <!-- Cambio de estado al para el chat de whatsapp -->
+          <div class="flex items-center gap-2 mt-2">
+            <JCheckbox onKeyPress 
+              type="switch" 
+              [isChecked]="isCheckedChatWhatsapp" 
+              (click)="checkUpdate(2, isCheckedChatWhatsapp)" 
+            />
+            @if (isCheckedChatWhatsapp) {
+            <span class="text-green-600 dark:text-green-300">Activado</span>
+            } @else {
+            <span class="text-red-600 dark:text-red-300">Desactivado</span>
+            }
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Chat de whatsapp -->
+      <div class="flex gap-4 items-center p-4 rounded-xl border border-gray-200 dark:border-dark-border bg-white dark:bg-foreground shadow-sm hover:shadow-lg hover:border-primary/50 hover:dark:border-primary transition duration-300">
+
+        <div class="shrink-0 flex items-center justify-center w-16 h-16 rounded-full  bg-dark-primary/10 text-dark-primary dark:bg-primary/10 dark:text-primary">
+          <lucide-icon [name]="icons.botMessageSquare" [size]="32"></lucide-icon>
+        </div>
+
+        <div class="block2">
+          <span class="font-semibold text-gray-800 dark:text-white text-[15px]">ChatBot</span>
+
+          <!-- Cambio de estado al para el chat de whatsapp -->
+          <div class="flex items-center gap-2 mt-2">
+            <JCheckbox onKeyPress 
+              type="switch" 
+              [isChecked]="isCheckedChatBot" 
+              (click)="checkUpdate(3, isCheckedChatBot)" 
+            />
+            @if (isCheckedChatBot) {
+            <span class="text-green-600 dark:text-green-300">Activado</span>
+            } @else {
+            <span class="text-red-600 dark:text-red-300">Desactivado</span>
+            }
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Chat de whatsapp -->
+      <div class="flex gap-4 items-center p-4 rounded-xl border border-gray-200 dark:border-dark-border bg-white dark:bg-foreground shadow-sm hover:shadow-lg hover:border-primary/50 hover:dark:border-primary transition duration-300">
+
+        <div class="shrink-0 flex items-center justify-center w-16 h-16 rounded-full  bg-dark-primary/10 text-dark-primary dark:bg-primary/10 dark:text-primary">
+          <lucide-icon [name]="icons.messagesSquare" [size]="32"></lucide-icon>
+        </div>
+
+        <div class="block2">
+          <span class="font-semibold text-gray-800 dark:text-white text-[15px]">Chat general</span>
+
+          <!-- Cambio de estado al para el chat de whatsapp -->
+          <div class="flex items-center gap-2 mt-2">
+            <JCheckbox onKeyPress 
+              type="switch" 
+              [isChecked]="isCheckedChatGeneral" 
+              (click)="checkUpdate(4, isCheckedChatGeneral)" 
+            />
+            @if (isCheckedChatGeneral) {
+            <span class="text-green-600 dark:text-green-300">Activado</span>
+            } @else {
+            <span class="text-red-600 dark:text-red-300">Desactivado</span>
+            }
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Mas elementos -->
+    </div>
+  </section>
+
+  <!-- Mas secciones -->
+
+</section>
