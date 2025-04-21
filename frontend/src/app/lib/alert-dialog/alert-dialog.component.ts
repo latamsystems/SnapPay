@@ -2,13 +2,13 @@ import { Component, inject, computed } from "@angular/core";
 import { trigger, transition, style, animate } from "@angular/animations";
 import { LucideAngularModule, CircleCheck, CircleX, TriangleAlert, Info, CircleHelp, Loader2, } from "lucide-angular";
 import { NgClass } from "@angular/common";
-import { ButtonComponent } from "src/app/lib/button/button.component";
+import { JButtonComponent } from "src/app/lib/button/button.component";
 import { AlertDialogService } from "src/app/lib/alert-dialog/elements/alert-dialog.service";
-import { ColorsService } from "src/app/lib/colors/colors.service";
+import { JColorsService } from "src/app/lib/colors/colors.service";
 
 @Component({
   selector: "JAlertDialog",
-  imports: [LucideAngularModule, NgClass, ButtonComponent],
+  imports: [LucideAngularModule, NgClass, JButtonComponent],
   templateUrl: "./alert-dialog.component.html",
   styleUrl: "./alert-dialog.component.scss",
   animations: [
@@ -23,11 +23,11 @@ import { ColorsService } from "src/app/lib/colors/colors.service";
     ]),
   ],
 })
-export class AlertDialogComponent {
+export class JAlertDialogComponent {
   private readonly alertDialogService = inject(AlertDialogService);
 
   monocromatic: boolean = false;
-  constructor(private readonly colorsService: ColorsService) { }
+  constructor(private readonly colorsService: JColorsService) { }
 
   // Single computed property for dialogs
   dialogs = computed(() => this.alertDialogService.dialogs());

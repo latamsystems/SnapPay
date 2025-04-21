@@ -7,19 +7,18 @@ import { environment } from 'src/environments/environment.development';
 import { routesArray } from 'src/app/app.routes';
 import { AlertDialogService } from 'src/app/lib/alert-dialog/elements/alert-dialog.service';
 import { ModeToggleComponent } from 'src/app/components/mode-toggle/mode-toggle.component';
-import { InputComponent } from 'src/app/lib/input/input.component';
-import { LabelComponent } from 'src/app/lib/label/label.component';
+import { JInputComponent } from 'src/app/lib/input/input.component';
+import { JLabelComponent } from 'src/app/lib/label/label.component';
 import { ContentFormComponent } from 'src/app/lib/crud/form-component/components/content-form/content-form.component';
 import { ErrorMessageComponent } from 'src/app/lib/crud/form-component/components/error-message/error-message.component';
-import { ButtonComponent } from 'src/app/lib/button/button.component';
-import { CheckboxComponent } from 'src/app/lib/checkbox/checkbox.component';
-
+import { JButtonComponent } from 'src/app/lib/button/button.component';
+import { JCheckboxComponent } from 'src/app/lib/checkbox/checkbox.component';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
-  imports: [ModeToggleComponent, RouterLink, FormsModule, ReactiveFormsModule, InputComponent, LabelComponent, ContentFormComponent, ErrorMessageComponent, ButtonComponent, CheckboxComponent]
+  imports: [ModeToggleComponent, RouterLink, FormsModule, ReactiveFormsModule, JInputComponent, JLabelComponent, ContentFormComponent, ErrorMessageComponent, JButtonComponent, JCheckboxComponent]
 })
 export class AuthComponent {
 

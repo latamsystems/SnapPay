@@ -1,8 +1,6 @@
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { NgClass } from '@angular/common';
-import { FileUploadModule } from 'primeng/fileupload';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TooltipModule } from 'primeng/tooltip';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ExamplesComponent } from '../../examples/examples.component';
 import { SidebarService } from 'src/app/core/services/static/layout/sidebar.service';
@@ -14,7 +12,7 @@ import { SidebarShared } from 'src/app/core/shared/sidebar.shared';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, NgClass, TooltipModule, FileUploadModule, ExamplesComponent]
+  imports: [ReactiveFormsModule, FormsModule, NgClass, ExamplesComponent]
 })
 export class HomeComponent implements OnDestroy, AfterViewInit {
 

@@ -22,24 +22,23 @@ import { CommonModule } from '@angular/common';
     ])
   ]
 })
-export class DialogComponent {
-
+export class JDialogComponent {
   icons = {
     x: X
-  }
+  };
 
-  @Input() position: 
-  | 'center'
-  | 'leftCenter'
-  | 'rightCenter'
-  | 'topCenter'
-  | 'bottomCenter'
-  | 'leftTop'
-  | 'leftBottom'
-  | 'rightTop'
-  | 'rightBottom' = 'center';
+  @Input() position:
+    | 'center'
+    | 'leftCenter'
+    | 'rightCenter'
+    | 'topCenter'
+    | 'bottomCenter'
+    | 'leftTop'
+    | 'leftBottom'
+    | 'rightTop'
+    | 'rightBottom' = 'center';
+
   @Input() offset: { top?: number, bottom?: number, left?: number, right?: number } = {};
-
 
   @Input() openModal = false;
   @Output() closeModal = new EventEmitter<void>();
@@ -47,7 +46,12 @@ export class DialogComponent {
   @Input() dialogTemplate!: TemplateRef<any>;
   @Input() title = 'Dialog Title';
   @Input() width: number = 500;
-  @Input() height: number = 300;
+  @Input() height: number | 'auto' = 300;
+  @Input() overlay: boolean = true;
+  @Input() draggable: boolean = false;
+
+  private isDragging = false;
+  private dragOffset = { x: 0, y: 0 };
 
   constructor() { }
 
@@ -56,23 +60,17 @@ export class DialogComponent {
   }
 
   onClose() {
-    this.closeModal.emit()
+    this.closeModal.emit();
   }
 
-  // Devuelve un string con unidad (px o %)
   getModalWidth(): string {
-    if (typeof this.width === 'number') {
-      return `${this.width}px`;
-    }
-    return this.width;
+    return typeof this.width === 'number' ? `${this.width}px` : this.width;
   }
 
-  // Devuelve un string con unidad (px o %)
   getModalHeight(): string {
-    if (typeof this.height === 'number') {
-      return `${this.height}px`;
-    }
-    return this.height;
+    if (this.height === 'auto') return 'auto';
+    if (typeof this.height === 'number') return `${this.height}px`;
+    return `${this.height || 40}px`;
   }
 
   @HostListener('document:keydown.escape', ['$event'])
@@ -82,7 +80,6 @@ export class DialogComponent {
     }
   }
 
-  // Agrega posisionamiento al al modal
   getPositionClass(): string {
     switch (this.position) {
       case 'leftCenter': return 'justify-start items-center';
@@ -98,7 +95,6 @@ export class DialogComponent {
     }
   }
 
-  // Agrega offsets a los estilos del modal
   getOffsetStyles(): { [key: string]: string } {
     return {
       marginTop: this.offset.top !== undefined ? `${this.offset.top}px` : '',
@@ -107,4 +103,53 @@ export class DialogComponent {
       marginRight: this.offset.right !== undefined ? `${this.offset.right}px` : '',
     };
   }
+
+  startDrag(event: MouseEvent) {
+    if (!this.draggable) return;
+
+    this.isDragging = true;
+
+    const dialogElement = (event.currentTarget as HTMLElement).closest('[data-draggable-dialog]') as HTMLElement;
+    if (!dialogElement) return;
+
+    const rect = dialogElement.getBoundingClientRect();
+    this.dragOffset = {
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top
+    };
+
+    dialogElement.style.position = 'fixed';
+    dialogElement.style.margin = '0';
+    dialogElement.style.transform = 'none';
+    dialogElement.style.zIndex = '1001';
+
+    const mouseMoveHandler = (moveEvent: MouseEvent) => {
+      if (!this.isDragging) return;
+
+      const newLeft = moveEvent.clientX - this.dragOffset.x;
+      const newTop = moveEvent.clientY - this.dragOffset.y;
+
+      // límites del viewport
+      const maxLeft = window.innerWidth - dialogElement.offsetWidth;
+      const maxTop = window.innerHeight - dialogElement.offsetHeight;
+
+      // aplicar límites
+      const boundedLeft = Math.min(Math.max(newLeft, 0), maxLeft);
+      const boundedTop = Math.min(Math.max(newTop, 0), maxTop);
+
+      dialogElement.style.left = `${boundedLeft}px`;
+      dialogElement.style.top = `${boundedTop}px`;
+    };
+
+    const mouseUpHandler = () => {
+      this.isDragging = false;
+      document.removeEventListener('mousemove', mouseMoveHandler);
+      document.removeEventListener('mouseup', mouseUpHandler);
+    };
+
+    document.addEventListener('mousemove', mouseMoveHandler);
+    document.addEventListener('mouseup', mouseUpHandler);
+  }
+
+
 }

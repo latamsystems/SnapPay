@@ -9,7 +9,7 @@ import { Check, Loader2, LucideAngularModule } from 'lucide-angular';
   templateUrl: './checkbox.component.html',
   styleUrl: './checkbox.component.scss'
 })
-export class CheckboxComponent {
+export class JCheckboxComponent {
 
   // Lucide icons
   icons = {

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { OptionComponent } from '../option/option.component';
-import { SelectComponent } from '../select.component';
+import { JSelectComponent } from '../select.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GenericService } from '../../crud/elements/crud-generic.service';
 
 @Component({
   selector: 'app-select-example',
-  imports: [SelectComponent, OptionComponent, FormsModule, CommonModule],
+  imports: [JSelectComponent, OptionComponent, FormsModule, CommonModule],
   templateUrl: './example.component.html',
   styleUrl: './example.component.scss'
 })

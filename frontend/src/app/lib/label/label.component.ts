@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
   templateUrl: './label.component.html',
   styleUrl: './label.component.scss'
 })
-export class LabelComponent {
+export class JLabelComponent {
 
   @Input() for: string = '';
   @Input() text: string = '';

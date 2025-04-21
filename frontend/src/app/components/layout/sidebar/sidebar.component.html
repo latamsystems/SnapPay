@@ -39,7 +39,7 @@
                 'flex justify-center': sidebarHidden,
                 'pl-[5px]': !sidebarHidden,
               }"
-              [pTooltip]="sidebarHidden ? item.divider : undefined">{{item.divider}}</li>
+              [jTooltip]="sidebarHidden ? item.divider : undefined" jTooltipPosition="right">{{item.divider}}</li>
             }
 
             @else if (!item.elements) {
@@ -47,7 +47,7 @@
             <a [routerLink]="item.route"
               class="flex gap-2 p-2 mb-2 items-center text-black dark:text-white border border-border/30 dark:border-dark-border/30 hover:border-border hover:dark:border-dark-border rounded transition duration-300"
               routerLinkActive="bg-primary dark:bg-dark-primary text-white"
-              [pTooltip]="sidebarHidden ? item.name : undefined" [routerLinkActiveOptions]="{exact: true}">
+              [jTooltip]="sidebarHidden ? item.name : undefined" jTooltipPosition="right" [routerLinkActiveOptions]="{exact: true}">
               <div class="icon-sidebar-item">
                 <lucide-icon [name]="item.icon" class="w-5 h-5"></lucide-icon>
               </div>
@@ -65,7 +65,7 @@
             @if (canShowElement(item)) {
             <a (click)="toggleSection(item.name)"
               class="relative flex gap-2 p-2 mb-2 items-center text-black! dark:text-white! border border-border/30 dark:border-dark-border/30 hover:border-border hover:dark:border-dark-border rounded transition duration-300"
-              [pTooltip]="sidebarHidden ? item.name : undefined"
+              [jTooltip]="sidebarHidden ? item.name : undefined" jTooltipPosition="right"
               [ngClass]="{'bg-muted dark:bg-dark-muted text-black dark:text-white ': isSectionVisible(item.name)}">
               <div class="icon-sidebar-item">
                 <lucide-icon [name]="item.icon" class="w-5 h-5"></lucide-icon>
@@ -98,7 +98,7 @@
               <a [routerLink]="element.route"
                 class="flex gap-2 p-2 items-center text-black dark:text-white border border-border/30 dark:border-dark-border/30 hover:border-border hover:dark:border-dark-border rounded transition duration-300"
                 routerLinkActive="bg-primary dark:bg-dark-primary text-white"
-                [pTooltip]="sidebarHidden ? element.name : undefined" [routerLinkActiveOptions]="{exact: true}">
+                [jTooltip]="sidebarHidden ? element.name : undefined" jTooltipPosition="right" [routerLinkActiveOptions]="{exact: true}">
                 <div class="icon-sidebar-item">
                   <li><lucide-icon [name]="element.icon" [size]="15"></lucide-icon></li>
                 </div>

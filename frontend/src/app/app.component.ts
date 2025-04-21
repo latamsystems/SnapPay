@@ -2,7 +2,7 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { AlertDialogComponent } from 'src/app/lib/alert-dialog/alert-dialog.component';
+import { JAlertDialogComponent } from 'src/app/lib/alert-dialog/alert-dialog.component';
 import { Observable } from 'rxjs';
 
 export let AppInjector: Injector;
@@ -11,7 +11,7 @@ export let AppInjector: Injector;
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  imports: [RouterOutlet, AlertDialogComponent],
+  imports: [RouterOutlet, JAlertDialogComponent],
 })
 export class AppComponent implements OnInit {
 

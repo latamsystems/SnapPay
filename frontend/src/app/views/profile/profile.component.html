@@ -15,7 +15,11 @@
         <div>
           <span class="flex items-center gap-[5px]">
             <b>Actualizar datos personales</b>
-            <div class="cursor-pointer" [pTooltip]="tooltipContentUpdateProfile" [autoHide]="false">
+            <div class="cursor-pointer" 
+              [jTooltip]="tooltipContentUpdateProfile" 
+              [jTooltipPosition]="'right'"
+              [jTooltipOffsetY]="sidebar.sidebarHidden ? 0 : -10"
+            >
               <lucide-icon [name]="icons.info" [size]="15"></lucide-icon>
             </div>
           </span>
@@ -61,7 +65,12 @@
         <div>
           <span class="flex items-center gap-[5px]">
             <b>Actualizar contraseña</b>
-            <div class="cursor-pointer" [pTooltip]="tooltipContentChangePassword" [autoHide]="false">
+            <div class="cursor-pointer" 
+              [jTooltip]="tooltipContentChangePassword" 
+              [jTooltipPosition]="'right'"
+              [jTooltipOffsetY]="sidebar.sidebarHidden ? -5 : -12"
+              [jTooltipOffsetX]="sidebar.sidebarHidden ? 0 : 15"
+            >
               <lucide-icon [name]="icons.info" [size]="15"></lucide-icon>
             </div>
           </span>

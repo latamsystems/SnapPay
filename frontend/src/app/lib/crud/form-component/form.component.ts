@@ -1,13 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, HostListener, Input, Output, TemplateRef } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DialogModule } from 'primeng/dialog';
-import { SidebarModule } from 'primeng/sidebar';
-import { TooltipModule } from 'primeng/tooltip';
-import { ButtonComponent } from 'src/app/lib/button/button.component';
+import { JButtonComponent } from 'src/app/lib/button/button.component';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Asterisk, CircleX, Info, LucideAngularModule, Save, X } from 'lucide-angular';
-import { CheckboxComponent } from 'src/app/lib/checkbox/checkbox.component';
+import { JCheckboxComponent } from 'src/app/lib/checkbox/checkbox.component';
+import { JTooltipModule } from '../../tooltip/tooltip.directive';
 
 export type FormType = 'none' | 'create' | 'update';
 
@@ -23,7 +21,7 @@ export interface DynamicCheckbox {
 @Component({
   selector: 'JCrudForm',
   standalone: true,
-  imports: [LucideAngularModule, ButtonComponent, TooltipModule, SidebarModule, ReactiveFormsModule, FormsModule, DialogModule, CommonModule, CheckboxComponent],
+  imports: [LucideAngularModule, JButtonComponent, JTooltipModule, ReactiveFormsModule, FormsModule, CommonModule, JCheckboxComponent],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -39,7 +37,7 @@ export interface DynamicCheckbox {
     ])
   ]
 })
-export class FormComponent {
+export class JFormComponent {
 
   icons = {
     x: X,

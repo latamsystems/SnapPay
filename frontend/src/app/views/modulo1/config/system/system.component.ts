@@ -1,17 +1,16 @@
 import { NgClass } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BotMessageSquare, EarthLock, LucideAngularModule, MessageCircleDashed, MessagesSquare } from 'lucide-angular';
-import { TooltipModule } from 'primeng/tooltip';
 import { SidebarService } from 'src/app/core/services/static/layout/sidebar.service';
 import { SystemService } from 'src/app/core/services/system.service';
 import { SidebarShared } from 'src/app/core/shared/sidebar.shared';
 import { AlertDialogService } from 'src/app/lib/alert-dialog/elements/alert-dialog.service';
-import { CheckboxComponent } from 'src/app/lib/checkbox/checkbox.component';
+import { JCheckboxComponent } from 'src/app/lib/checkbox/checkbox.component';
 
 @Component({
   selector: 'app-system',
   standalone: true,
-  imports: [LucideAngularModule, TooltipModule, NgClass, CheckboxComponent],
+  imports: [LucideAngularModule, NgClass, JCheckboxComponent],
   templateUrl: './system.component.html',
   styleUrl: './system.component.scss'
 })

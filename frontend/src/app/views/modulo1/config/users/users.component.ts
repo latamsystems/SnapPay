@@ -1,7 +1,6 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DialogComponent } from 'src/app/lib/dialog/dialog.component';
 import { UserResult } from 'src/app/core/interfaces/entities/user.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserService } from 'src/app/core/services/content/user.service';
@@ -15,18 +14,17 @@ import { ConverterService } from 'src/app/lib/crud/elements/converter.service';
 import { GenericService } from 'src/app/lib/crud/elements/crud-generic.service';
 import { ContentFormComponent } from 'src/app/lib/crud/form-component/components/content-form/content-form.component';
 import { ErrorMessageComponent } from 'src/app/lib/crud/form-component/components/error-message/error-message.component';
-import { FormComponent } from 'src/app/lib/crud/form-component/form.component';
+import { JFormComponent } from 'src/app/lib/crud/form-component/form.component';
 import { OptionsTable, TableColumn } from 'src/app/lib/crud/table-component/elements/table.interface';
-import { TableComponent } from 'src/app/lib/crud/table-component/table.component';
-import { InputComponent } from 'src/app/lib/input/input.component';
-import { LabelComponent } from 'src/app/lib/label/label.component';
-import { SelectComponent } from 'src/app/lib/select/select.component';
-import { ToggleRadioComponent } from 'src/app/lib/toggle-radio/toggle-radio.component';
+import { JTableComponent } from 'src/app/lib/crud/table-component/table.component';
+import { JInputComponent } from 'src/app/lib/input/input.component';
+import { JLabelComponent } from 'src/app/lib/label/label.component';
+import { JSelectComponent } from 'src/app/lib/select/select.component';
 import { FilterButton, FilterSelect } from 'src/app/lib/crud/filter-component/elements/filter.interface';
 
 @Component({
   selector: 'app-users',
-  imports: [CommonModule, ReactiveFormsModule, TableComponent, FormComponent, InputComponent, SelectComponent, LabelComponent, ErrorMessageComponent, ContentFormComponent, DialogComponent, ToggleRadioComponent],
+  imports: [CommonModule, ReactiveFormsModule, JTableComponent, JFormComponent, JInputComponent, JSelectComponent, JLabelComponent, ErrorMessageComponent, ContentFormComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
@@ -353,7 +351,7 @@ export class UsersComponent implements OnInit {
   // Formulario
   // =========================================================
 
-  @ViewChild(TableComponent) tableComponent!: TableComponent;
+  @ViewChild(JTableComponent) tableComponent!: JTableComponent;
   formGroup!: FormGroup;
 
   // Validaciones

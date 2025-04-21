@@ -1,7 +1,6 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { NgClass, AsyncPipe } from '@angular/common';
-import { TooltipModule } from 'primeng/tooltip';
 import { SystemService } from 'src/app/core/services/system.service';
 import { MenuProfileComponent } from '../menu-profile/menu-profile.component';
 import { MenuService } from 'src/app/core/services/static/layout/menu-profile.service';
@@ -9,13 +8,12 @@ import { NotificationService } from 'src/app/core/services/static/layout/notific
 import { ChartNoAxesGantt, ChevronsUp, LucideAngularModule, Menu, User } from 'lucide-angular';
 import { ModeToggleComponent } from '../../mode-toggle/mode-toggle.component';
 import { SessionShared } from 'src/app/core/shared/session.shared';
-import { GenericService } from 'src/app/lib/crud/elements/crud-generic.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
-  imports: [LucideAngularModule, ModeToggleComponent, NgClass, MenuProfileComponent, AsyncPipe, TooltipModule]
+  imports: [LucideAngularModule, ModeToggleComponent, NgClass, MenuProfileComponent, AsyncPipe]
 })
 export class NavbarComponent implements OnInit {
 

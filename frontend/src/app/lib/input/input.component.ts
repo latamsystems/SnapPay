@@ -12,12 +12,12 @@ import { LucideAngularModule, X } from 'lucide-angular';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputComponent),
+      useExisting: forwardRef(() => JInputComponent),
       multi: true
     }
   ]
 })
-export class InputComponent implements ControlValueAccessor {
+export class JInputComponent implements ControlValueAccessor {
 
   icons = {
     x: X,

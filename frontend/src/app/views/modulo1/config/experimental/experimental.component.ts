@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ButtonComponent } from 'src/app/lib/button/button.component';
-import { InputComponent } from 'src/app/lib/input/input.component';
+import { JButtonComponent } from 'src/app/lib/button/button.component';
+import { JInputComponent } from 'src/app/lib/input/input.component';
 
 @Component({
   selector: 'app-experimental',
   templateUrl: './experimental.component.html',
   styleUrls: ['./experimental.component.scss'],
-  imports: [InputComponent ,ButtonComponent, FormsModule],
+  imports: [JInputComponent ,JButtonComponent, FormsModule],
 })
 export class ExperimentalComponent {
   file: File | null = null;

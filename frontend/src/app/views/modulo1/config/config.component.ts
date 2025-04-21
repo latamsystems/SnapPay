@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { routesArrayModulo1 } from '../modulo1.routes';
-import { TooltipModule } from 'primeng/tooltip';
 import { RouterLink } from '@angular/router';
 import { SessionShared } from 'src/app/core/shared/session.shared';
 import { CalendarCog, CreditCard, DollarSign, FlaskConical, Layers, Library, LucideAngularModule, MonitorCog, Tag, UserCog } from 'lucide-angular';
 
 @Component({
   selector: 'app-config',
-  imports: [LucideAngularModule, TooltipModule, RouterLink],
+  imports: [LucideAngularModule, RouterLink],
   templateUrl: './config.component.html',
   styleUrl: './config.component.scss'
 })

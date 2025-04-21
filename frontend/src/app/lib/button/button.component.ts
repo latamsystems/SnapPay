@@ -1,19 +1,19 @@
 import { NgClass } from "@angular/common"
 import { Component, Input, Output, EventEmitter, inject } from "@angular/core"
 import { LucideAngularModule, Loader2 } from "lucide-angular"
-import { ColorsService } from "src/app/lib/colors/colors.service"
-import { TooltipModule } from "primeng/tooltip"
+import { JColorsService } from "src/app/lib/colors/colors.service"
+import { JTooltipModule } from "../tooltip/tooltip.directive"
 
 @Component({
   selector: "JButton",
   standalone: true,
   templateUrl: "./button.component.html",
   styleUrl: "./button.component.scss",
-  imports: [NgClass, LucideAngularModule, TooltipModule],
+  imports: [NgClass, LucideAngularModule, JTooltipModule],
 })
-export class ButtonComponent {
+export class JButtonComponent {
   icons = { loading: Loader2 }
-  private readonly colorsService = inject(ColorsService)
+  private readonly colorsService = inject(JColorsService)
 
   @Input() type: "button" | "submit" | "reset" = "button" // Tipo de botón
   @Input() disabled = false // Estado deshabilitado

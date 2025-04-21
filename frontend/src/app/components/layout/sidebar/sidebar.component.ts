@@ -1,18 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { TooltipModule } from 'primeng/tooltip';
 import { NgClass } from '@angular/common';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CookieService } from 'ngx-cookie-service';
 import { Banknote, ChevronDown, CircleDollarSign, ClipboardPen, FileBadge, Home, LucideAngularModule, NotebookTabs, ScrollText, ShieldCheck, ShoppingCart, Smartphone, SquareLibrary, TableProperties, UserRoundPlus, UsersRound, Wallet } from 'lucide-angular';
 import { SessionShared } from 'src/app/core/shared/session.shared';
+import { JTooltipModule } from 'src/app/lib/tooltip/tooltip.directive';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
-  imports: [LucideAngularModule, NgClass, RouterLink, RouterLinkActive, TooltipModule],
+  imports: [LucideAngularModule, NgClass, RouterLink, RouterLinkActive, JTooltipModule],
   animations: [
     trigger('slideToggle', [
       state('collapsed', style({

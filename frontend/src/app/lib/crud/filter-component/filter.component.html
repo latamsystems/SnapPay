@@ -1,4 +1,4 @@
-<div class="flex flex-col md:flex-row-reverse justify-between items-center mb-4 gap-3">
+<div class="flex flex-col md:flex-row-reverse justify-between items-center mb-4 gap-3 select-none">
     <div class="flex items-center gap-3 md:w-auto w-full">
         <div class="relative w-full">
             <input type="text" [(ngModel)]="searchQuery" [placeholder]="searchPlaceholder"
@@ -78,15 +78,23 @@
     </div>
 </div>
 
+
 <!-- Contenedor defiltros -->
-<p-dialog 
-    header="Filtros" 
-    (onHide)="closeFilterDialog()" 
-    [(visible)]="visibleFilter" 
-    [position]="positionFilter"
-    [style]="{ width: '240px', left: '0vw' }" 
-    [resizable]="false"
->
+ <div class="select-none">
+    <JDialog
+        [openModal]="dialog.openDialog"
+        (closeModal)="dialog.onClose()"
+        [dialogTemplate]="templateDialog" 
+        position="leftCenter"
+        title="Filtros"
+        [width]="220"
+        height="auto"
+        [overlay]="false"
+        [draggable]="true"
+    />
+</div>
+
+<ng-template #templateDialog>
     <div class="m-0 pt-1">
         @if (filtersSelect.length > 0) {
             <div class="flex flex-col gap-2">
@@ -103,7 +111,6 @@
                         [placeholder]="filter.placeholder ?? ''"
                         [showClear]="filter.showClear ?? false"
                         [options]="filter.options"
-                        [isFilterSelect]="true"
                         />
                     </div>
 
@@ -125,7 +132,6 @@
                         [isSearch]="filter.isSearch ?? true"
                         [searchFields]="filter.searchFields || []"
                         [defaultFilters]="filter.defaultFilters || []"
-                        [isFilterSelect]="true"
                         />
                     </div>
                   }
@@ -153,4 +159,5 @@
             </div>
         }
     </div>
-</p-dialog>
+</ng-template>
+

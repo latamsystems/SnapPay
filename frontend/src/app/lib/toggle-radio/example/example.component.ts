@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { ToggleRadioComponent } from '../toggle-radio.component';
+import { JToggleRadioComponent } from '../toggle-radio.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-toggle-radio-example',
-  imports: [ToggleRadioComponent, CommonModule, FormsModule],
+  imports: [JToggleRadioComponent, CommonModule, FormsModule],
   templateUrl: './example.component.html',
   styleUrl: './example.component.scss'
 })

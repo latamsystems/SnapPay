@@ -7,16 +7,16 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { AlertDialogService } from 'src/app/lib/alert-dialog/elements/alert-dialog.service';
 import { environment } from 'src/environments/environment.development';
 import { ModeToggleComponent } from 'src/app/components/mode-toggle/mode-toggle.component';
-import { InputComponent } from 'src/app/lib/input/input.component';
+import { JInputComponent } from 'src/app/lib/input/input.component';
 import { ContentFormComponent } from 'src/app/lib/crud/form-component/components/content-form/content-form.component';
 import { ErrorMessageComponent } from 'src/app/lib/crud/form-component/components/error-message/error-message.component';
-import { ButtonComponent } from 'src/app/lib/button/button.component';
-import { CheckboxComponent } from 'src/app/lib/checkbox/checkbox.component';
+import { JButtonComponent } from 'src/app/lib/button/button.component';
+import { JCheckboxComponent } from 'src/app/lib/checkbox/checkbox.component';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [ModeToggleComponent, RouterLink, FormsModule, ReactiveFormsModule, InputComponent, ContentFormComponent, ErrorMessageComponent, ButtonComponent, CheckboxComponent],
+  imports: [ModeToggleComponent, RouterLink, FormsModule, ReactiveFormsModule, JInputComponent, ContentFormComponent, ErrorMessageComponent, JButtonComponent, JCheckboxComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })

@@ -1,9 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
 import { NgClass } from '@angular/common';
-import { DropdownModule } from 'primeng/dropdown';
-import { TooltipModule } from 'primeng/tooltip';
-import { CalendarModule } from 'primeng/calendar';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserService } from 'src/app/core/services/content/user.service';
 import { SidebarService } from 'src/app/core/services/static/layout/sidebar.service';
@@ -12,18 +9,18 @@ import { SidebarShared } from 'src/app/core/shared/sidebar.shared';
 import { PasswdChangeResults, UserResult } from 'src/app/core/interfaces/entities/user.interface';
 import { CalendarService } from 'src/app/core/services/static/transformer/calendar.service';
 import { Gem, Info, KeyRound, LucideAngularModule, UserRoundCheck } from 'lucide-angular';
-import { InputComponent } from 'src/app/lib/input/input.component';
-import { SelectComponent } from 'src/app/lib/select/select.component';
-import { LabelComponent } from 'src/app/lib/label/label.component';
+import { JInputComponent } from 'src/app/lib/input/input.component';
+import { JLabelComponent } from 'src/app/lib/label/label.component';
 import { ContentFormComponent } from 'src/app/lib/crud/form-component/components/content-form/content-form.component';
 import { ErrorMessageComponent } from 'src/app/lib/crud/form-component/components/error-message/error-message.component';
 import { ConverterService } from 'src/app/lib/crud/elements/converter.service';
-import { ButtonComponent } from 'src/app/lib/button/button.component';
+import { JButtonComponent } from 'src/app/lib/button/button.component';
 import { AlertDialogService } from 'src/app/lib/alert-dialog/elements/alert-dialog.service';
 import { AlertToastService } from 'src/app/lib/alert-toast/elements/alert-toast.service';
-import { CheckboxComponent } from 'src/app/lib/checkbox/checkbox.component';
+import { JCheckboxComponent } from 'src/app/lib/checkbox/checkbox.component';
 import { GenericService } from 'src/app/lib/crud/elements/crud-generic.service';
 import { FormShared } from 'src/app/core/shared/form.shared';
+import { JTooltipModule } from 'src/app/lib/tooltip/tooltip.directive';
 
 @Component({
   selector: 'app-profile',
@@ -31,7 +28,7 @@ import { FormShared } from 'src/app/core/shared/form.shared';
   styleUrls: ['./profile.component.scss'],
   providers: [],
   standalone: true,
-  imports: [LucideAngularModule, NgClass, FormsModule, ReactiveFormsModule, DropdownModule, TooltipModule, CalendarModule, InputComponent, ButtonComponent, CheckboxComponent, SelectComponent, LabelComponent, ContentFormComponent, ErrorMessageComponent],
+  imports: [LucideAngularModule, NgClass, FormsModule, ReactiveFormsModule, JInputComponent, JButtonComponent, JCheckboxComponent, JLabelComponent, ContentFormComponent, ErrorMessageComponent, JTooltipModule],
 })
 export class ProfileComponent implements OnInit, OnDestroy {
 

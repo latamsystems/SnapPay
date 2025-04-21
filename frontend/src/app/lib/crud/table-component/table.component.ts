@@ -4,21 +4,21 @@ import { FormsModule } from '@angular/forms';
 import { LucideAngularModule, ChevronUp, ChevronDown, Eye, Edit, Trash, Search, ChevronsUpDown, Check, Loader2, ChevronLeft, ChevronRight } from 'lucide-angular';
 import { GenericService } from '../../crud/elements/crud-generic.service';
 import { Params } from '@angular/router';
-import { ButtonComponent } from '../../button/button.component';
+import { JButtonComponent } from '../../button/button.component';
 import { LoadingState, LoadingStates, OptionsTable, SortDirection, TableColumn } from './elements/table.interface';
 import { AlertToastService } from '../../alert-toast/elements/alert-toast.service';
-import { CheckboxComponent } from "../../checkbox/checkbox.component";
+import { JCheckboxComponent } from "../../checkbox/checkbox.component";
 import { ConverterService } from '../elements/converter.service';
 import { CalendarService } from 'src/app/core/services/static/transformer/calendar.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { PaginatorComponent } from '../paginator-component/paginator.component';
-import { FilterComponent } from '../filter-component/filter.component';
+import { JPaginatorComponent } from '../paginator-component/paginator.component';
+import { JFilterComponent } from '../filter-component/filter.component';
 import { FilterButton, FilterSelect } from '../filter-component/elements/filter.interface';
 
 @Component({
   selector: 'JCrudTable',
   standalone: true,
-  imports: [CommonModule, FormsModule, PaginatorComponent, FilterComponent, LucideAngularModule, ButtonComponent, CheckboxComponent, CheckboxComponent],
+  imports: [CommonModule, FormsModule, JPaginatorComponent, JFilterComponent, LucideAngularModule, JButtonComponent, JCheckboxComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
   animations: [
@@ -40,7 +40,7 @@ import { FilterButton, FilterSelect } from '../filter-component/elements/filter.
 
 
 })
-export class TableComponent implements OnInit {
+export class JTableComponent implements OnInit {
 
   Math = Math;
 

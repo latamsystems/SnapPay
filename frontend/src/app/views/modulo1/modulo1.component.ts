@@ -6,7 +6,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { TimeSesionService } from 'src/app/core/services/static/layout/time-session.service';
 import { environment } from 'src/environments/environment.development';
 import { routesArrayModulo1 } from './modulo1.routes';
-import { AlertToastComponent } from 'src/app/lib/alert-toast/alert-toast.component';
+import { JAlertToastComponent } from 'src/app/lib/alert-toast/alert-toast.component';
 import { SidebarComponent } from 'src/app/components/layout/sidebar/sidebar.component';
 import { SidebarService } from 'src/app/core/services/static/layout/sidebar.service';
 import { AlertSessionComponent } from 'src/app/components/layout/alert-session/alert-session.component';
@@ -14,7 +14,7 @@ import { NavbarComponent } from 'src/app/components/layout/navbar/navbar.compone
 
 @Component({
   selector: 'app-modulo1',
-  imports: [RouterOutlet, AlertToastComponent, NavbarComponent, SidebarComponent, AlertSessionComponent, NgClass],
+  imports: [RouterOutlet, JAlertToastComponent, NavbarComponent, SidebarComponent, AlertSessionComponent, NgClass],
   templateUrl: './modulo1.component.html',
   styleUrl: './modulo1.component.scss'
 })

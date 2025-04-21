@@ -8,15 +8,15 @@ import { AlertToastService } from '../../alert-toast/elements/alert-toast.servic
 import { ConverterService } from '../elements/converter.service';
 import { CalendarService } from 'src/app/core/services/static/transformer/calendar.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { PaginatorComponent } from '../paginator-component/paginator.component';
-import { FilterComponent } from '../filter-component/filter.component';
+import { JPaginatorComponent } from '../paginator-component/paginator.component';
+import { JFilterComponent } from '../filter-component/filter.component';
 import { FilterButton, FilterSelect } from '../filter-component/elements/filter.interface';
 import { LoadingState, LoadingStates, OptionsTable, SortDirection, TableColumn } from '../table-component/elements/table.interface';
 
 @Component({
   selector: 'JCrudCard',
   standalone: true,
-  imports: [CommonModule, FormsModule, PaginatorComponent, FilterComponent, LucideAngularModule],
+  imports: [CommonModule, FormsModule, JPaginatorComponent, JFilterComponent, LucideAngularModule],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
   animations: [

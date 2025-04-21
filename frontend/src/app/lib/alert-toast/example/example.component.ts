@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { AlertToastService } from 'src/app/lib/alert-toast/elements/alert-toast.service';
-import { ButtonComponent } from 'src/app/lib/button/button.component';
+import { JButtonComponent } from 'src/app/lib/button/button.component';
 
 @Component({
   selector: 'app-alert-toast-example',
-  imports: [ButtonComponent],
+  imports: [JButtonComponent],
   templateUrl: './example.component.html',
   styleUrl: './example.component.scss'
 })

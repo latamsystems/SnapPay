@@ -3,12 +3,12 @@ import { trigger, transition, style, animate } from "@angular/animations";
 import { NgClass } from '@angular/common';
 import { AlertToastService } from 'src/app/lib/alert-toast/elements/alert-toast.service';
 import { CircleCheck, CircleHelp, CircleX, Info, Loader2, LucideAngularModule, TriangleAlert, X } from 'lucide-angular';
-import { ButtonComponent } from 'src/app/lib/button/button.component';
-import { ColorsService } from 'src/app/lib/colors/colors.service';
+import { JButtonComponent } from 'src/app/lib/button/button.component';
+import { JColorsService } from 'src/app/lib/colors/colors.service';
 
 @Component({
   selector: 'JAlertToast',
-  imports: [LucideAngularModule, NgClass, ButtonComponent],
+  imports: [LucideAngularModule, NgClass, JButtonComponent],
   templateUrl: './alert-toast.component.html',
   styleUrl: './alert-toast.component.scss',
   animations: [
@@ -23,14 +23,14 @@ import { ColorsService } from 'src/app/lib/colors/colors.service';
     ])
   ]
 })
-export class AlertToastComponent {
+export class JAlertToastComponent {
 
   @Input() position: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' = 'bottom-right';
 
   private readonly alertToastService = inject(AlertToastService);
 
   monocromatic: boolean = false;
-  constructor(private readonly colorsService: ColorsService) { }
+  constructor(private readonly colorsService: JColorsService) { }
 
   toasts = computed(() => this.alertToastService.toasts());
 

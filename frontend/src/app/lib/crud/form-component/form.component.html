@@ -14,8 +14,13 @@
                 <span>
                     {{ typeForm !== 'none' ? typeForm === 'create' ? 'AGREGAR' : 'ACTUALIZAR' : 'REGISTROS' }} {{ typeForm !== 'none' ? titleForm : '' }}
                 </span>
-
-                <div class="cursor-pointer" [pTooltip]="tooltipContentChangePassword" [autoHide]="false">
+                
+                <div class="cursor-pointer" 
+                    [jTooltip]="tooltipContentChangePassword" 
+                    [jTooltipPosition]="'bottom'" 
+                    [jTooltipOffsetX]="25"
+                    [jTooltipOffsetY]="-20"
+                >
                     <lucide-icon [name]="icons.info" [size]="15"></lucide-icon>
                 </div>
             </div>

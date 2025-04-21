@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ButtonComponent } from 'src/app/lib/button/button.component';
+import { JButtonComponent } from 'src/app/lib/button/button.component';
 import {
   LucideAngularModule,
   ChevronsLeft,
@@ -10,11 +10,11 @@ import {
 
 @Component({
   selector: 'JPaginator',
-  imports: [LucideAngularModule, ButtonComponent],
+  imports: [LucideAngularModule, JButtonComponent],
   templateUrl: './paginator.component.html',
   styleUrl: './paginator.component.scss'
 })
-export class PaginatorComponent {
+export class JPaginatorComponent {
 
   Math = Math;
 

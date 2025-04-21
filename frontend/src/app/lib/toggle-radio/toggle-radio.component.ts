@@ -12,12 +12,12 @@ import { Loader2, LucideAngularModule } from 'lucide-angular';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ToggleRadioComponent),
+      useExisting: forwardRef(() => JToggleRadioComponent),
       multi: true,
     },
   ],
 })
-export class ToggleRadioComponent implements OnInit, ControlValueAccessor {
+export class JToggleRadioComponent implements OnInit, ControlValueAccessor {
 
   icons = {
     loading: Loader2,

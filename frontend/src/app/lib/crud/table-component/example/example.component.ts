@@ -1,15 +1,15 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
-import { TableComponent } from '../table.component';
+import { JTableComponent } from '../table.component';
 import { OptionsTable, TableColumn } from '../elements/table.interface';
 import { Ban, Cpu, Edit, LucideAngularModule, Plus, Power, Trash } from 'lucide-angular';
-import { FormComponent, FormType } from '../../form-component/form.component';
+import { JFormComponent, FormType } from '../../form-component/form.component';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { GenericService } from '../../elements/crud-generic.service';
-import { InputComponent } from 'src/app/lib/input/input.component';
-import { SelectComponent } from 'src/app/lib/select/select.component';
+import { JInputComponent } from 'src/app/lib/input/input.component';
+import { JSelectComponent } from 'src/app/lib/select/select.component';
 import { AlertToastService } from 'src/app/lib/alert-toast/elements/alert-toast.service';
-import { LabelComponent } from 'src/app/lib/label/label.component';
+import { JLabelComponent } from 'src/app/lib/label/label.component';
 import { ErrorMessageComponent } from '../../form-component/components/error-message/error-message.component';
 import { ContentFormComponent } from '../../form-component/components/content-form/content-form.component';
 import { AlertDialogService } from 'src/app/lib/alert-dialog/elements/alert-dialog.service';
@@ -31,7 +31,7 @@ interface User {
 
 @Component({
   selector: 'app-table-example',
-  imports: [LucideAngularModule, TableComponent, FormComponent, CommonModule, ReactiveFormsModule, InputComponent, SelectComponent, LabelComponent, ErrorMessageComponent, ContentFormComponent],
+  imports: [LucideAngularModule, JTableComponent, JFormComponent, CommonModule, ReactiveFormsModule, JInputComponent, JSelectComponent, JLabelComponent, ErrorMessageComponent, ContentFormComponent],
   templateUrl: './example.component.html',
   styleUrl: './example.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -176,7 +176,7 @@ export class TableExampleComponent {
   // =========================================================
 
   // Abrir formulario
-  @ViewChild(TableComponent) tableComponent!: TableComponent;
+  @ViewChild(JTableComponent) tableComponent!: JTableComponent;
   openForm: boolean = false;
   typeForm: FormType = 'create';
   formGroup!: FormGroup;

@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, ContentChildren, QueryList, Aft
 import { FormsModule, ControlValueAccessor, ReactiveFormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Eye, X, LucideAngularModule, ChevronDown, Check, Loader2, Search } from 'lucide-angular';
-import { ButtonComponent } from '../button/button.component';
+import { JButtonComponent } from '../button/button.component';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { OptionComponent } from './option/option.component';
 import { TableColumn } from '../crud/table-component/elements/table.interface';
@@ -12,7 +12,7 @@ import { debounceTime, distinctUntilChanged, Subject, Subscription } from 'rxjs'
 @Component({
   selector: 'JSelect',
   standalone: true,
-  imports: [LucideAngularModule, ButtonComponent, CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [LucideAngularModule, JButtonComponent, CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
   animations: [
@@ -29,12 +29,12 @@ import { debounceTime, distinctUntilChanged, Subject, Subscription } from 'rxjs'
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: SelectComponent,
+      useExisting: JSelectComponent,
       multi: true,
     }
   ]
 })
-export class SelectComponent implements ControlValueAccessor, AfterContentInit, AfterViewInit, OnDestroy, OnInit, OnChanges {
+export class JSelectComponent implements ControlValueAccessor, AfterContentInit, AfterViewInit, OnDestroy, OnInit, OnChanges {
 
   // Lucide icons
   icons = {
@@ -384,7 +384,6 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     return '250px'; // Default fallback width
   }
 
-  // Actualizar la posición del dropdown
   // Actualizar la posición del dropdown
   updateDropdownPosition() {
     setTimeout(() => {

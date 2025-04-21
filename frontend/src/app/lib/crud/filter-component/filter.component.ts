@@ -1,22 +1,23 @@
 import { Component, EventEmitter, Input, Output, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule, Search, X, Loader2, Cpu, Filter, Eraser, Check, Trash2, ArrowDownWideNarrow } from 'lucide-angular';
-import { SelectComponent } from 'src/app/lib/select/select.component';
+import { JSelectComponent } from 'src/app/lib/select/select.component';
 import { Subject, Subscription, debounceTime, filter } from 'rxjs';
-import { ButtonComponent } from 'src/app/lib/button/button.component';
-import { DialogModule } from "primeng/dialog"
+import { JButtonComponent } from 'src/app/lib/button/button.component';
 import { FilterButton, FilterSelect } from './elements/filter.interface';
 import { AlertToastService } from 'src/app/lib/alert-toast/elements/alert-toast.service';
 import { LoadingState, TableColumn } from '../table-component/elements/table.interface';
+import { JDialogComponent } from '../../dialog/dialog.component';
+import { DialogShared } from 'src/app/core/shared/dialog.shared';
 
 @Component({
   selector: 'JFilter',
   standalone: true,
-  imports: [LucideAngularModule, SelectComponent, ButtonComponent, FormsModule, DialogModule],
+  imports: [LucideAngularModule, JSelectComponent, JButtonComponent, JDialogComponent, FormsModule],
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss']
 })
-export class FilterComponent implements OnInit, OnDestroy {
+export class JFilterComponent implements OnInit, OnDestroy {
 
   // Lucide icons
   icons = {
@@ -67,10 +68,6 @@ export class FilterComponent implements OnInit, OnDestroy {
   private searchSubscription!: Subscription;
   private isInitialized: boolean = false;
 
-  // Variables para estado de los filtros
-  visibleFilter: boolean = false;
-  positionFilter: any = 'left';
-
   // Configuración de botones
   @Input() filtersButton: FilterButton[] = [];
 
@@ -82,6 +79,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
   
   constructor(
+    public readonly dialog: DialogShared,
     private readonly alertToastService: AlertToastService,
     private readonly cdr: ChangeDetectorRef,
   ) { }
@@ -154,16 +152,6 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
 
   // =====================================================
-  // Filtros
-  // =====================================================
-
-  // Método para cerrar el diálogo de filtros
-  closeFilterDialog(): void {
-    this.visibleFilter = false;  // Oculta el filtro
-    // this.updateButtonStates();  // Actualiza los estados de los botones
-  }
-
-  // =====================================================
   // Botones de filtro
   // =====================================================
 
@@ -177,9 +165,9 @@ export class FilterComponent implements OnInit, OnDestroy {
           ...button,
           icon: this.icons.filter,
           iconChange: this.icons.filterList,
-          isChangeIcon: () => this.visibleFilter,
+          isChangeIcon: () => this.dialog.openDialog,
           clicked: () => {
-            this.visibleFilter = !this.visibleFilter;
+            this.dialog.openDialog = !this.dialog.openDialog;
           },
           classes: 'bg-[#20638f] hover:bg-[#1d5a82] text-white'
         };

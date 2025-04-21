@@ -4,21 +4,20 @@ import { Router, RouterLink } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { routesArray } from 'src/app/app.routes';
 import { MailService } from 'src/app/core/services/mail.service';
-import { InputOtpModule } from 'primeng/inputotp';
 import { UserService } from 'src/app/core/services/content/user.service';
 import { AlertDialogService } from 'src/app/lib/alert-dialog/elements/alert-dialog.service';
 import { ModeToggleComponent } from 'src/app/components/mode-toggle/mode-toggle.component';
 import { ArrowLeft, Loader2, LucideAngularModule } from 'lucide-angular';
-import { InputComponent } from 'src/app/lib/input/input.component';
+import { JInputComponent } from 'src/app/lib/input/input.component';
 import { ContentFormComponent } from 'src/app/lib/crud/form-component/components/content-form/content-form.component';
 import { ErrorMessageComponent } from 'src/app/lib/crud/form-component/components/error-message/error-message.component';
-import { ButtonComponent } from 'src/app/lib/button/button.component';
-import { CheckboxComponent } from 'src/app/lib/checkbox/checkbox.component';
+import { JButtonComponent } from 'src/app/lib/button/button.component';
+import { JCheckboxComponent } from 'src/app/lib/checkbox/checkbox.component';
 import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-password-recovery',
-  imports: [ModeToggleComponent, LucideAngularModule, RouterLink, FormsModule, ReactiveFormsModule, InputOtpModule, InputComponent, ContentFormComponent, ErrorMessageComponent, ButtonComponent, CheckboxComponent, NgClass],
+  imports: [ModeToggleComponent, LucideAngularModule, RouterLink, FormsModule, ReactiveFormsModule, JInputComponent, ContentFormComponent, ErrorMessageComponent, JButtonComponent, JCheckboxComponent, NgClass],
   templateUrl: './password-recovery.component.html',
   styleUrls: ['./password-recovery.component.scss']
 })

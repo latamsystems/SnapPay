@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class ColorsService {
+export class JColorsService {
 
   // Variants
   variants: { [key: string]: string } = {
