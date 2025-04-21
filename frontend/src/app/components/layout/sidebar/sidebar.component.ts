@@ -5,7 +5,7 @@ import { NgClass } from '@angular/common';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CookieService } from 'ngx-cookie-service';
-import { Banknote, ChevronDown, CircleDollarSign, ClipboardPen, FileBadge, Home, LucideAngularModule, NotebookTabs, ScrollText, ShieldCheck, SquareLibrary, TableProperties, UserRoundPlus, Wallet } from 'lucide-angular';
+import { Banknote, ChevronDown, CircleDollarSign, ClipboardPen, FileBadge, Home, LucideAngularModule, NotebookTabs, ScrollText, ShieldCheck, ShoppingCart, Smartphone, SquareLibrary, TableProperties, UserRoundPlus, UsersRound, Wallet } from 'lucide-angular';
 import { SessionShared } from 'src/app/core/shared/session.shared';
 
 @Component({
@@ -45,7 +45,10 @@ export class SidebarComponent implements OnInit {
     bankNote: Banknote,
     shieldCheck: ShieldCheck,
     tableProperties: TableProperties,
-    chevronDown: ChevronDown
+    chevronDown: ChevronDown,
+    smartPhone: Smartphone,
+    usersRound: UsersRound,
+    shoppingCart: ShoppingCart
   }
 
   @Input() title!: string;
@@ -84,91 +87,33 @@ export class SidebarComponent implements OnInit {
         name: 'Inicio',
         route: this.routes[0],
       },
-      // {
-      //   divider: 'Secretaría',
-      // },
-      // {
-      //   icon: this.icons.clipboardPen,
-      //   name: 'Matrículas',
-      //   denyRole: [4, 6],
-      //   elements: [
-      //     {
-      //       icon: this.icons.userRoundPlus,
-      //       name: 'Regístrar',
-      //       route: this.routes[3],
-      //       denyRole: [4]
-      //     },
-      //     {
-      //       icon: this.icons.scrollText,
-      //       name: 'Matriculados',
-      //       route: this.routes[15],
-      //     }
-      //   ]
-      // },
-      // { // Solo para rol de consultor (4)
-      //   icon: this.icons.scrollText,
-      //   name: 'Matriculados',
-      //   route: this.routes[15],
-      //   denyRole: [1, 2, 3, 5, 6]
-      // },
-      // {
-      //   icon: this.icons.squareLibrery,
-      //   name: 'Expedientes Académicos',
-      //   route: this.routes[4],
-      //   denyRole: [6]
-      // },
-      // {
-      //   icon: this.icons.fileBadge,
-      //   name: 'Certificado de cupo',
-      //   route: this.routes[5],
-      //   denyRole: [4, 6]
-      // },
-      // {
-      //   icon: this.icons.notebookTabs,
-      //   name: 'Nóminas',
-      //   route: this.routes[6],
-      //   denyRole: [6]
-      // },
-      // {
-      //   divider: 'Colecturía',
-      // },
-      // {
-      //   icon: this.icons.circleDollarSign,
-      //   name: 'Pagos',
-      //   denyRole: [3, 4, 5, 6],
-      //   elements: [
-      //     {
-      //       icon: this.icons.bankNote,
-      //       name: 'Regístro Pagos',
-      //       route: this.routes[7],
-      //       denyRole: [4, 6]
-      //     },
-      //     {
-      //       icon: this.icons.shieldCheck,
-      //       name: 'Validar Pagos',
-      //       route: this.routes[8],
-      //       denyRole: [3, 4, 5, 6]
-      //     }
-      //   ]
-      // },
-      // {
-      //   icon: this.icons.bankNote,
-      //   name: 'Regístro Pagos',
-      //   route: this.routes[7],
-      //   denyRole: [1, 2, 4, 6]
-      // },
-      // {
-      //   icon: this.icons.wallet,
-      //   name: 'Cartera de cobro',
-      //   route: this.routes[9],
-      //   denyRole: [6]
-      // },
-      // {
-      //   icon: this.icons.tableProperties,
-      //   name: 'Tarifario',
-      //   route: this.routes[10],
-      //   denyRole: [6]
-      // }
+      {
+        divider: 'Gestión',
+      },
+      {
+        icon: this.icons.usersRound,
+        name: 'Clientes',
+        route: this.routes[5],
+        denyRole: [4, 6]
+      },
+      {
+        icon: this.icons.smartPhone,
+        name: 'Dispositivos',
+        route: this.routes[4],
+        denyRole: [6]
+      },
+      {
+        icon: this.icons.shoppingCart,
+        name: 'Ventas',
+        route: this.routes[5],
+        denyRole: [4, 6]
+      },
+      {
+        icon: this.icons.bankNote,
+        name: 'Pagos',
+        route: this.routes[4],
+        denyRole: [6]
+      },
     ]
   }
 

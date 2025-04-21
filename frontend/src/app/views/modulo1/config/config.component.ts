@@ -4,7 +4,7 @@ import { routesArrayModulo1 } from '../modulo1.routes';
 import { TooltipModule } from 'primeng/tooltip';
 import { RouterLink } from '@angular/router';
 import { SessionShared } from 'src/app/core/shared/session.shared';
-import { CalendarCog, CreditCard, DollarSign, FlaskConical, Library, LucideAngularModule, MonitorCog, UserCog } from 'lucide-angular';
+import { CalendarCog, CreditCard, DollarSign, FlaskConical, Layers, Library, LucideAngularModule, MonitorCog, Tag, UserCog } from 'lucide-angular';
 
 @Component({
   selector: 'app-config',
@@ -24,6 +24,8 @@ icons = {
   library: Library,
   creditCard: CreditCard,
   flaskConical: FlaskConical,
+  tag: Tag,
+  layers: Layers
 }
 
   // Routes
@@ -63,6 +65,20 @@ icons = {
         icon: this.icons.userCog,
         title: 'Gestión de usuarios',
         description: 'Crea, edita, elimina y accede a su información detallada.',
+        permitRoles: [1, 2, 3]
+      },
+      {
+        route: this.routes[5],
+        icon: this.icons.tag,
+        title: 'Gestión de marcas',
+        description: 'Crea, edita, elimina marcas de teléfono.',
+        permitRoles: [1, 2, 3]
+      },
+      {
+        route: this.routes[5],
+        icon: this.icons.layers,
+        title: 'Gestión de modelos',
+        description: 'Crea, edita, elimina modelos de teléfono.',
         permitRoles: [1, 2, 3]
       },
       {
