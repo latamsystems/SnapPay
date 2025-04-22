@@ -63,7 +63,7 @@
       @if (isLabel) {
         <label [for]="id" class="flex text-[15px] font-bold text-black dark:text-white justify-between mb-1 opacity-80">
           <span>{{ placeholder }}</span>
-          <span>{{ value }}{{simbol}}</span>
+          <span>{{ value | number:'1.0-2' }}{{simbol}}</span>
         </label>
       }@else {
         <label [for]="id" class="block text-[15px] font-bold text-black dark:text-white text-center mb-1 opacity-80">{{ placeholder }}</label>
@@ -87,20 +87,29 @@
         (blur)="onTouched()"
         [ngClass]="combinedNgClass"
         [class]="classes"
-        class="w-full h-5 bg-background dark:bg-dark-background border border-border dark:border-dark-border rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary transition duration-200
+        class="
+        w-full h-5 bg-background dark:bg-dark-background border border-border dark:border-dark-border 
+        rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary transition duration-200
+      
         [&::-webkit-slider-thumb]:appearance-none
         [&::-webkit-slider-thumb]:h-8
         [&::-webkit-slider-thumb]:w-8
         [&::-webkit-slider-thumb]:rounded-full
-        [&::-webkit-slider-thumb]:bg-dark-primary
-        [&::-webkit-slider-thumb]:dark:bg-primary
         [&::-webkit-slider-thumb]:cursor-pointer
+        [&::-webkit-slider-thumb]:bg-dark-primary
+        dark:[&::-webkit-slider-thumb]:bg-primary
+        [&::-webkit-slider-thumb:hover]:bg-primary
+        dark:[&::-webkit-slider-thumb:hover]:bg-dark-primary
+      
         [&::-moz-range-thumb]:h-4
         [&::-moz-range-thumb]:w-4
         [&::-moz-range-thumb]:rounded-full
         [&::-moz-range-thumb]:bg-primary
-        [&::-moz-range-thumb]:hover:bg-primary/80
         [&::-moz-range-thumb]:cursor-pointer
+        [&::-moz-range-thumb:hover]:bg-primary
+        dark:[&::-moz-range-thumb:hover]:bg-dark-primary
+      
+      
         " />
 
         @if (max) {

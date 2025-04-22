@@ -1,12 +1,12 @@
 import { Component, Input, forwardRef, ViewChild, ElementRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgClass } from '@angular/common';
+import { NgClass, CommonModule } from '@angular/common';
 import { LucideAngularModule, X } from 'lucide-angular';
 
 @Component({
   selector: 'JInput',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgClass, LucideAngularModule],
+  imports: [FormsModule, ReactiveFormsModule, NgClass, LucideAngularModule, CommonModule],
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',
   providers: [

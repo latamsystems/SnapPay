@@ -2,9 +2,9 @@
 <main class="container mx-auto">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- Controls Panel -->
-        <div class="space-y-8">
+        <div class="space-y-8 select-none">
             <div>
-                <h2 class="text-sm font-bold mb-1">Selector de color</h2>
+                <h2 class="text-sm font-bold mb-1 opacity-60">Selector de color</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- Color Picker -->
                     <div
@@ -47,12 +47,22 @@
 
                         <!-- Hex Input -->
                         <JContentForm>
-
                             <JContentForm>
+
                                 <JLabel for="baseColor" text="Ingresa un valor Hex" classes="opacity-60" />
-                                <JInput id="baseColor" type="text" [(ngModel)]="baseColor"
-                                    (input)="updateFromHexInput()" placeholder="#000000" />
+
+                                <JContentForm [rows]="true">
+                                    <JContentForm class="flex-1">
+                                        <JInput id="baseColor" type="text" [(ngModel)]="baseColor"
+                                            (input)="updateFromHexInput()" placeholder="#000000" />
+                                    </JContentForm>
+
+                                    <!-- Color Preview -->
+                                    <div class="h-[35px] w-[60px] rounded shadow-md "
+                                        [style.background-color]="baseColor"></div>
+                                </JContentForm>
                             </JContentForm>
+
 
                             <!-- Saturation Slider -->
                             <JInput type="range" [min]="0" [max]="100" [(ngModel)]="saturation"
