@@ -60,12 +60,19 @@
   <div class="w-full">
 
     @if (placeholder) {
-      <label [for]="id" class="block text-[15px] font-bold text-black dark:text-white text-center mb-3 opacity-80">{{ placeholder }}</label>
+      @if (isLabel) {
+        <label [for]="id" class="flex text-[15px] font-bold text-black dark:text-white justify-between mb-1 opacity-80">
+          <span>{{ placeholder }}</span>
+          <span>{{ value }}{{simbol}}</span>
+        </label>
+      }@else {
+        <label [for]="id" class="block text-[15px] font-bold text-black dark:text-white text-center mb-1 opacity-80">{{ placeholder }}</label>
+      }
     }
 
     <div class="relative flex gap-2 w-full items-center justify-center align-center items-center justify-center align-center">
-      @if (min) {
-        <span class="text-[15px] font-bold text-gray-500 mt-1 text-center">{{min}}</span>
+      @if (min !== null) {
+        <span class="text-[15px] font-bold text-gray-500 mt-1 text-center">{{min}}{{simbol}}</span>
       }
       <input
         type="range"
@@ -97,11 +104,13 @@
         " />
 
         @if (max) {
-        <span class="text-[15px] font-bold text-gray-500 mt-1 text-center">{{max}}</span>
+        <span class="text-[15px] font-bold text-gray-500 mt-1 text-center">{{max}}{{simbol}}</span>
         }
     </div>
 
-    <div class="text-xl font-bold text-gray-500 mt-1 text-center">{{ value }}</div>
+    @if (!isLabel) {
+      <div class="text-xl font-bold text-gray-500 mt-1 text-center">{{ value }}</div>
+    }
   </div>
 }
 

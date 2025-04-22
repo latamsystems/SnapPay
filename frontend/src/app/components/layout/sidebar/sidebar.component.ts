@@ -93,25 +93,25 @@ export class SidebarComponent implements OnInit {
       {
         icon: this.icons.usersRound,
         name: 'Clientes',
-        route: this.routes[5],
+        route: this.routes[10],
         denyRole: [4, 6]
       },
       {
         icon: this.icons.smartPhone,
         name: 'Dispositivos',
-        route: this.routes[4],
+        route: this.routes[10],
         denyRole: [6]
       },
       {
         icon: this.icons.shoppingCart,
         name: 'Ventas',
-        route: this.routes[5],
+        route: this.routes[10],
         denyRole: [4, 6]
       },
       {
         icon: this.icons.bankNote,
         name: 'Pagos',
-        route: this.routes[4],
+        route: this.routes[10],
         denyRole: [6]
       },
     ]

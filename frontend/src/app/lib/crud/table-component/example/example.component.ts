@@ -11,7 +11,7 @@ import { JSelectComponent } from 'src/app/lib/select/select.component';
 import { AlertToastService } from 'src/app/lib/alert-toast/elements/alert-toast.service';
 import { JLabelComponent } from 'src/app/lib/label/label.component';
 import { ErrorMessageComponent } from '../../form-component/components/error-message/error-message.component';
-import { ContentFormComponent } from '../../form-component/components/content-form/content-form.component';
+import { JContentFormComponent } from '../../form-component/components/content-form/content-form.component';
 import { AlertDialogService } from 'src/app/lib/alert-dialog/elements/alert-dialog.service';
 import { ConverterService } from '../../elements/converter.service';
 import { FilterButton, FilterSelect } from '../../filter-component/elements/filter.interface';
@@ -31,7 +31,7 @@ interface User {
 
 @Component({
   selector: 'app-table-example',
-  imports: [LucideAngularModule, JTableComponent, JFormComponent, CommonModule, ReactiveFormsModule, JInputComponent, JSelectComponent, JLabelComponent, ErrorMessageComponent, ContentFormComponent],
+  imports: [LucideAngularModule, JTableComponent, JFormComponent, CommonModule, ReactiveFormsModule, JInputComponent, JSelectComponent, JLabelComponent, ErrorMessageComponent, JContentFormComponent],
   templateUrl: './example.component.html',
   styleUrl: './example.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

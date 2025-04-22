@@ -24,65 +24,56 @@ app-root {
   width: 100%;
 }
 
-// * {
-//   outline: 1px solid red; /* o overflow-x: hidden en body */
-// }
-
 @custom-variant dark (&:where(.dark, .dark *));
 
+
 @theme {
-  --color-background: #f1ebf3;
-  --color-foreground: #1a1719;
-  --color-card: #e4dae8;
-  --color-card-foreground: #282225;
-  --color-popover: #f1ebf3;
-  --color-popover-foreground: #2b002d;
-  --color-primary: #5c3c60;
-  --color-primary-foreground: #ffffff;
-  --color-secondary: #e0d7e2;
+  --color-background: #f5eff5;
+  --color-foreground: #181a1b;
+  --color-card: #e7e4e7;
+  --color-card-foreground: #2c1f2d;
+  --color-popover: #f3f2f3;
+  --color-popover-foreground: #150e16;
+  --color-primary: #5b3e5e;
+  --color-primary-foreground: #FFFFFF;
+  --color-secondary: #c4b9c5;
   --color-secondary-foreground: #000000;
-  --color-muted: #dedde8;
-  --color-muted-foreground: #726772;
-  --color-accent: #dedde8;
-  --color-accent-foreground: #282225;
-  --color-destructive: #bf4040;
-  --color-destructive-foreground: #e7e3e6;
-  --color-border: #c2a9cc;
-  --color-input: #85668f;
-  --color-ring: #5c3c60;
+  --color-muted: #d9d8da;
+  --color-muted-foreground: #6f5a72;
+  --color-accent: #d2d0d2;
+  --color-accent-foreground: #2c1f2d;
+  --color-destructive: #BF3F3F;
+  --color-destructive-foreground: #f3f2f3;
+  --color-border: #a28da5;
+  --color-input: #a28da5;
+  --color-ring: #5b3e5e;
+
+  --color-dark-background: #15151a;
+  --color-dark-foreground: #e6e4e7;
+  --color-dark-card: #171118;
+  --color-dark-card-foreground: #e6e4e7;
+  --color-dark-popover: #090609;
+  --color-dark-popover-foreground: #e6e4e7;
+  --color-dark-primary: #503c53;
+  --color-dark-primary-foreground: #FFFFFF;
+  --color-dark-secondary: #382c3a;
+  --color-dark-secondary-foreground: #FFFFFF;
+  --color-dark-muted: #433b44;
+  --color-dark-muted-foreground: #9d949e;
+  --color-dark-accent: #433b44;
+  --color-dark-accent-foreground: #e6e4e7;
+  --color-dark-destructive: #BF3F3F;
+  --color-dark-destructive-foreground: #e6e4e7;
+  --color-dark-border: #7d6680;
+  --color-dark-input: #7d6680;
+  --color-dark-ring: #503c53;
   --color-radius: 0.5rem;
-  --color-popover: #ffffff;
-
-  --color-dark-background: #1a1719;
-  --color-dark-foreground: #e7e3e6;
-  --color-dark-card: #1a1719;
-  --color-dark-card-foreground: #e7e3e6;
-  --color-dark-popover: #0f0d0f;
-  --color-dark-popover-foreground: #e7e3e6;
-  --color-dark-primary: #5c3c60;
-  --color-dark-primary-foreground: #ffffff;
-  --color-dark-secondary: #392e3b;
-  --color-dark-secondary-foreground: #ffffff;
-  --color-dark-muted: #3e3d45;
-  --color-dark-muted-foreground: #b1a9b4;
-  --color-dark-accent: #3e3d45;
-  --color-dark-accent-foreground: #e7e3e6;
-  --color-dark-destructive: #bf4040;
-  --color-dark-destructive-foreground: #e7e3e6;
-  --color-dark-border: #85668f;
-  --color-dark-input: #85668f;
-  --color-dark-ring: #5c3c60;
   --color-dark-radius: 0.5rem;
-  --color-dark-popover: #1a1a24;
 }
-
 
 .dark {
   --tw-bg-opacity: 1;
   background-color: rgba(18, 18, 18, var(--tw-bg-opacity));
   color: var(--white);
 }
-
-
-
 

@@ -12,7 +12,7 @@ import { AlertDialogService } from 'src/app/lib/alert-dialog/elements/alert-dial
 import { AlertToastService } from 'src/app/lib/alert-toast/elements/alert-toast.service';
 import { ConverterService } from 'src/app/lib/crud/elements/converter.service';
 import { GenericService } from 'src/app/lib/crud/elements/crud-generic.service';
-import { ContentFormComponent } from 'src/app/lib/crud/form-component/components/content-form/content-form.component';
+import { JContentFormComponent } from 'src/app/lib/crud/form-component/components/content-form/content-form.component';
 import { ErrorMessageComponent } from 'src/app/lib/crud/form-component/components/error-message/error-message.component';
 import { JFormComponent } from 'src/app/lib/crud/form-component/form.component';
 import { OptionsTable, TableColumn } from 'src/app/lib/crud/table-component/elements/table.interface';
@@ -24,7 +24,7 @@ import { FilterButton, FilterSelect } from 'src/app/lib/crud/filter-component/el
 
 @Component({
   selector: 'app-users',
-  imports: [CommonModule, ReactiveFormsModule, JTableComponent, JFormComponent, JInputComponent, JSelectComponent, JLabelComponent, ErrorMessageComponent, ContentFormComponent],
+  imports: [CommonModule, ReactiveFormsModule, JTableComponent, JFormComponent, JInputComponent, JSelectComponent, JLabelComponent, ErrorMessageComponent, JContentFormComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })

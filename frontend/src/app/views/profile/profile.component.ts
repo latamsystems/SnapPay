@@ -11,7 +11,7 @@ import { CalendarService } from 'src/app/core/services/static/transformer/calend
 import { Gem, Info, KeyRound, LucideAngularModule, UserRoundCheck } from 'lucide-angular';
 import { JInputComponent } from 'src/app/lib/input/input.component';
 import { JLabelComponent } from 'src/app/lib/label/label.component';
-import { ContentFormComponent } from 'src/app/lib/crud/form-component/components/content-form/content-form.component';
+import { JContentFormComponent } from 'src/app/lib/crud/form-component/components/content-form/content-form.component';
 import { ErrorMessageComponent } from 'src/app/lib/crud/form-component/components/error-message/error-message.component';
 import { ConverterService } from 'src/app/lib/crud/elements/converter.service';
 import { JButtonComponent } from 'src/app/lib/button/button.component';
@@ -28,7 +28,7 @@ import { JTooltipModule } from 'src/app/lib/tooltip/tooltip.directive';
   styleUrls: ['./profile.component.scss'],
   providers: [],
   standalone: true,
-  imports: [LucideAngularModule, NgClass, FormsModule, ReactiveFormsModule, JInputComponent, JButtonComponent, JCheckboxComponent, JLabelComponent, ContentFormComponent, ErrorMessageComponent, JTooltipModule],
+  imports: [LucideAngularModule, NgClass, FormsModule, ReactiveFormsModule, JInputComponent, JButtonComponent, JCheckboxComponent, JLabelComponent, JContentFormComponent, ErrorMessageComponent, JTooltipModule],
 })
 export class ProfileComponent implements OnInit, OnDestroy {
 
@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
 
   // Variables de control de formulario perfil
-  frormProfile!: FormGroup
+  formProfile!: FormGroup
 
   // Variables de control de formulario perfil
   formControlsProfile: { [key: string]: AbstractControl | null } = {};
@@ -88,11 +88,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
   // Validaciones
   initForm(): void {
     // Validaciones de formulario perfil
-    this.frormProfile = this.formBuilder.group({
+    this.formProfile = this.formBuilder.group({
+      firstname_user: ['', Validators.required],
+      lastname_user: ['', Validators.required],
+      identification_user: ['', Validators.required],
       email_user: ['', [Validators.required, Validators.pattern(/^[\w-ñÑ]+(?:\.[\w-ñÑ]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,7}$/)]],
     });
 
-    this.formControlsProfile = this.converterService.initializeFormControls(this.frormProfile);
+    this.formControlsProfile = this.converterService.initializeFormControls(this.formProfile);
 
     // Validaciones de formulario perfil
     this.frormPassword = this.formBuilder.group({
@@ -122,11 +125,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
     if (this.session.id_user) {
       this.genericService.getId<UserResult>('user', this.session.id_user).subscribe({
         next: (response) => {
-          console.log(response)
+
           const user: UserResult = response; // Obtener el objeto de usuario
 
           // Establecer los valores obtenidos en los campos del formulario
-          this.frormProfile.patchValue({
+          this.formProfile.patchValue({
+            firstname_user: user.firstname_user,
+            lastname_user: user.lastname_user,
+            identification_user: user.identification_user,
             email_user: user.email_user,
           });
 
@@ -147,13 +153,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
   updateProfile() {
 
     // Activar los mensajes de validacion del formulario
-    this.frormProfile.markAllAsTouched();
+    this.formProfile.markAllAsTouched();
 
-    if (this.frormProfile.valid) {
+    if (this.formProfile.valid) {
 
-      const formData: UserResult = this.frormProfile.value;
+      const formData: UserResult = this.formProfile.value;
 
-      if (this.form.onValidateChange(!this.frormProfile.dirty)) return;
+      if (this.form.onValidateChange(!this.formProfile.dirty)) return;
 
       this.alertDialogService.AlertDialog({
         type: 'question',

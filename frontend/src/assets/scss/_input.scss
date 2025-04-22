@@ -1,5 +1,11 @@
 
 .input {
+
+    &::placeholder {
+        color: rgba(0, 0, 0, 0.4);
+        transition: opacity 0.2s ease;
+      }
+
     &:-webkit-autofill {
         -webkit-text-fill-color: black !important;
         -webkit-box-shadow: 0 0 0px 1000px color-mix(in srgb, var(--color-primary) 15%, white) inset !important;
@@ -18,20 +24,22 @@
 .dark {
     .input {
     
+        &::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+          }
+
         &:-webkit-autofill {
             -webkit-text-fill-color: white !important;
             -webkit-box-shadow: 0 0 0px 1000px color-mix(in srgb, var(--color-background) 15%, black) inset !important;
             caret-color: var(--color-dark-primary) !important;
         }
 
-        .input:-webkit-autofill:hover,
-        .input:-webkit-autofill:focus,
-        .input:-webkit-autofill:active {
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus,
+        &:-webkit-autofill:active {
             -webkit-text-fill-color: white !important;
             -webkit-box-shadow: 0 0 0px 1000px color-mix(in srgb, var(--color-background) 15%, black) inset !important;
             caret-color: var(--color-primary) !important;
         }
     }
 }
-
-  

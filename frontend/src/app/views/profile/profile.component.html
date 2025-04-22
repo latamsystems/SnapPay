@@ -1,16 +1,13 @@
 <section class="relative grid gap-[20px] pb-3">
 
-  <div class="grid grid-cols-[1fr_1fr] gap-[20px]" [ngClass]="{
-    'max-[1000px]:grid-cols-[1fr]' : !sidebar.sidebarHidden,
-    'max-[850px]:grid-cols-[1fr]' : sidebar.sidebarHidden,
-  }">
+  <div class="grid gap-[20px]">
 
     <!-- Contenedor para datos del susuario -->
-    @if (frormProfile) {
+    @if (formProfile) {
     <div class="contenedor_formulario_perfil">
       <form
         class="relative inherit py-[10px] px-[20px] rounded-[10px] border border-border dark:border-dark-border bg-white dark:bg-foreground"
-        [formGroup]="frormProfile">
+        [formGroup]="formProfile">
 
         <div>
           <span class="flex items-center gap-[5px]">
@@ -37,6 +34,33 @@
           'max-[850px]:grid-cols-[1fr]' : !sidebar.sidebarHidden,
           'max-[730px]:grid-cols-[1fr]' : sidebar.sidebarHidden,
         }">
+
+          <JContentForm>
+            <JLabel for="firstname_user" text="Nombre" [isRequired]="true" />
+            <JInput type="text" id="firstname_user" formControlName="firstname_user" placeholder="Ingrese su nombre" />
+            <JErrorMessage [control]="formControlsProfile['firstname_user_control']" [errorMessages]="{
+              required: 'El nombre es requerido.',
+            }" />
+          </JContentForm>
+
+
+          <JContentForm>
+            <JLabel for="lastname_user" text="Apellido" [isRequired]="true" />
+            <JInput type="text" id="lastname_user" formControlName="lastname_user" placeholder="Ingrese su apellido" />
+            <JErrorMessage [control]="formControlsProfile['lastname_user_control']" [errorMessages]="{
+              required: 'El apellido es requerido.',
+            }" />
+          </JContentForm>
+          
+
+          <JContentForm>
+            <JLabel for="identification_user" text="Apellido" [isRequired]="true" />
+            <JInput type="text" id="identification_user" formControlName="identification_user" placeholder="Ingrese su identificación" />
+            <JErrorMessage [control]="formControlsProfile['identification_user_control']" [errorMessages]="{
+              required: 'La identificación es requerida.',
+            }" />
+          </JContentForm>
+
 
           <JContentForm>
             <JLabel for="email_user" text="Correo electrónico" [isRequired]="true" />

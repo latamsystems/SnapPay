@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
   templateUrl: './content-form.component.html',
   styleUrl: './content-form.component.scss'
 })
-export class ContentFormComponent {
+export class JContentFormComponent {
   @Input() columns: number = 1;
   @Input() rows: boolean = false;
 

@@ -38,6 +38,9 @@ export class JInputComponent implements ControlValueAccessor {
   @Input() min: number = 0;
   @Input() max: number = 100;
   @Input() step: number = 1;
+  @Input() isLabel: boolean = false;
+  @Input() simbol: string = '';
+
 
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
 

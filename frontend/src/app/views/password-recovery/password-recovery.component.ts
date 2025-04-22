@@ -9,7 +9,7 @@ import { AlertDialogService } from 'src/app/lib/alert-dialog/elements/alert-dial
 import { ModeToggleComponent } from 'src/app/components/mode-toggle/mode-toggle.component';
 import { ArrowLeft, Loader2, LucideAngularModule } from 'lucide-angular';
 import { JInputComponent } from 'src/app/lib/input/input.component';
-import { ContentFormComponent } from 'src/app/lib/crud/form-component/components/content-form/content-form.component';
+import { JContentFormComponent } from 'src/app/lib/crud/form-component/components/content-form/content-form.component';
 import { ErrorMessageComponent } from 'src/app/lib/crud/form-component/components/error-message/error-message.component';
 import { JButtonComponent } from 'src/app/lib/button/button.component';
 import { JCheckboxComponent } from 'src/app/lib/checkbox/checkbox.component';
@@ -17,7 +17,7 @@ import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-password-recovery',
-  imports: [ModeToggleComponent, LucideAngularModule, RouterLink, FormsModule, ReactiveFormsModule, JInputComponent, ContentFormComponent, ErrorMessageComponent, JButtonComponent, JCheckboxComponent, NgClass],
+  imports: [ModeToggleComponent, LucideAngularModule, RouterLink, FormsModule, ReactiveFormsModule, JInputComponent, JContentFormComponent, ErrorMessageComponent, JButtonComponent, JCheckboxComponent, NgClass],
   templateUrl: './password-recovery.component.html',
   styleUrls: ['./password-recovery.component.scss']
 })

@@ -1,7 +1,31 @@
-<section class="grid grid-cols-[1fr_1fr]">
-    <div class="grid gap-3 border border-border dark:border-dark-border rounded-lg p-5 bg-white dark:bg-foreground">
-        <h2 class="font-bold">Convertidor de imagen a .bin</h2>
-        <JInput type="file" (change)="onFileSelected($event)" accept="image/*" [(ngModel)]="file" [clearButton]="true" [showImage]="true" />
-        <JButton text="Descargar como .bin" (clicked)="downloadAsBin()" [disabled]="!file" classes="primary" />
+<section class="flex flex-col gap-6">
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div
+      class="grid gap-3 border border-border dark:border-dark-border rounded-xl p-6 bg-white dark:bg-foreground shadow">
+      <h2 class="text-lg font-bold text-gray-800 dark:text-white">Convertidor de imagenes</h2>
+      <JInput type="file" (change)="onFileSelected($event)" accept="image/*" [(ngModel)]="file" [clearButton]="true"
+        [showImage]="true" />
+
+      <div class="flex gap-3">
+        <JButton text=".bin" (clicked)="downloadAsBin()" [disabled]="!file" classes="primary" />
+        <JButton text=".ico" (clicked)="downloadAsIco()" [disabled]="!file" classes="primary" />
+      </div>
+
     </div>
+
+    <div
+      class="grid gap-4 border border-border dark:border-dark-border rounded-xl p-6 bg-white dark:bg-foreground shadow">
+
+    </div>
+  </div>
+
+
+  <div
+    class="flex flex-col gap-3 border border-border dark:border-dark-border rounded-xl p-6 bg-white dark:bg-foreground shadow">
+    <h2 class="text-lg font-bold text-gray-800 dark:text-white">Generador de colores de tema</h2>
+
+    <JTheme></JTheme>
+  </div>
+
 </section>
