@@ -25,11 +25,11 @@ import { JColorsService } from 'src/app/lib/colors/colors.service';
 })
 export class JAlertToastComponent {
 
+  @Input() monocromatic: boolean = false;
   @Input() position: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' = 'bottom-right';
 
   private readonly alertToastService = inject(AlertToastService);
 
-  monocromatic: boolean = false;
   constructor(private readonly colorsService: JColorsService) { }
 
   toasts = computed(() => this.alertToastService.toasts());

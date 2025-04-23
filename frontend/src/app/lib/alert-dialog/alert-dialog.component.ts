@@ -1,4 +1,4 @@
-import { Component, inject, computed } from "@angular/core";
+import { Component, inject, computed, Input } from "@angular/core";
 import { trigger, transition, style, animate } from "@angular/animations";
 import { LucideAngularModule, CircleCheck, CircleX, TriangleAlert, Info, CircleHelp, Loader2, } from "lucide-angular";
 import { NgClass } from "@angular/common";
@@ -24,9 +24,10 @@ import { JColorsService } from "src/app/lib/colors/colors.service";
   ],
 })
 export class JAlertDialogComponent {
+  
+  @Input() monocromatic: boolean = false;
   private readonly alertDialogService = inject(AlertDialogService);
-
-  monocromatic: boolean = false;
+  
   constructor(private readonly colorsService: JColorsService) { }
 
   // Single computed property for dialogs
