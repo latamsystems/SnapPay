@@ -47,7 +47,7 @@
         <div class="flex flex-col items-center w-full gap-2">
           <!-- Campo de correo electrónico -->
           <JContentForm class="w-full">
-            <JLabel for="email_user" classes="font-bold text-gray-600" text="Correo electrónico" />
+            <JLabel for="email_user" classes="font-bold text-gray-600">Correo electrónico</JLabel>
             <JInput type="text" id="email_user" formControlName="email_user" placeholder="Ingrese su correo" />
             <JErrorMessage classes="text-[10px]" [control]="formControls['email_user_control']" [errorMessages]="{
               required: 'El correo es requerido.',
@@ -57,7 +57,7 @@
 
           <!-- Campo de contraseña -->
           <JContentForm class="w-full">
-            <JLabel for="password_user" classes="font-bold text-gray-600" text="Contraseña" />
+            <JLabel for="password_user" classes="font-bold text-gray-600">Contraseña</JLabel>
             <JInput [type]="isVisiblePassword ? 'text' : 'password'" id="password_user" formControlName="password_user"
               placeholder="Ingrese su contraseña" />
             <JErrorMessage classes="text-[10px]" [control]="formControls['password_user_control']" [errorMessages]="{

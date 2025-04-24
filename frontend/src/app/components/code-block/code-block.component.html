@@ -1,0 +1,9 @@
+<div class="relative rounded bg-foreground pl-5 pt-3 m-0 border border-border dark:border-dark-border">
+    <div class="absolute top-4 right-4">
+        <JButton (clicked)="copyCode()" [icon]="icons['copy']" [iconChange]="icons['check']"
+            [isChangeIcon]="copied" [iconSize]="15" tooltip="Copiar" classes="w-[25px] h-[25px] text-white" />
+    </div>
+    <pre class="p-5">
+        <code #codeRef class="language-{{language}}"></code>
+    </pre>
+</div>

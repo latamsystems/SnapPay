@@ -5,7 +5,6 @@
 // ===============================================
 
 @import "./assets/scss/scroll";
-@import "./assets/scss/dialog";
 @import "./assets/scss/input";
 
 html, body {
@@ -25,7 +24,6 @@ app-root {
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
-
 
 @theme {
   --color-background: #f5eff5;

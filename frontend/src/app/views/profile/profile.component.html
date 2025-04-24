@@ -36,7 +36,7 @@
         }">
 
           <JContentForm>
-            <JLabel for="firstname_user" text="Nombre" [isRequired]="true" />
+            <JLabel for="firstname_user" [isRequired]="true">Nombre</JLabel>
             <JInput type="text" id="firstname_user" formControlName="firstname_user" placeholder="Ingrese su nombre" />
             <JErrorMessage [control]="formControlsProfile['firstname_user_control']" [errorMessages]="{
               required: 'El nombre es requerido.',
@@ -45,7 +45,7 @@
 
 
           <JContentForm>
-            <JLabel for="lastname_user" text="Apellido" [isRequired]="true" />
+            <JLabel for="lastname_user" [isRequired]="true">Apellido</JLabel>
             <JInput type="text" id="lastname_user" formControlName="lastname_user" placeholder="Ingrese su apellido" />
             <JErrorMessage [control]="formControlsProfile['lastname_user_control']" [errorMessages]="{
               required: 'El apellido es requerido.',
@@ -54,7 +54,7 @@
           
 
           <JContentForm>
-            <JLabel for="identification_user" text="Apellido" [isRequired]="true" />
+            <JLabel for="identification_user" [isRequired]="true">Identificación</JLabel>
             <JInput type="text" id="identification_user" formControlName="identification_user" placeholder="Ingrese su identificación" />
             <JErrorMessage [control]="formControlsProfile['identification_user_control']" [errorMessages]="{
               required: 'La identificación es requerida.',
@@ -63,7 +63,7 @@
 
 
           <JContentForm>
-            <JLabel for="email_user" text="Correo electrónico" [isRequired]="true" />
+            <JLabel for="email_user" [isRequired]="true">Correo electrónico</JLabel>
             <JInput type="text" id="email_user" formControlName="email_user" placeholder="Ingrese su correo electrónico" />
             <JErrorMessage [control]="formControlsProfile['email_user_control']" [errorMessages]="{
               required: 'El correo es requerido.',
@@ -113,7 +113,7 @@
         <div class="password_change">
 
           <JContentForm>
-            <JLabel for="password_user" text="Contraseña actual" [isRequired]="true" />
+            <JLabel for="password_user" [isRequired]="true">Contraseña actual</JLabel>
             <JInput [type]="isVisiblePassword ? 'text' : 'password'" id="password_user" formControlName="password_user" placeholder="Ingrese su contraseña" />
             <JErrorMessage [control]="formControlsPasswd['password_user_control']" [errorMessages]="{
                 required: 'La contraseña actual es requerida.'
@@ -121,7 +121,7 @@
           </JContentForm>
 
           <JContentForm>
-            <JLabel for="new_password" text="Nueva contraseña" [isRequired]="true" />
+            <JLabel for="new_password" [isRequired]="true">Nueva contraseña</JLabel>
             <JInput [type]="isVisiblePassword ? 'text' : 'password'" id="new_password" formControlName="new_password" placeholder="Ingrese una nueva contraseña" />
             <JErrorMessage [control]="formControlsPasswd['new_password_control']" [errorMessages]="{
                 required: 'La nueva contraseña es requerida.',

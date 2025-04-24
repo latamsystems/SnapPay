@@ -29,7 +29,7 @@
         
         <JContentForm [columns]="2">
             <JContentForm>
-                <JLabel for="firstname_user" text="Nombres" [isRequired]="true" />
+                <JLabel for="firstname_user" [isRequired]="true">Nombres</JLabel>
                 <JInput type="text" id="firstname_user" formControlName="firstname_user" placeholder="Ingrese el nombre" />
                 <JErrorMessage [control]="form.formControls['firstname_user_control']" [errorMessages]="{
                     required: 'El nombre es requerido.',
@@ -38,7 +38,7 @@
             </JContentForm>
 
             <JContentForm>
-                <JLabel for="lastname_user" text="Apellidos" [isRequired]="true" />
+                <JLabel for="lastname_user" [isRequired]="true">Apellidos</JLabel>
                 <JInput type="text" id="lastname_user" formControlName="lastname_user" placeholder="Ingrese el apellido" />
                 <JErrorMessage [control]="form.formControls['lastname_user_control']" [errorMessages]="{
                     required: 'El apellido es requerido.',
@@ -48,7 +48,7 @@
         </JContentForm>
 
         <JContentForm>
-            <JLabel for="identification_user" text="Identificación" [isRequired]="true" />
+            <JLabel for="identification_user" [isRequired]="true">Identificación</JLabel>
             <JInput type="text" id="identification_user" formControlName="identification_user" placeholder="Ingrese el número de identificación" />
             <JErrorMessage [control]="form.formControls['identification_user_control']" [errorMessages]="{
                 required: 'La identificación es requerida.'
@@ -56,7 +56,7 @@
         </JContentForm>
   
         <JContentForm>
-            <JLabel for="email_user" text="Correo eléctronico" [isRequired]="true" />
+            <JLabel for="email_user" [isRequired]="true">Correo eléctronico</JLabel>
             <JInput type="email" id="email_user" formControlName="email_user" placeholder="Ingrese el correo electrónico" />
             <JErrorMessage [control]="form.formControls['email_user_control']" [errorMessages]="{
                 required: 'El correo es requerido.',
@@ -66,7 +66,7 @@
 
 
         <JContentForm>
-            <JLabel for="id_role" text="Selección de rol" [isRequired]="true" />
+            <JLabel for="id_role" [isRequired]="true">Selección de rol</JLabel>
             <JSelect
                 type="searchable"
                 formControlName="id_role"
