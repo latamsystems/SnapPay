@@ -1,0 +1,53 @@
+<div class="mx-auto">
+    <JCrudTable 
+        [columns]="columns" 
+        [endpoint]="endpoint" 
+        searchPlaceholder="Buscar marca..."
+        [filtersButton]="filtersButton"
+        [filtersSelect]="filtersSelect"
+        [optionsTable]="optionsTable"
+        (dataLoaded)="form.onTableDataLoaded()"
+        />
+</div>
+
+<JCrudForm 
+    [openForm]="form.openForm" 
+    (closeForm)="form.onClose()" 
+    [formTemplate]="templateForm" 
+    (submitForm)="onSubmitForm()"
+    [typeForm]="form.typeForm" 
+    [isLoading]="form.isLoading"
+/>
+
+<ng-template #templateForm>
+    <form [formGroup]="formGroup" class="flex flex-col gap-2">
+        <input class="input" id="id_model" type="hidden" formControlName="id_model">
+    
+        <JContentForm>
+            <JLabel for="name_model" [isRequired]="true">Nombre del modelo</JLabel>
+            <JInput type="textarea" id="name_model" formControlName="name_model" placeholder="Ingrese el nombre del modelo" />
+            <JErrorMessage [control]="form.formControls['name_model_control']" [errorMessages]="{
+                required: 'El nombre es requerido.'
+            }" />
+        </JContentForm>
+
+        <JContentForm>
+            <JLabel for="id_brand" [isRequired]="true">Selección de marca</JLabel>
+            <JSelect
+                type="searchable"
+                formControlName="id_brand"
+                endpoint="brand"
+                optionLabel="name_brand"
+                optionValue="id_brand"
+                [loadOnInit]="form.typeForm === 'create' ? false : true"
+                [isSearch]="false"
+                placeholder="Seleccione una marca"
+                [showClear]="true"
+            />
+            <JErrorMessage [control]="form.formControls['id_brand_control']" [errorMessages]="{
+                required: 'La marca es requerida.'
+            }" />
+        </JContentForm>
+
+    </form>
+</ng-template>

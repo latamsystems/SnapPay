@@ -14,6 +14,10 @@ import { ProfileComponent } from "../profile/profile.component";
 import { ExperimentalComponent } from "./config/experimental/experimental.component";
 import { SystemComponent } from "./config/system/system.component";
 import { UsersComponent } from "./config/users/users.component";
+import { BrandsComponent } from "./config/brands/brands.component";
+import { ModelsComponent } from "./config/models/models.component";
+import { ClientsComponent } from "./clients/clients.component";
+import { DevicesComponent } from "./devices/devices.component";
 
 // Nombre de rutas
 const home: string = 'inicio';            // 0
@@ -23,7 +27,10 @@ const config: string = 'configuracion';   // 2
 const systems: string = config + '/gestion-del-sistema';         // 3
 const experimental: string = config + '/experimental';           // 4
 const users: string = config + '/usuarios';                      // 5
-
+const brands: string = config + '/marcas';                       // 6
+const models: string = config + '/modelos';                      // 7
+const clients: string = config + '/clientes';                    // 8
+const devices: string = config + '/dispositivos';                // 9
 
 
 // Convertir primera en mayuscula
@@ -39,6 +46,10 @@ export const routesArrayModulo1: string[] = [
     '/' + systems,
     '/' + experimental,
     '/' + users,
+    '/' + brands,
+    '/' + models,
+    '/' + clients,
+    '/' + devices,
 ];
 
 export const routesModulo1: Routes = [
@@ -96,6 +107,38 @@ export const routesModulo1: Routes = [
                 canActivate: [roleGuard],
                 data: {
                     title: capitalizeFirstLetter(users),
+                    allowedRoles: [1, 2, 3] // Asignar roles permitidos
+                },
+            },
+            {
+                path: brands, component: BrandsComponent,
+                canActivate: [roleGuard],
+                data: {
+                    title: capitalizeFirstLetter(brands),
+                    allowedRoles: [1, 2, 3] // Asignar roles permitidos
+                },
+            },
+            {
+                path: models, component: ModelsComponent,
+                canActivate: [roleGuard],
+                data: {
+                    title: capitalizeFirstLetter(models),
+                    allowedRoles: [1, 2, 3] // Asignar roles permitidos
+                },
+            },
+            {
+                path: clients, component: ClientsComponent,
+                canActivate: [roleGuard],
+                data: {
+                    title: capitalizeFirstLetter(clients),
+                    allowedRoles: [1, 2, 3] // Asignar roles permitidos
+                },
+            },
+            {
+                path: devices, component: DevicesComponent,
+                canActivate: [roleGuard],
+                data: {
+                    title: capitalizeFirstLetter(devices),
                     allowedRoles: [1, 2, 3] // Asignar roles permitidos
                 },
             },

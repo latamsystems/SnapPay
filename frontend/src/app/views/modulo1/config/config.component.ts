@@ -67,14 +67,14 @@ icons = {
         permitRoles: [1, 2, 3]
       },
       {
-        route: this.routes[5],
+        route: this.routes[6],
         icon: this.icons.tag,
         title: 'Gestión de marcas',
         description: 'Crea, edita, elimina marcas de teléfono.',
         permitRoles: [1, 2, 3]
       },
       {
-        route: this.routes[5],
+        route: this.routes[7],
         icon: this.icons.layers,
         title: 'Gestión de modelos',
         description: 'Crea, edita, elimina modelos de teléfono.',

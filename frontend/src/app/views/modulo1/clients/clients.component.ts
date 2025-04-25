@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserResult } from 'src/app/core/interfaces/entities/user.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserService } from 'src/app/core/services/content/user.service';
 import { DialogShared } from 'src/app/core/shared/dialog.shared';
@@ -20,22 +19,24 @@ import { JInputComponent } from 'src/app/lib/input/input.component';
 import { JLabelComponent } from 'src/app/lib/label/label.component';
 import { JSelectComponent } from 'src/app/lib/select/select.component';
 import { FilterButton, FilterSelect } from 'src/app/lib/crud/filter-component/elements/filter.interface';
+import { ModelResult } from 'src/app/core/interfaces/entities/model.interface';
+import { ClientResult } from 'src/app/core/interfaces/entities/client.interface';
 
 @Component({
-  selector: 'app-users',
+  selector: 'app-clients',
   imports: [CommonModule, ReactiveFormsModule, JTableComponent, JFormComponent, JInputComponent, JSelectComponent, JLabelComponent, ErrorMessageComponent, JContentFormComponent],
-  templateUrl: './users.component.html',
-  styleUrl: './users.component.scss',
+  templateUrl: './clients.component.html',
+  styleUrl: './clients.component.scss'
 })
-export class UsersComponent implements OnInit {
+export class ClientsComponent implements OnInit {
 
   session!: SessionShared;
 
   // Nombre de endpoint
-  endpoint: string = 'user';
+  endpoint: string = 'client';
 
   // Elementos de crud
-  columns: TableColumn<UserResult>[] = [];
+  columns: TableColumn<ClientResult>[] = [];
   filtersButton: FilterButton[] = [];
   filtersSelect: FilterSelect[] = [];
   optionsTable: OptionsTable[] = [];
@@ -76,34 +77,33 @@ export class UsersComponent implements OnInit {
   initColumns() {
     this.columns = [
       {
-        key: 'id_user',
+        key: 'id_client',
         label: 'ID',
         sortable: false,
         visible: false,
         isSearchable: false,
       },
       {
-        key: 'firstname_user',
+        key: 'firstname_client',
+        label: 'Apellido',
+      },
+      {
+        key: 'lastname_client',
         label: 'Nombre'
       },
       {
-        key: 'lastname_user',
-        label: 'Apellido'
+        key: 'identification_client',
+        label: 'Identificaciòn',
+        styles: { textAlign: 'center' }
       },
       {
-        key: 'identification_user',
-        label: 'Cédula',
-        styles: { 'text-align': 'center' }
+        key: 'email_client',
+        label: 'Correo'
       },
       {
-        key: 'email_user',
-        label: 'Correo Electrónico'
-      },
-      {
-        key: 'role.name_role',
-        label: 'Rol',
-        isDecorator: true,
-        styles: { 'text-align': 'center' }
+        key: 'phone_client',
+        label: 'Telèfono',
+        styles: { textAlign: 'center' }
       },
     ];
   }
@@ -124,10 +124,10 @@ export class UsersComponent implements OnInit {
         classes: 'primary',
         isVisible: () => this.session.role_user === 1 || this.session.role_user === 2,
       },
-      {
-        type: 'filter',
-        tooltip: 'Filtros',
-      },
+      // {
+      //   type: 'filter',
+      //   tooltip: 'Filtrar',
+      // },
       {
         type: 'clear',
         tooltip: 'Limpiar filtros'
@@ -144,12 +144,12 @@ export class UsersComponent implements OnInit {
       {
         type: 'searchable',
         selected: null,
-        endpoint: 'role',
-        optionLabel: 'name_role',
-        optionValue: 'id_role',
+        endpoint: 'brand',
+        optionLabel: 'name_brand',
+        optionValue: 'id_brand',
         loadOnInit: false,
         isSearch: false,
-        placeholder: 'Roles...',
+        placeholder: 'Marcas...',
         showClear: true
       },
     ]
@@ -162,16 +162,6 @@ export class UsersComponent implements OnInit {
   initOptionsTable() {
     this.optionsTable = [
       {
-        icon: this.form.icons.keyRound,
-        tooltip: 'Restablecer clave',
-        clicked: (data) => {
-          this.onResetPasswd(data);
-        },
-        classes: 'teal_secondary',
-        disabled: (data) => data.id_user === 1 && this.session.id_user !== 1,
-        isVisible: () => this.session.role_user === 1,
-      },
-      {
         icon: this.form.icons.edit,
         tooltip: 'Editar',
         clicked: (data) => {
@@ -180,9 +170,7 @@ export class UsersComponent implements OnInit {
         },
         classes: 'warning_secondary',
         disabled: (data) =>
-          this.session.id_user !== 1 &&
-          (this.session.id_user !== 1 && data.id_user === 1) ||
-          (this.session.role_user !== 1 && data.id_role === 1),
+          this.session.id_user !== 1,
         isVisible: () =>
           this.session.role_user === 1 ||
           this.session.role_user === 2,
@@ -194,11 +182,6 @@ export class UsersComponent implements OnInit {
           this.onEnabled(data);
         },
         classes: 'orange_secondary',
-        disabled: (data) =>
-          this.session.id_user !== 1 &&
-          (this.session.id_user !== 1 && data.id_user === 1) ||
-          (this.session.role_user !== 1 && data.id_role === 1) ||
-          data.id_user === this.session.id_user,
         isVisible: () =>
           this.session.role_user === 1 ||
           this.session.role_user === 2,
@@ -212,10 +195,7 @@ export class UsersComponent implements OnInit {
         classes: 'error_secondary',
         disabled: (data) =>
           this.session.id_user !== 1 &&
-          (this.session.id_user !== 1 && data.id_user === 1) ||
-          (this.session.role_user !== 1 && data.id_role === 1) ||
           data.id_user === this.session.id_user,
-
         isVisible: () => this.session.role_user === 1,
       },
     ];
@@ -225,63 +205,21 @@ export class UsersComponent implements OnInit {
   // Funciones de opciones de tabla
   // =========================================================
 
-  // Restablecer contraseña
-  onResetPasswd(data: UserResult) {
-    this.alertDialogService.AlertDialog({
-      type: 'question',
-      title: 'Restablecer contraseña',
-      description: `¿Está seguro de restablecer la contraseña de <br><b>${data.firstname_user} ${data.lastname_user}</b>?`,
-      onConfirm: async () => {
-
-        if (!data.id_user) return;
-        this.userService.resetPasswordUser(data.id_user, data.identification_user).subscribe({
-          next: (response) => {
-            this.alertToastService.AlertToast({
-              type: 'success',
-              title: 'Contraseña restablecida',
-              description: response.msg,
-            });
-          }
-        });
-
-      },
-      onCancel: () => console.log('Cancelar restablecimiento de contraseña'),
-    })
-  }
-
-  // Variables para el dialogo de información
-  dataDialog!: UserResult;
-  titleDialog!: string;
-
-  // Variables de conversión
-  birth_format!: string;
-  age_user!: number | null;
-  salaty_format!: string | null;
-
-  // Informacion
-  onInfo(data: UserResult) {
-    this.dataDialog = data;
-    this.titleDialog = `${data.firstname_user} ${data.lastname_user}`;
-  }
-
   // Editar
-  onEdit(data: UserResult) {
+  onEdit(data: ModelResult) {
     // Abrir formulario
     this.form.onOpen();
 
     // Obtener datos
     this.formGroup.patchValue({
-      id_user: data.id_user,
-      firstname_user: data.firstname_user,
-      lastname_user: data.lastname_user,
-      identification_user: data.identification_user,
-      email_user: data.email_user,
-      id_role: data.id_role,
+      id_model: data.id_model,
+      name_model: data.name_model,
+      id_brand: data.id_brand,
     })
   }
 
   // Activar/Desactivar
-  onEnabled(data: UserResult) {
+  onEnabled(data: any) {
     if (!data.id_user) return;
 
     const id = data.id_user;
@@ -317,19 +255,19 @@ export class UsersComponent implements OnInit {
   }
 
   // Eliminar
-  onDelete(data: UserResult) {
+  onDelete(data: ModelResult) {
     this.alertDialogService.AlertDialog({
       type: 'question',
-      title: "Eliminar usuario",
-      description: `¿Está seguro de eliminar el usuario <br><b>${data.firstname_user} ${data.lastname_user}</b>?`,
+      title: "Eliminar modelo",
+      description: `¿Está seguro de eliminar el modelo <br><b>${data.name_model}</b>?`,
       onConfirm: async () => {
 
-        if (!data.id_user) return;
-        this.genericService.delete<any>(this.endpoint, data.id_user).subscribe({
+        if (!data.id_model) return;
+        this.genericService.delete<any>(this.endpoint, data.id_model).subscribe({
           next: (response) => {
             this.alertToastService.AlertToast({
               type: "success",
-              title: "Usuario eliminado",
+              title: "Modelo eliminado",
               description: response.msg
             });
 
@@ -354,22 +292,9 @@ export class UsersComponent implements OnInit {
   // Validaciones
   initForm(): void {
     this.formGroup = this.formBuilder.group({
-      id_user: null,
-      firstname_user: ['', [Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+(?: [a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+)*$/)]],
-      lastname_user: ['', [Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+(?: [a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+)*$/)]],
-      identification_user: ['', Validators.required],
-      email_user: ['', [Validators.required, Validators.pattern(/^[\w-ñÑ]+(?:\.[\w-ñÑ]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,7}$/)]],
-      phone_user: ['', Validators.required],
-      referencyPhone_user: [null],
-      birth_user: ['', Validators.required],
-      numberAccount_user: ['', Validators.required],
-      salary_user: [null, Validators.required],
-      daySalary_user: [null, Validators.required],
-      location_user: [null],
-      id_genre: [null, Validators.required],
-      id_bank: [null, Validators.required],
-      id_role: [null, Validators.required],
-      id_office: [null, Validators.required],
+      id_model: null,
+      name_model: ['', Validators.required],
+      id_brand: [null, Validators.required],
     })
 
     this.form.formControls = this.converterService.initializeFormControls(this.formGroup);
@@ -389,14 +314,14 @@ export class UsersComponent implements OnInit {
 
       this.form.isLoading = true;
       const action$ = isNew
-        ? this.genericService.create<any>(this.endpoint, formData)
-        : this.genericService.update<any>(this.endpoint, formData.id_user, formData);
+        ? this.genericService.create<ModelResult>(this.endpoint, formData)
+        : this.genericService.update<ModelResult>(this.endpoint, formData.id_model, formData);
 
       action$.subscribe({
         next: (response) => {
           // Guardamos el mensaje y esperamos a que cargue la tabla
           this.form.messages = {
-            title: isNew ? "Usuario creado" : "Usuario actualizado",
+            title: isNew ? "Modelo creado" : "Modelo actualizado",
             description: response.msg
           };
 
@@ -408,4 +333,6 @@ export class UsersComponent implements OnInit {
       })
     }
   }
+
 }
+

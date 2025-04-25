@@ -1,0 +1,34 @@
+<div class="mx-auto">
+    <JCrudTable 
+        [columns]="columns" 
+        [endpoint]="endpoint" 
+        searchPlaceholder="Buscar marca..."
+        [filtersButton]="filtersButton"
+        [optionsTable]="optionsTable"
+        (dataLoaded)="form.onTableDataLoaded()"
+        />
+</div>
+
+<JCrudForm 
+    [openForm]="form.openForm" 
+    (closeForm)="form.onClose()" 
+    [formTemplate]="templateForm" 
+    (submitForm)="onSubmitForm()"
+    [typeForm]="form.typeForm" 
+    [isLoading]="form.isLoading"
+/>
+
+<ng-template #templateForm>
+    <form [formGroup]="formGroup" class="flex flex-col gap-2">
+        <input class="input" id="id_brand" type="hidden" formControlName="id_brand">
+    
+        <JContentForm>
+            <JLabel for="name_brand" [isRequired]="true">Nombre de la marca</JLabel>
+            <JInput type="textarea" id="name_brand" formControlName="name_brand" placeholder="Ingrese el nombre de la marca" />
+            <JErrorMessage [control]="form.formControls['name_brand_control']" [errorMessages]="{
+                required: 'El nombre es requerido.'
+            }" />
+        </JContentForm>
+
+    </form>
+</ng-template>
