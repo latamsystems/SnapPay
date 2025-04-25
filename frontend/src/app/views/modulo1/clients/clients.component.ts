@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { UserService } from 'src/app/core/services/content/user.service';
 import { DialogShared } from 'src/app/core/shared/dialog.shared';
 import { FormShared } from 'src/app/core/shared/form.shared';
 import { SessionShared } from 'src/app/core/shared/session.shared';
@@ -17,14 +16,13 @@ import { OptionsTable, TableColumn } from 'src/app/lib/crud/table-component/elem
 import { JTableComponent } from 'src/app/lib/crud/table-component/table.component';
 import { JInputComponent } from 'src/app/lib/input/input.component';
 import { JLabelComponent } from 'src/app/lib/label/label.component';
-import { JSelectComponent } from 'src/app/lib/select/select.component';
-import { FilterButton, FilterSelect } from 'src/app/lib/crud/filter-component/elements/filter.interface';
-import { ModelResult } from 'src/app/core/interfaces/entities/model.interface';
+import { FilterButton } from 'src/app/lib/crud/filter-component/elements/filter.interface';
 import { ClientResult } from 'src/app/core/interfaces/entities/client.interface';
+import { ClientService } from 'src/app/core/services/content/client.service';
 
 @Component({
   selector: 'app-clients',
-  imports: [CommonModule, ReactiveFormsModule, JTableComponent, JFormComponent, JInputComponent, JSelectComponent, JLabelComponent, ErrorMessageComponent, JContentFormComponent],
+  imports: [CommonModule, ReactiveFormsModule, JTableComponent, JFormComponent, JInputComponent, JLabelComponent, ErrorMessageComponent, JContentFormComponent],
   templateUrl: './clients.component.html',
   styleUrl: './clients.component.scss'
 })
@@ -38,7 +36,6 @@ export class ClientsComponent implements OnInit {
   // Elementos de crud
   columns: TableColumn<ClientResult>[] = [];
   filtersButton: FilterButton[] = [];
-  filtersSelect: FilterSelect[] = [];
   optionsTable: OptionsTable[] = [];
 
   constructor(
@@ -50,7 +47,7 @@ export class ClientsComponent implements OnInit {
     private readonly alertToastService: AlertToastService,
     private readonly alertDialogService: AlertDialogService,
     private readonly converterService: ConverterService,
-    private readonly userService: UserService,
+    private readonly clientService: ClientService,
   ) {
     this.session = new SessionShared(this.authService);
     this.form.onResetCallback = () => this.formGroup.reset();
@@ -65,7 +62,6 @@ export class ClientsComponent implements OnInit {
     // Inicializa los elementos del crud
     this.initColumns();
     this.initFilterButton();
-    this.initSelectFilter();
     this.initOptionsTable();
     this.initForm();
   }
@@ -124,35 +120,11 @@ export class ClientsComponent implements OnInit {
         classes: 'primary',
         isVisible: () => this.session.role_user === 1 || this.session.role_user === 2,
       },
-      // {
-      //   type: 'filter',
-      //   tooltip: 'Filtrar',
-      // },
       {
         type: 'clear',
         tooltip: 'Limpiar filtros'
       },
     ];
-  }
-
-  // ======================================================
-  // Filtros de tabla
-  // ======================================================
-
-  initSelectFilter() {
-    this.filtersSelect = [
-      {
-        type: 'searchable',
-        selected: null,
-        endpoint: 'brand',
-        optionLabel: 'name_brand',
-        optionValue: 'id_brand',
-        loadOnInit: false,
-        isSearch: false,
-        placeholder: 'Marcas...',
-        showClear: true
-      },
-    ]
   }
 
   // =========================================================
@@ -206,42 +178,45 @@ export class ClientsComponent implements OnInit {
   // =========================================================
 
   // Editar
-  onEdit(data: ModelResult) {
+  onEdit(data: ClientResult) {
     // Abrir formulario
     this.form.onOpen();
 
     // Obtener datos
     this.formGroup.patchValue({
-      id_model: data.id_model,
-      name_model: data.name_model,
-      id_brand: data.id_brand,
+      id_client: data.id_client,
+      firstname_client: data.firstname_client,
+      lastname_client: data.lastname_client,
+      identification_client: data.identification_client,
+      phone_client: data.phone_client,
+      email_client: data.email_client,
     })
   }
 
   // Activar/Desactivar
-  onEnabled(data: any) {
-    if (!data.id_user) return;
+  onEnabled(data: ClientResult) {
+    if (!data.id_client) return;
 
-    const id = data.id_user;
+    const id = data.id_client;
     const isActive = data.id_status === 1;
     const message = isActive ? 'desactivar' : 'activar';
     const message2 = isActive ? 'desactivado' : 'activado';
 
     const serviceCall = isActive
-      ? () => this.userService.deactivateUser(id)
-      : () => this.userService.activateUser(id);
+      ? () => this.clientService.deactivateClient(id)
+      : () => this.clientService.activateClient(id);
 
     this.alertDialogService.AlertDialog({
       type: 'question',
-      title: `${message.charAt(0).toUpperCase() + message.slice(1)} usuario`,
-      description: `¿Está seguro de ${message} el usuario <br><b>${data.firstname_user} ${data.lastname_user}</b>?`,
+      title: `${message.charAt(0).toUpperCase() + message.slice(1)} cliente`,
+      description: `¿Está seguro de ${message} el cliente <br><b>${data.firstname_client} ${data.lastname_client}</b>?`,
       onConfirm: async () => {
 
         serviceCall().subscribe({
           next: (response) => {
             this.alertToastService.AlertToast({
               type: "success",
-              title: `Usuario ${message2}`,
+              title: `Cliente ${message2}`,
               description: response.msg
             });
 
@@ -255,19 +230,19 @@ export class ClientsComponent implements OnInit {
   }
 
   // Eliminar
-  onDelete(data: ModelResult) {
+  onDelete(data: ClientResult) {
     this.alertDialogService.AlertDialog({
       type: 'question',
-      title: "Eliminar modelo",
-      description: `¿Está seguro de eliminar el modelo <br><b>${data.name_model}</b>?`,
+      title: "Eliminar cliente",
+      description: `¿Está seguro de eliminar el cliente <br><b>${data.firstname_client} ${data.lastname_client}</b>?`,
       onConfirm: async () => {
 
-        if (!data.id_model) return;
-        this.genericService.delete<any>(this.endpoint, data.id_model).subscribe({
+        if (!data.id_client) return;
+        this.genericService.delete<ClientResult>(this.endpoint, data.id_client).subscribe({
           next: (response) => {
             this.alertToastService.AlertToast({
               type: "success",
-              title: "Modelo eliminado",
+              title: "Cliente eliminado",
               description: response.msg
             });
 
@@ -292,9 +267,12 @@ export class ClientsComponent implements OnInit {
   // Validaciones
   initForm(): void {
     this.formGroup = this.formBuilder.group({
-      id_model: null,
-      name_model: ['', Validators.required],
-      id_brand: [null, Validators.required],
+      id_client: null,
+      firstname_client: ['', Validators.required],
+      lastname_client: ['', Validators.required],
+      identification_client: ['', Validators.required],
+      phone_client: ['', Validators.required],
+      email_client: ['', Validators.required],
     })
 
     this.form.formControls = this.converterService.initializeFormControls(this.formGroup);
@@ -306,6 +284,7 @@ export class ClientsComponent implements OnInit {
 
     const formData = {
       ...this.formGroup.value,
+      ...(!this.formGroup.value.id_client ? {id_user: this.session.id_user} : {}),
     }
 
     if (this.formGroup.valid) {
@@ -314,14 +293,14 @@ export class ClientsComponent implements OnInit {
 
       this.form.isLoading = true;
       const action$ = isNew
-        ? this.genericService.create<ModelResult>(this.endpoint, formData)
-        : this.genericService.update<ModelResult>(this.endpoint, formData.id_model, formData);
+        ? this.genericService.create<ClientResult>(this.endpoint, formData)
+        : this.genericService.update<ClientResult>(this.endpoint, formData.id_client, formData);
 
       action$.subscribe({
         next: (response) => {
           // Guardamos el mensaje y esperamos a que cargue la tabla
           this.form.messages = {
-            title: isNew ? "Modelo creado" : "Modelo actualizado",
+            title: isNew ? "Cliente creado" : "Cliente actualizado",
             description: response.msg
           };
 

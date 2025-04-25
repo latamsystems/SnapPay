@@ -3,8 +3,11 @@
         [columns]="columns" 
         [endpoint]="endpoint" 
         searchPlaceholder="Buscar cliente..."
+        [checked]="true"
+        [checkedValues]="[[1], [2]]"
+        [checkedTitles]="['Activo', 'Inactivo']"
+        [defaultFilters]="{ 'id_status': 1 }" 
         [filtersButton]="filtersButton"
-        [filtersSelect]="filtersSelect"
         [optionsTable]="optionsTable"
         (dataLoaded)="form.onTableDataLoaded()"
         />
@@ -21,31 +24,49 @@
 
 <ng-template #templateForm>
     <form [formGroup]="formGroup" class="flex flex-col gap-2">
-        <input class="input" id="id_model" type="hidden" formControlName="id_model">
+        <input class="input" id="id_client" type="hidden" formControlName="id_client">
     
         <JContentForm>
-            <JLabel for="name_model" [isRequired]="true">Nombre del modelo</JLabel>
-            <JInput type="textarea" id="name_model" formControlName="name_model" placeholder="Ingrese el nombre del modelo" />
-            <JErrorMessage [control]="form.formControls['name_model_control']" [errorMessages]="{
+            <JLabel for="firstname_client" [isRequired]="true">Nombre</JLabel>
+            <JInput type="text" id="firstname_client" formControlName="firstname_client" placeholder="Ingrese el nombre" />
+            <JErrorMessage [control]="form.formControls['firstname_client_control']" [errorMessages]="{
                 required: 'El nombre es requerido.'
             }" />
         </JContentForm>
 
+
         <JContentForm>
-            <JLabel for="id_brand" [isRequired]="true">Selección de marca</JLabel>
-            <JSelect
-                type="searchable"
-                formControlName="id_brand"
-                endpoint="brand"
-                optionLabel="name_brand"
-                optionValue="id_brand"
-                [loadOnInit]="form.typeForm === 'create' ? false : true"
-                [isSearch]="false"
-                placeholder="Seleccione una marca"
-                [showClear]="true"
-            />
-            <JErrorMessage [control]="form.formControls['id_brand_control']" [errorMessages]="{
-                required: 'La marca es requerida.'
+            <JLabel for="lastname_client" [isRequired]="true">Apellido</JLabel>
+            <JInput type="text" id="lastname_client" formControlName="lastname_client" placeholder="Ingrese el apellido" />
+            <JErrorMessage [control]="form.formControls['lastname_client_control']" [errorMessages]="{
+                required: 'El apellido es requerido.'
+            }" />
+        </JContentForm>
+
+
+        <JContentForm>
+            <JLabel for="identification_client" [isRequired]="true">identificación</JLabel>
+            <JInput type="text" id="identification_client" formControlName="identification_client" placeholder="Ingrese la identificación" />
+            <JErrorMessage [control]="form.formControls['identification_client_control']" [errorMessages]="{
+                required: 'La identificación es requerida.'
+            }" />
+        </JContentForm>
+
+
+        <JContentForm>
+            <JLabel for="phone_client" [isRequired]="true">Teléfono</JLabel>
+            <JInput type="text" id="phone_client" formControlName="phone_client" placeholder="Ingrese el número" />
+            <JErrorMessage [control]="form.formControls['phone_client_control']" [errorMessages]="{
+                required: 'El número es requerido.'
+            }" />
+        </JContentForm>
+
+
+        <JContentForm>
+            <JLabel for="email_client" [isRequired]="true">Correo electrónico</JLabel>
+            <JInput type="text" id="email_client" formControlName="email_client" placeholder="Ingrese el correo" />
+            <JErrorMessage [control]="form.formControls['email_client_control']" [errorMessages]="{
+                required: 'El correo es requerido.'
             }" />
         </JContentForm>
 
