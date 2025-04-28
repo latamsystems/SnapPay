@@ -15,6 +15,7 @@ export const environment = {
   urlControl: '/control',
   urlUser: '/user',
   urlClient: '/client',
+  urlDevice: '/device',
 
   urlStatus: '/status',
   urlRole: '/role',

@@ -1,1 +1,76 @@
-<p>devices works!</p>
+<div class="mx-auto">
+    <JCrudTable 
+        [columns]="columns" 
+        [endpoint]="endpoint" 
+        searchPlaceholder="Buscar dispositivo..."
+        [checked]="true"
+        [checkedValues]="[[1], [2]]"
+        [checkedTitles]="['Activo', 'Inactivo']"
+        [defaultFilters]="{ 'id_status': 1 }" 
+        [filtersButton]="filtersButton"
+        [filtersSelect]="filtersSelect"
+        [optionsTable]="optionsTable"
+        (dataLoaded)="form.onTableDataLoaded()"
+        />
+</div>
+
+<JCrudForm 
+    [openForm]="form.openForm" 
+    (closeForm)="form.onClose()" 
+    [formTemplate]="templateForm" 
+    (submitForm)="onSubmitForm()"
+    [typeForm]="form.typeForm" 
+    [isLoading]="form.isLoading"
+/>
+
+<ng-template #templateForm>
+    <form [formGroup]="formGroup" class="flex flex-col gap-2">
+        <input class="input" id="id_device" type="hidden" formControlName="id_device">
+
+        <JContentForm>
+            <JLabel for="id_user" [isAutomated]="true">Asesor</JLabel>
+            <JSelect
+                type="searchable"
+                formControlName="id_user"
+                endpoint="user"
+                [optionLabel]="['firstname_user', 'lastname_user']"
+                optionValue="id_user"
+                [loadOnInit]="form.openForm"
+                [isSearch]="false"
+                placeholder="Seleccione un asesor" 
+                [disabled]="session.id_user !== 1"              
+                [showClear]="false"
+            />
+            <JErrorMessage [control]="form.formControls['id_user_control']" [errorMessages]="{
+                required: 'El asesor es requerido.'
+            }" />
+        </JContentForm>
+
+        <JContentForm>
+            <JLabel for="id_model" [isRequired]="true">Selección de modelo</JLabel>
+            <JSelect
+                type="searchable"
+                formControlName="id_model"
+                endpoint="model"
+                optionLabel="name_model"
+                optionValue="id_model"
+                [loadOnInit]="form.typeForm === 'create' ? false : true"
+                [isSearch]="true"
+                placeholder="Seleccione una modelo"
+                [showClear]="true"
+            />
+            <JErrorMessage [control]="form.formControls['id_model_control']" [errorMessages]="{
+                required: 'El modelo es requerido.'
+            }" />
+        </JContentForm>
+
+        <JContentForm>
+            <JLabel for="price_device" [isRequired]="true">Precio</JLabel>
+            <JInput type="text" id="price_device" formControlName="price_device" placeholder="Ingrese el precio" />
+            <JErrorMessage [control]="form.formControls['price_device_control']" [errorMessages]="{
+                required: 'El precio es requerido.'
+            }" />
+        </JContentForm>
+
+    </form>
+</ng-template>

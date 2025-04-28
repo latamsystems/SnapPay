@@ -35,9 +35,125 @@ const config: FindOptions = {
     ]
 }
 
-export default { crud: CrudService(models.Device, consoleHelper, config) };
+
+/**
+ * Métodos personalizados para el servicio
+ */
+const serviceMethods = {
+    create: (formData: Device, reqMsg: Record<string, string>) => handleService({
+        consoleHelper, async serviceFunction(...args) {
+            const [formData] = args as [any];
+
+            // Reglas de validación
+            await validateRequest<Device>({
+                model: models.Device,
+                formData,
+                rules: [
+                    rule.validateFieldTypes(),
+                    rule.requiredFields(['price_device', 'id_model', 'id_user']),
+                ],
+            });
+
+            // Crear
+            const result = await models.Device.create({ ...formData, id_status: 1 });
+
+            // Emitir evento a todos los clientes conectados
+            const io = getIo();
+            io.emit('device:created', result);
+
+            return HttpResponse.success({ message: reqMsg.success });
+        },
+        params: [formData]
+    }),
+    update: (id_device: number, formData: Device, reqMsg: Record<string, string>) => handleService({
+        consoleHelper, async serviceFunction(...args) {
+            const [id_device, formData] = args as [number, Device];
+
+            // Reglas de validación
+            await validateRequest<Device>({
+                model: models.Device,
+                formData,
+                rules: [
+                    rule.validateFieldTypes(),
+                    rule.requiredFields(['price_device', 'id_model', 'id_user']),
+                    rule.recordExists(id_device, reqMsg.notFound),
+                ],
+            });
+
+            // Actualizar datos
+            const result = await models.Device.update(formData, { where: { id_device } });
+
+            // Emitir evento a todos los clientes conectados
+            const io = getIo();
+            io.emit('device:updated', result);
+
+            return HttpResponse.success({ message: reqMsg.success });
+        },
+        params: [id_device, formData]
+    })
+};
+
+export default { crud: CrudService(models.Device, consoleHelper, config, serviceMethods) };
 
 // =============================================================================
 // =============================================================================
 
-export class DeviceService { }
+export class DeviceService { 
+    
+    /**
+     * Desactivar registro
+     * @param id_device 
+     * @param reqMsg 
+     * @returns 
+     */
+    @Service
+    static async deactivateDevice(id_device: number, reqMsg: Record<string, string>) {
+
+        // Reglas de validación
+        await validateRequest({
+            model: models.Device,
+            rules: [
+                rule.recordExists(id_device, reqMsg.notFound),
+            ]
+        });
+
+        // Actualizar datos
+        await models.Device.update({ id_status: 2 }, { where: { id_device } });
+
+        // Emitir evento a todos los clientes conectados
+        const io = getIo();
+        io.emit('device:deactivate', { id_device });
+
+        return HttpResponse.success({ message: reqMsg.success });
+    }
+
+    // =============================================================================
+
+    /**
+     * Activar registro
+     * @param id_device 
+     * @param reqMsg 
+     * @returns 
+     */
+    @Service
+    static async activateDevice(id_device: number, reqMsg: Record<string, string>) {
+
+        // Reglas de validación
+        await validateRequest({
+            model: models.Device,
+            rules: [
+                rule.recordExists(id_device, reqMsg.notFound),
+            ]
+        });
+
+        // Actualizar datos
+        await models.Device.update({ id_status: 1 }, { where: { id_device } });
+
+        // Emitir evento a todos los clientes conectados
+        const io = getIo();
+        io.emit('device:activate', { id_device });
+
+        return HttpResponse.success({ message: reqMsg.success });
+    }
+
+}
