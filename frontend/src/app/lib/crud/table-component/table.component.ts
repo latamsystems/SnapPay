@@ -1,3 +1,28 @@
+ 
+// ===============================================
+// Librería de Componentes y Funciones - tailjNg
+// ===============================================
+// Descripción:
+//   Esta librería está diseñada para ofrecer un conjunto de componentes reutilizables y funciones
+//   optimizadas para facilitar el desarrollo de interfaces de usuario y la gestión de datos en aplicaciones 
+//   web. Incluye herramientas para mejorar la experiencia del desarrollador y la interacción con el usuario.
+// Propósito:
+//   - Crear componentes modulares y personalizables.
+//   - Mejorar la eficiencia del desarrollo front-end mediante herramientas reutilizables.
+//   - Proporcionar soluciones escalables y fáciles de integrar con aplicaciones existentes.
+// Uso:
+//   Para obtener la funcionalidad completa, simplemente importa los módulos necesarios y usa los 
+//   componentes según tu caso de uso. Asegúrate de revisar la documentación oficial para obtener ejemplos 
+//   detallados sobre su implementación y personalización.
+// Autores:
+//   Armando Josue Velasquez Delgado - Desarrollador principal
+// Licencia:
+//   Este proyecto está licenciado bajo la MIT - ver el archivo LICENSE para más detalles.
+// Versión: 0.0.9
+// Fecha de creación: 2025-01-04
+// =============================================== 
+
+
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -73,6 +98,7 @@ export class JTableComponent implements OnInit {
   };
 
   @Input() endpoint!: string;
+  mainEndpoint!: string;
   @Input() columns: TableColumn<any>[] = [];
   @Input() defaultFilters: { [key: string]: any } = {};
   @Input() isPaginator = true;
@@ -143,6 +169,7 @@ export class JTableComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.mainEndpoint = this.endpoint.split('/').pop() ?? this.endpoint;
     this.isChecked = this.checkedValues[0][0];
     this.titleChecked = this.checkedTitles[0];
     this.columnDefaults();
@@ -192,7 +219,9 @@ export class JTableComponent implements OnInit {
     // setTimeout(() => {
     this.crudService.getAll<any>(this.endpoint, params).subscribe({
       next: (response) => {
-        this.data = response.data[this.endpoint] ?? [];
+        console.log('Data loaded:', response);
+
+        this.data = response.data[this.mainEndpoint] ?? [];
 
         if (response.meta?.page) {
           this.totalItems = response.meta.page.totalRecords;
@@ -240,7 +269,7 @@ export class JTableComponent implements OnInit {
   // Método para cambiar el estado de un checkbox
   onCheckboxChange(item: any, column: TableColumn<any>) {
     // Get the ID field name based on dataProperty
-    const idField = `id_${this.endpoint}`;
+    const idField = `id_${this.mainEndpoint}`;
 
     // Get the record ID
     const recordId = item[idField];
