@@ -1,68 +1,38 @@
 <div class="flex flex-col justify-center bg-background dark:bg-dark-background text-black dark:text-white px-6 py-10">
   <div class="mb-10">
     <h1 class="text-3xl md:text-4xl font-bold">Panel de Control</h1>
-    <p class="text-sm md:text-base text-muted-foreground mt-2">Resumen general del sistema: gestión de entidades activas.</p>
+    <p class="text-sm md:text-base text-muted-foreground mt-2">Resumen general del sistema: gestión de entidades
+      activas.</p>
   </div>
 
+
+  @if (!isLoading) {
   <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
-    <!-- Marcas -->
-    <div class="bg-white dark:bg-foreground shadow rounded-2xl border border-border dark:border-dark-border p-6 flex justify-between items-center">
+    @for (card of dashboardCards; track $index) {
+    @if (!card.denyRole?.includes(session.role_user)) {
+    <div
+      class="bg-white dark:bg-foreground shadow rounded-2xl border border-border dark:border-dark-border p-6 flex justify-between items-center"
+      [ngClass]="{ 'col-span-full sm:col-span-2 xl:col-span-1': card.title === 'Usuarios del sistema' }">
       <div>
-        <h2 class="text-base md:text-lg font-semibold">Marcas registradas</h2>
-        <p class="text-4xl font-bold mt-2">24</p>
-        <p class="text-xs mt-1 text-muted-foreground">Última: Samsung</p>
+        <h2 class="text-base md:text-lg font-semibold">{{ card.title }}</h2>
+        <p class="text-4xl font-bold mt-2">{{ card.total }}</p>
+        <p class="text-2xs mt-1 text-muted-foreground">{{card.description}}</p>
       </div>
-      <div class="text-primary bg-primary/10 p-4 rounded-full">
-        <lucide-icon [name]="icons.tag" [size]="40" />
+      <div class="p-4 rounded-full" [ngClass]="'text-' + card.color + ' bg-' + card.bg">
+        <lucide-icon [name]="card.icon" [size]="40" />
       </div>
     </div>
-
-    <!-- Modelos -->
-    <div class="bg-white dark:bg-foreground shadow rounded-2xl border border-border dark:border-dark-border p-6 flex justify-between items-center">
-      <div>
-        <h2 class="text-base md:text-lg font-semibold">Modelos únicos</h2>
-        <p class="text-4xl font-bold mt-2">37</p>
-        <p class="text-xs mt-1 text-muted-foreground">Ejemplo: Galaxy A54</p>
-      </div>
-      <div class="text-blue-500 bg-blue-500/10 p-4 rounded-full">
-        <lucide-icon [name]="icons.layers" [size]="40" />
-      </div>
-    </div>
-
-    <!-- Dispositivos -->
-    <div class="bg-white dark:bg-foreground shadow rounded-2xl border border-border dark:border-dark-border p-6 flex justify-between items-center">
-      <div>
-        <h2 class="text-base md:text-lg font-semibold">Dispositivos totales</h2>
-        <p class="text-4xl font-bold mt-2">105</p>
-        <p class="text-xs mt-1 text-muted-foreground">Activos y almacenados</p>
-      </div>
-      <div class="text-green-500 bg-green-500/10 p-4 rounded-full">
-        <lucide-icon [name]="icons.device" [size]="40" />
-      </div>
-    </div>
-
-    <!-- Clientes -->
-    <div class="bg-white dark:bg-foreground shadow rounded-2xl border border-border dark:border-dark-border p-6 flex justify-between items-center">
-      <div>
-        <h2 class="text-base md:text-lg font-semibold">Clientes registrados</h2>
-        <p class="text-4xl font-bold mt-2">58</p>
-        <p class="text-xs mt-1 text-muted-foreground">5 nuevos esta semana</p>
-      </div>
-      <div class="text-orange-500 bg-orange-500/10 p-4 rounded-full">
-        <lucide-icon [name]="icons.client" [size]="40" />
-      </div>
-    </div>
-
-    <!-- Usuarios -->
-    <div class="bg-white dark:bg-foreground shadow rounded-2xl border border-border dark:border-dark-border p-6 flex justify-between items-center col-span-full sm:col-span-2 xl:col-span-1">
-      <div>
-        <h2 class="text-base md:text-lg font-semibold">Usuarios del sistema</h2>
-        <p class="text-4xl font-bold mt-2">10</p>
-        <p class="text-xs mt-1 text-muted-foreground">Último acceso: 22 abr.</p>
-      </div>
-      <div class="text-purple-500 bg-purple-500/10 p-4 rounded-full">
-        <lucide-icon [name]="icons.users" [size]="40" />
-      </div>
+    }
+    }
+  </div>
+  } @else {
+  <div
+    class="w-full flex justify-center items-center h-100 bg-white dark:bg-foreground rounded-[20px] border border-border dark:border-dark-border">
+    <div class="flex flex-col gap-3 items-center justify-center py-4">
+      <lucide-icon [name]="icons.loading" size="30" class="text-primary animate-spin"></lucide-icon>
+      <p>Cargando datos...</p>
     </div>
   </div>
+  }
+
 </div>

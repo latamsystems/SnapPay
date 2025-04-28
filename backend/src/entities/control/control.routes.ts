@@ -11,6 +11,8 @@ router.get("/", crud.getAll);
 router.get("/:id", crud.getById);
 router.put("/update/:id/:status", verifyToken, ControlController.updateControl);
 
+router.get("/resume/:id_user", verifyToken, ControlController.getGeneralResume);
+
 router.use("/", verifyToken, checkRole([1]), crudRoutes(crud)); // CRUD
 
 export default router;

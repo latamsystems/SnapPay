@@ -16,10 +16,11 @@ export const crud = CrudController({ service: controlService.crud });
 // =============================================================================
 
 export class ControlController {
+
     /**
-    * Actualizacion de control
-    * @param req 
-   */
+     * Actualizacion de control
+     * @param req 
+    */
     @Controller({
         service: ControlService.updateControl,
         messages: {
@@ -31,6 +32,22 @@ export class ControlController {
         extractParams: (req: Request) => [req.params.id, req.params.status],
     })
     static updateControl() { void 0 }
+
+    // =============================================================================
+
+    /**
+     * Resumen general del sistema
+     * @param req 
+    */
+    @Controller({
+        service: ControlService.getGeneralResume,
+        messages: {
+            success: 'Resumen general obtenido exitosamente.',
+            notFound: 'No se encontro el usuario.',
+        },
+        extractParams: (req: Request) => [req.params.id_user],
+    })
+    static getGeneralResume() { void 0 }
 
 }
 
